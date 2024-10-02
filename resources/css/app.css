@@ -5,3 +5,12 @@
 [x-cloak] {
     display: none;
 }
+
+
+.loading-spinner {
+    /* Estilos para tu spinner */
+    /* Ejemplo: */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

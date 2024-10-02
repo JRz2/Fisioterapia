@@ -1,5 +1,5 @@
 <div>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div>
         <a class="px-3 py-2 text-xs font-bold text-white bg-green-600 rounded-lg hover:bg-green-700 hover:no-underline" 
         href="{{route('doctor.paciente.show', $row)}}">
             <i class="fa fa-eye"> </i>

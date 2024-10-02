@@ -31,6 +31,9 @@ class PacienteDatatable extends DataTableComponent
     public $imagen3="hola";
 
     public $view = 'livewire.paciente-datatable';
+
+    
+
     
     public function configure(): void
     {
@@ -42,26 +45,31 @@ class PacienteDatatable extends DataTableComponent
     { 
         return [
             Column::make("Id", "id")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Nombre", "nombre")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Paterno", "paterno")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Celular", "celular")
                 ->collapseOnMobile()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Deporte", "deporte")
                 ->collapseOnMobile()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Edad", "edad")
                 ->collapseOnMobile()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Acciones")
                 ->collapseOnTablet()
                 ->label(
                     fn($row) => view('livewire.index-paciente', compact('row'))
                 ),
-
         ];
     }
 
@@ -77,6 +85,10 @@ class PacienteDatatable extends DataTableComponent
 
     #[On('paciente-created')]
     public function actualizarTabla(){
+        $this->dispatch('swal:suces', [
+            'title' => 'Paciente',
+            'text' => 'Creado correctamente',
+        ]);
         $this->pacientestabla = $this->getPacientes();
     }   
 
