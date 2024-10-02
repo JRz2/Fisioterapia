@@ -9,7 +9,7 @@ class Paciente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'paterno', 'materno', 'direccion', 'celular', 'ocupacion', 'deporte', 'genero', 'edad'];
+    protected $fillable = ['nombre', 'paterno', 'materno', 'direccion', 'celular', 'ocupacion', 'deporte', 'genero', 'edad','ci'];
 
     //relacion uno a muchos
     public function consulta(){

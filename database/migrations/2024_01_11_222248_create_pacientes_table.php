@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('paterno');
             $table->string('materno')->nullable();;
             $table->string('edad');
+            $table->integer('ci');
             $table->string('genero');
             $table->string('direccion')->nullable();
             $table->string('deporte')->nullable();
