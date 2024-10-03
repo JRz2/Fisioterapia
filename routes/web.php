@@ -32,5 +32,8 @@ Route::middleware([
 Route::view('/esqueleto', 'doctor.model.esqueleto');
 Route::view('/craneo', 'doctor.model.craneo');
 Route::view('/musculo ', 'doctor.model.musculo');
+Route::view('/minferior', 'doctor.model.minferior');
+Route::view('/msuperior', 'doctor.model.msuperior');
+
 
 

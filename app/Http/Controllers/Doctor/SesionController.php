@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sesion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SesionController extends Controller
@@ -12,7 +14,9 @@ class SesionController extends Controller
      */
     public function index()
     {
-        //
+        $sesiones = Sesion::whereDate('fecha', '!=', Carbon::today())->get();
+        $sesionesHoy = Sesion::whereDate('fecha', Carbon::today())->get(); 
+        return view('doctor.sesion.index', compact('sesiones', 'sesionesHoy'));   
     }
 
     /**

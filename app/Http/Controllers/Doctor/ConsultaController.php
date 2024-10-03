@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Consulta;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ConsultaController extends Controller
 {
@@ -24,8 +25,10 @@ class ConsultaController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $consultas = Consulta::whereDate('fecha', '!=', Carbon::today())->get();
+        $consultasHoy = Consulta::whereDate('fecha', Carbon::today())->get(); 
+        return view('doctor.consulta.index', compact('consultas', 'consultasHoy'));        
+    }   
 
     /**
      * Show the form for creating a new resource.

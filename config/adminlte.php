@@ -346,9 +346,14 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Pruebas',
-            'url'  => '',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Consultas',
+            'route'  => 'doctor.consulta.index',
+            'icon' => 'fas fa-folder',
+        ],
+        [
+            'text' => 'Sesiones',
+            'route'  => 'doctor.sesion.index',
+            'icon' => 'fas fa-heart-pulse',
         ],
         ['header' => 'MODELOS'],
 
@@ -365,6 +370,22 @@ return [
                     'text'    => 'Craneo',
                     'icon'    => 'fas fa-skull',
                     'url'     => '/craneo',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Musculos',
+            'icon'    => 'fas fa-shield',
+            'submenu' => [
+                [
+                    'text'    => 'Inferior',
+                    'icon'    => 'fas fa-socks',
+                    'url'     => '/minferior',
+                ],
+                [
+                    'text'    => 'Superior',
+                    'icon'    => 'fas fa-lungs',
+                    'url'     => '/msuperior',
                 ],
             ],
         ],
