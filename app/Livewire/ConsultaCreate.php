@@ -25,6 +25,7 @@ class ConsultaCreate extends Component
     public $openexa = false;
     public $opendiag = false;
     public $openplan = false;
+    public $openhorario = false;
     public $cerrar = true;
     public $btnterminar = true;
     public $panel = true;
@@ -116,6 +117,18 @@ class ConsultaCreate extends Component
         $this->openexa = true;
         $this->opendiag = false;
         $this->openplan = false;
+    }
+
+    public function horario(){
+        $this->openan = false;
+        $this->openantro = false;
+        $this->openval = false;
+        $this->openins = false;
+        $this->openmov = false;
+        $this->openexa = false;
+        $this->opendiag = false;
+        $this->openplan = false;
+        $this->openhorario = true;
     }
 
 

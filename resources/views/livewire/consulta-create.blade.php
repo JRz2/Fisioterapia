@@ -53,6 +53,7 @@
                 <button class="btn-nav" :class="{ 'active': activeSection === 'movilizacion' }" @click="activeSection = 'movilizacion'; $wire.movilizacion()">Palpación</button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'examen' }" @click="activeSection = 'examen'; $wire.examen()">Pruebas</button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'diagnostico' }" @click="activeSection = 'diagnostico'; $wire.diagnostico()">Diagnóstico</button>
+                <button class="btn-nav" :class="{ 'active': activeSection === 'horario' }" @click="activeSection = 'horario'; $wire.horario()">Horarios</button>
             </div>            
         
             <!-- Paneles de contenido -->
@@ -83,6 +84,10 @@
         
                 <div wire:model="opendiag" style="{{ $opendiag ? '' : 'display: none;' }}" class="panel-content">
                     @livewire('diagnostico-create', ['consultaId' => $id])
+                </div>
+
+                <div wire:model="openhorario" style="{{ $openhorario ? '' : 'display: none;' }}" class="panel-content">
+                    @livewire('horario-create', ['consultaId' => $id])
                 </div>
             </div>
         </div>
