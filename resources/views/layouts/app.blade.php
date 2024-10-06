@@ -50,7 +50,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
 
     @livewireScripts
     <script>
-        Livewire.on('swal:suces', param => {
+        Livewire.on('swal:success', param => {
             Swal.fire({
                 title: param[0].title || '¡Éxito!',
                 text: param[0].text || 'Operación completada con éxito.',
@@ -62,6 +62,30 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
         });
     </script>
 
+    <script>
+        Livewire.on('swal:confirm', param => {
+            Swal.fire({
+                title: param[0].title,
+                text: param[0].text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: param[0].confirmButtonText,
+                cancelButtonText: param[0].cancelButtonText,
+                confirmButtonColor: '#e1402d',
+                cancelButtonColor: '#c4aa2d',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, puedes ejecutar una acción en Livewire
+                    Livewire.dispatch('destroy', { pacienteId: param[0].data.id });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Acción si se cancela (opcional)
+                    //Swal.fire('Cancelado', 'La acción ha sido cancelada', 'info');
+                    Swal.close();
+                }
+            });
+            console.log(param[0]);
+        });
+    </script>
 
 </body>
 
