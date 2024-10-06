@@ -30,11 +30,14 @@
             </button>
         </div>
         @endif
+
         <div class="row">
             @livewire('create-paciente')
         </div>
         <div class="row pt-4">
+            
             <div class="col-md-12">
+            <span wire:loading.table class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 @livewire('Paciente-datatable')
             </div>
         </div>

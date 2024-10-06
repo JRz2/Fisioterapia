@@ -1,12 +1,15 @@
 <div>
+
     <x-button wire:click="create">
-        Nuevo Paciente
+        <span wire:loading wire:target="create" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="ml-2">Nuevo Paciente</span>
     </x-button>
+
     <div>
         <form wire:submit="save">
             <x-dialog-modal wire:model="opencreate">
                 <x-slot name="title">
-                    <label style="margin-top: 15px"> NUEVO PACIENTE </label>
+                    <label style="margin-top: 15px"> {{ $editMode ? 'EDITAR PACIENTE' : 'NUEVO PACIENTE' }} </label>
                 </x-slot>
                 <x-slot name="content">
                     <div class="bg-white shadow rounder">
@@ -16,13 +19,19 @@
                                     Foto
                                 </x-label>
                                 <div style="height: 150px">
-                                    @if ($imagen)
+                                    @if ($editMode){
+                                        @if ($imagen)
+                                        <img src="{{asset('storage/' . $imagen)}}" style="height: 150px">
+                                        @else
+                                        <img src="{{ asset('image/user.png') }}" style="height: 150px">   
+                                    }
+                                    @elseif($imagen)
                                     <img src="{{$imagen->temporaryUrl()}}" style="height: 150px">
-                                    @else
+                                    @else 
                                     <img src="{{ asset('image/user.png') }}" style="height: 150px">
                                     @endif
                                 </div>
-                                <input wire:model="imagen" wire:key="{{$imagenkey}}" type="file" id="file" style="display: none;">
+                                <input wire:model="imagen" wire:key="{{$imagenkey}}" wire:click="clickImage" type="file" id="file" style="display: none;">
                                 <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">Seleccionar archivo</label>
                             </div>
                             <div class=" col-md-4">
@@ -30,19 +39,19 @@
                                     Nombre
                                 </x-label>
                                 <x-input wire:model="nombre"> </x-imput>
-                                <x-input-error for="nombre"></x-input-error>
+                                    <x-input-error for="nombre"></x-input-error>
 
-                                <x-label>
-                                    Apellido Paterno
-                                </x-label>
-                                <x-input wire:model="paterno"> </x-imput>
-                                <x-input-error for="paterno"></x-input-error>
+                                    <x-label>
+                                        Apellido Paterno
+                                    </x-label>
+                                    <x-input wire:model="paterno"> </x-imput>
+                                        <x-input-error for="paterno"></x-input-error>
 
-                                <x-label>
-                                    Apellido Materno
-                                </x-label>
-                                <x-input wire:model="materno"> </x-imput>
-                                <x-input-error for="materno"></x-input-error>
+                                        <x-label>
+                                            Apellido Materno
+                                        </x-label>
+                                        <x-input wire:model="materno"> </x-imput>
+                                            <x-input-error for="materno"></x-input-error>
 
                             </div>
                             <div class=" col-md-4">
@@ -115,7 +124,8 @@
                             </x-danger-button>
 
                             <x-button>
-                                Guardar
+                                <span wire:loading wire:target="save" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-2">{{ $editMode ? 'Actualizar' : 'Guardar' }} </span>
                             </x-button>
                         </div>
                     </div>
@@ -125,5 +135,3 @@
         </form>
     </div>
 </div>
-
-

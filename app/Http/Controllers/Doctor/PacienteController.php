@@ -13,10 +13,9 @@ class PacienteController extends Controller
     public function __construct()
     {
         $this->middleware('can:doctor.paciente.index')->only('index');
-        $this->middleware('can:doctor.paciente.create')->only('create','store');
-        $this->middleware('can:doctor.paciente.edit')->only('edit','update');
+        $this->middleware('can:doctor.paciente.create')->only('create', 'store');
+        $this->middleware('can:doctor.paciente.edit')->only('edit', 'update');
         $this->middleware('can:doctor.paciente.destroy')->only('destroy');
-
     }
 
     /**
@@ -47,7 +46,7 @@ class PacienteController extends Controller
      * Display the specified resource.
      */
     public function show(Paciente $paciente)
-    {       
+    {
         //$antropometria = Antropometria::all();
         $consultas = $paciente->consulta;
         //$antro = $consultas->antropometria;
@@ -63,7 +62,8 @@ class PacienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        /*$creadPa = Paciente::find($id); // Obtén el paciente por su ID
+        return view('livewire.index-paciente', compact('creadPa'));*/
     }
 
     /**
