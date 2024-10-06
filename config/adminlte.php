@@ -355,6 +355,11 @@ return [
             'route'  => 'doctor.sesion.index',
             'icon' => 'fas fa-heart-pulse',
         ],
+        [
+            'text' => 'Sesiones',
+            'route'  => 'doctor.horario.index',
+            'icon' => 'fas fa-heart-pulse',
+        ],
         ['header' => 'MODELOS'],
 
         [

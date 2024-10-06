@@ -4,7 +4,7 @@
             <x-label>
                 PRUEBAS
             </x-label>
-        </div>
+        </div> 
 
         <form wire:submit="save">
             <div style="display: flex;  gap:5%; margin:30px; height: 350px">

@@ -1,76 +1,90 @@
 <?php
 
 namespace App\Livewire;
-
-use App\Models\Consulta;
 use App\Models\Horario;
-use Illuminate\Support\Facades\Request;
 use Livewire\Component;
-use Carbon\Carbon;
+
 
 class HorarioCreate extends Component
 {
+    
+    public $dias = []; // Días seleccionados
+    public $consultaId;
+    public $fecha_inicio;
+    public $fecha_fin;
+    public $horarios = [
+        'lunes' => ['hora_inicio' => null, 'hora_fin' => null],
+        'martes' => ['hora_inicio' => null, 'hora_fin' => null],
+        'miércoles' => ['hora_inicio' => null, 'hora_fin' => null],
+        'jueves' => ['hora_inicio' => null, 'hora_fin' => null],
+        'viernes' => ['hora_inicio' => null, 'hora_fin' => null],
+        'sábado' => ['hora_inicio' => null, 'hora_fin' => null],
+        'domingo' => ['hora_inicio' => null, 'hora_fin' => null],
+    ];
 
-    public function store(Request $request)
+    public function save()
     {
-        $validatedData = $request->validate([
-            'consulta_id' => 'required|exists:consultas,id',
-            'dias' => 'required|array', // Los días seleccionados (e.g., ['lunes', 'miércoles', 'sábado'])
-            'hora_inicio' => 'required|date_format:H:i',
-            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'nullable|date|after:fecha_inicio', // Opcional
-        ]);
+        // Asegúrate de que 'dias' es un array de días seleccionados.
+        foreach ($this->dias as $dia) {
+            // Verifica si existe el horario correspondiente en $horarios
+            if (!empty($this->horarios[$dia]['hora_inicio']) && !empty($this->horarios[$dia]['hora_fin'])) {
 
-        // Guardar los horarios
-        foreach ($request->dias as $dia) {
-            Horario::create([
-                'consulta_id' => $request->consulta_id,
-                'dia' => $dia,
-                'hora_inicio' => $request->hora_inicio,
-                'hora_fin' => $request->hora_fin,
-                'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin' => $request->fecha_fin,
-            ]);
-        }
-    }
+                // Calcular la fecha del primer día seleccionado a partir de la fecha de inicio
+                $primeraFecha = $this->getFechaPrimerDia($this->fecha_inicio, $dia);
 
-    public function generarSesiones(Horario $horario)
-    {
-        $fechas = [];
-        $fechaInicio = Carbon::parse($horario->fecha_inicio);
-        $fechaFin = $horario->fecha_fin ? Carbon::parse($horario->fecha_fin) : Carbon::now()->addMonths(1); // Si no hay fecha fin, se genera para un mes
-        
-        $diasSemana = [
-            'lunes' => Carbon::MONDAY,
-            'martes' => Carbon::TUESDAY,
-            'miércoles' => Carbon::WEDNESDAY,
-            'jueves' => Carbon::THURSDAY,
-            'viernes' => Carbon::FRIDAY,
-            'sábado' => Carbon::SATURDAY,
-            'domingo' => Carbon::SUNDAY,
-        ];
-        
-        $dia = $diasSemana[$horario->dia];
-        
-        // Empezamos a generar las fechas
-        for ($date = $fechaInicio->copy(); $date <= $fechaFin; $date->addDay()) {
-            if ($date->dayOfWeek === $dia) {
-                $fechas[] = [
-                    'fecha' => $date->format('Y-m-d'),
-                    'hora_inicio' => $horario->hora_inicio,
-                    'hora_fin' => $horario->hora_fin
-                ];
+                // Crear la sesión con la fecha ajustada
+                Horario::create([
+                    'consulta_id' => $this->consultaId,
+                    'dia' => $dia,
+                    'hora_inicio' => $this->horarios[$dia]['hora_inicio'],
+                    'hora_fin' => $this->horarios[$dia]['hora_fin'],
+                    'fecha_inicio' => $primeraFecha, // Fecha calculada del primer día
+                    'fecha_fin' => $this->fecha_fin,
+                ]);
             }
         }
 
-        return $fechas;
+        // Limpiar los campos después de guardar
+        $this->reset(['dias', 'horarios', 'fecha_inicio', 'fecha_fin']);
+        session()->flash('message', 'Horarios programados con éxito.');
     }
 
+    private function getFechaPrimerDia($fechaInicio, $diaSeleccionado)
+    {
+        // Mapear días de la semana a números (0 = domingo, 6 = sábado)
+        $diasSemana = [
+            'domingo' => 0,
+            'lunes' => 1,
+            'martes' => 2,
+            'miércoles' => 3,
+            'jueves' => 4,
+            'viernes' => 5,
+            'sábado' => 6,
+        ];
+
+        // Obtener el número del día actual de la fecha de inicio
+        $fechaInicio = new \DateTime($fechaInicio);
+        $diaInicio = $fechaInicio->format('w'); // 'w' devuelve el día de la semana (0 = domingo, 6 = sábado)
+
+        // Obtener el número del día seleccionado
+        $diaSeleccionadoNumero = $diasSemana[$diaSeleccionado];
+
+        // Calcular la diferencia de días
+        $diferenciaDias = ($diaSeleccionadoNumero - $diaInicio + 7) % 7;
+
+        // Si la diferencia es 0, significa que la fecha de inicio ya es el día seleccionado.
+        if ($diferenciaDias == 0) {
+            return $fechaInicio->format('Y-m-d');
+        }
+
+        // Sumar la diferencia de días a la fecha de inicio para obtener el próximo día seleccionado
+        $fechaInicio->modify("+{$diferenciaDias} days");
+
+        return $fechaInicio->format('Y-m-d');
+    }
 
     public function render()
     {
-        $consultas = Consulta::all();
-        return view('livewire.horario-create', compact('consultas'));
+        return view('livewire.horario-create');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Horario;
 use Illuminate\Http\Request;
 
 class HorarioController extends Controller
@@ -12,7 +13,24 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        //
+        // Obtener todas las sesiones programadas con los horarios
+        $horarios = Horario::all();
+
+        // Formatear los horarios para el FullCalendar
+        $eventos = [];
+        foreach ($horarios as $horario) {
+            $eventos[] = [
+                'title' => 'Sesión de Paciente ID: ' . $horario->consulta->paciente_id, // o el nombre del paciente si tienes la relación
+                'start' => $horario->fecha_inicio . 'T' . $horario->hora_inicio,
+                'end'   => $horario->fecha_inicio . 'T' . $horario->hora_fin,
+                'backgroundColor' => '#007bff', // Puedes cambiar el color
+                'borderColor' => '#007bff',
+            ];
+    }
+
+    // Retornar a la vista con los eventos
+    return view('doctor.horario.index', compact('eventos'));
+
     }
 
     /**
