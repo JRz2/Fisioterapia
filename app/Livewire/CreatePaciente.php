@@ -82,6 +82,7 @@ class CreatePaciente extends Component
             'edad' => 'required',
             'genero' => 'required',
             'celular' => 'min:8',*/ // Opcional: máximo 2MB
+            //'imagen' => 'required|image',
             'ocupacion' => 'string|max:255',
             'deporte' => 'string|max:255',
             'nombre' => 'required|string|max:255',
@@ -96,6 +97,7 @@ class CreatePaciente extends Component
             'paterno' => 'Apellido Paterno requerido',
             'edad' => 'Edad requerido',
             'genero' => 'Genero requerido',
+            'imagen' => 'Imagen requerido'
         ]);
         if ($this->editMode) {
             $paciente = Paciente::find($this->paciente_edit_id);
@@ -131,11 +133,15 @@ class CreatePaciente extends Component
             $paciente = Paciente::create(
                 $this->only('nombre', 'paterno', 'materno', 'edad', 'ci', 'genero', 'direccion', 'ocupacion', 'deporte', 'celular')
             );
+
             $this->reset(['nombre', 'paterno', 'materno', 'edad', 'ci', 'genero', 'direccion', 'ocupacion', 'deporte', 'celular']);
             if ($this->imagen) {
-                $paciente->imagen = $this->imagen->store('pacientes');
-                $paciente->save();
+                $paciente->imagen = $this->imagen->store('pacientes');  
+                $paciente->save();  
             }
+                    
+            
+
             $this->imagenkey = rand();
             $this->dispatch('swal:success', [
                 'title' => 'Paciente',
@@ -172,11 +178,17 @@ class CreatePaciente extends Component
     }
 
     public function clickImage(){
-        if($this->editMode == true){
+        if($this->imagen){
             $this->valueImage = true;
         }else{
             $this->valueImage = false;
         } 
+
+        /*$this->dispatch('swal:confirm', [
+            'title' => 'Paciente',
+            'text' => 'Actualizado Correctamente',
+            'click' => $this->valueImage
+        ]);*/
     }
 
     public function render()

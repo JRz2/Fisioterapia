@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Antropometria;
-use App\Models\Consulta;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 

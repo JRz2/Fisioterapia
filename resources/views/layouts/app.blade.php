@@ -18,8 +18,8 @@
     <!-- Styles -->
     @livewireStyles
     <script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
-"></script>
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
+    "></script>
     <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
 " rel="stylesheet">
@@ -32,15 +32,23 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
 
         <!-- Page Heading -->
         @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
         @endif
 
         <!-- Page Content -->
         <main>
+            @if (Session::has('mensaje'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ Session::get('mensaje') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             {{ $slot }}
         </main>
     </div>
@@ -76,7 +84,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Si el usuario confirma, puedes ejecutar una acción en Livewire
-                    Livewire.dispatch('destroy', { pacienteId: param[0].data.id });
+                    Livewire.dispatch('destroy', {
+                        pacienteId: param[0].data.id
+                    });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     // Acción si se cancela (opcional)
                     //Swal.fire('Cancelado', 'La acción ha sido cancelada', 'info');

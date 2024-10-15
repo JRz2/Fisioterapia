@@ -1,9 +1,11 @@
 <div>
-    <x-button wire:click="create"> 
-            <i class="fas fa-solid fa-stethoscope fa-2x"></i>
-            Nueva
-            Consulta
-    </x-button> 
+    <x-button wire:click="create">
+        <span wire:loading wire:target="create" class="spinner-border spinner-border-sm" role="status"
+            aria-hidden="true"></span>
+        &nbsp;&nbsp;<i class="fas fa-solid fa-stethoscope fa-2x"></i>
+        &nbsp; Nueva
+        Consulta
+    </x-button>
 
     <div>
         <form wire:submit="save">
@@ -13,45 +15,52 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <div class="bg-white shadow rounder">
-                        <div style="display: flex; justify-content: space-around"  >
-                            <div>
-                                <x-label>
-                                    Nombre
-                                </x-label>
-                                <x-input value="{{$paciente->nombre}}" disabled> </x-imput>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <x-label>
+                                        Nombre
+                                    </x-label>
+                                    <x-input class="form-control" value="{{ $paciente->nombre }}" disabled> </x-imput>
+                                </div>
 
-                                <x-label>
-                                 Apellidos
-                                </x-label>
-                                <x-input value="{{$paciente->paterno}} {{$paciente->materno}}" disabled> </x-imput>
-                            </div>
+                                <div class="col-md-4">
+                                    <x-label>
+                                        Apellidos
+                                    </x-label>
+                                    <x-input class="form-control" value="{{ $paciente->paterno }} {{ $paciente->materno }}"
+                                        disabled>
+                                        </x-imput>
+                                        <x-input wire:model="paciente_id" type="text" hidden></x-input>
+                                </div>
 
-                            <div> 
-                                <x-input wire:model="paciente_id" type="text" hidden></x-input>
-                                <x-label>
-                                    Fecha
-                                </x-label>
-                                <x-input wire:model="fecha" type="date" required></x-input>
+                                <div class="col-md-4">
+                                    <x-label>
+                                        Fecha
+                                    </x-label>
+                                    <x-input class="form-control" wire:model="fecha" type="date" required></x-input>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </x-slot>
 
                 <x-slot name="footer">
-                    <div style="display:flex; justify-content: flex-end; margin-right: 10%">
-                        <div>
-                            <x-danger-button x-on:click="show = false"> 
-                                Cancelar 
-                            </x-danger-button>
+                    <div>
+                        <x-danger-button class="pr-4" x-on:click="show = false">
+                            Cancelar
+                        </x-danger-button>
 
-                            <x-button> 
-                                Guardar
-                            </x-button>
-                        </div>
-                    </div>
+                        <x-button>
+                            <span wire:loading wire:target="save" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                            &nbsp; Guardar
+                        </x-button>
+                    </div> 
                 </x-slot>
-            </x-dialog-modal>  
-        </form>      
+            </x-dialog-modal>
+        </form>
     </div>
 </div>
