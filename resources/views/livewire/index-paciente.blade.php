@@ -1,5 +1,5 @@
 <div>
-    <div>
+    <div class="flex flex-wrap justify-center space-x-2 space-y-2 sm:space-y-0 sm:flex-row">
         <a class="px-2 py-2 text-xs font-bold text-white bg-green-600 rounded-lg hover:bg-green-700 hover:no-underline"
             href="{{route('doctor.paciente.show', $row)}}">
             <i class="fa fa-eye"> </i>

@@ -31,7 +31,10 @@ class ConsultaDatatable extends DataTableComponent
             Column::make("Codigo", "codigo")
                 ->sortable(),
             Column::make("Fecha", "fecha")
-                ->sortable(),
+                ->sortable()
+                ->label(
+                    fn($row) => \Carbon\Carbon::parse($row->fecha)->format('d-m-Y') // Formato día-mes-año
+                ),
             Column::make("Acciones")
                 ->label(
                     fn($row) => view('livewire.consulta-show', compact('row'))
