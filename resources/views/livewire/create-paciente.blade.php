@@ -14,7 +14,7 @@
                 </x-slot>
                 <x-slot name="content">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body my-0">
                             <div class="row">
                                 <div class="col-md-4">
                                     <x-label>
@@ -126,7 +126,7 @@
                                     <x-label class="mt-2">
                                         Direccion
                                     </x-label>
-                                    <x-textarea class="form-control" wire:model="direccion" class="w-full" style="resize: none" > </x-textarea>
+                                    <x-textarea class="form-control" wire:model="direccion" class="w-full" style="resize: none; line-height: 1.2; margin: 0; padding: 0;" > </x-textarea>
                                 </div>
                             </div>
                         </div>

@@ -306,18 +306,7 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
+
         ['header' => 'ADMINISTRADOR',
         'can' => 'admin.user.index'
         ],
@@ -356,9 +345,9 @@ return [
             'icon' => 'fas fa-heart-pulse',
         ],
         [
-            'text' => 'Sesiones',
+            'text' => 'Calendario',
             'route'  => 'doctor.horario.index',
-            'icon' => 'fas fa-heart-pulse',
+            'icon' => 'fa-regular fa-calendar',
         ],
         ['header' => 'MODELOS'],
 
@@ -393,22 +382,6 @@ return [
                     'url'     => '/msuperior',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
         ],
     ],
 
