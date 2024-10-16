@@ -77,21 +77,15 @@ class CreatePaciente extends Component
     {
 
         $this->validate([
-            /*'nombre' => 'required',
-            'paterno' => 'required',
-            'edad' => 'required',
-            'genero' => 'required',
-            'celular' => 'min:8',*/ // Opcional: máximo 2MB
-            //'imagen' => 'required|image',
-            'ocupacion' => 'string|max:255',
-            'deporte' => 'string|max:255',
+            'ocupacion' => 'nullable|string|max:255',
+            'deporte' => 'nullable|string|max:255',
             'nombre' => 'required|string|max:255',
             'paterno' => 'required|string|max:255',
-            'materno' => 'nullable|string|max:255',
-            'direccion' => 'required|string|max:255',
+            'materno' => 'required|string|max:255',
+            'direccion' => 'nullable|string|max:255',
             'genero' => 'required|string',
-            'edad' => 'required|integer', // Asegura que la edad sea un número entero positivo
-            'celular' => 'required|integer', // Ajusta según el formato deseado
+            'edad' => 'required|integer', 
+            'celular' => 'nullable|integer', 
         ], [
             'nombre' => 'Nombre requerido',
             'paterno' => 'Apellido Paterno requerido',
@@ -138,6 +132,11 @@ class CreatePaciente extends Component
             if ($this->imagen) {
                 $paciente->imagen = $this->imagen->store('pacientes');  
                 $paciente->save();  
+            } else{
+                $this->imagen = "image/user.png"; 
+                $paciente->imagen = $this->imagen;  
+                $paciente->save();  
+                
             }
                     
             

@@ -7,7 +7,6 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Paciente;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
-use App\Livewire\Storage;
 
 class PacienteDatatable extends DataTableComponent
 {
@@ -46,17 +45,16 @@ class PacienteDatatable extends DataTableComponent
             Column::make("Id", "id")->sortable()->searchable(),
             Column::make("Imagen", "imagen")->hideIf(true),
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
-                'imagen' => $row->imagen ? asset('storage/' . $row->imagen) : asset('image/user.png'),
-            ])),            
+                'imagen' => strpos($row->imagen, 'image/') !== false 
+                    ? asset($row->imagen) 
+                    : asset('storage/' . $row->imagen),  
+            ])),                       
             Column::make("Nombre", "nombre")->sortable()->searchable(),
             Column::make("Paterno", "paterno")->sortable()->searchable(),
             Column::make("Materno", "materno")->sortable()->searchable(),
-            Column::make("CI", "ci")->sortable()->searchable(),
-            Column::make("Direccion", "direccion")->sortable()->searchable(),
-            Column::make("Celular", "celular")->collapseOnMobile()->sortable()->searchable(),
-            Column::make("Deporte", "deporte")->collapseOnMobile()->sortable()->searchable(),
-            Column::make("Edad", "edad")->collapseOnMobile()->sortable()->searchable(),
-            Column::make("Genero", "genero")->sortable()->searchable(),
+            Column::make("CI", "ci")->collapseOnTablet()->sortable()->searchable(),
+            Column::make("Edad", "edad")->collapseOnTablet()->sortable()->searchable(),
+            Column::make("Genero", "genero")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Acciones")->collapseOnTablet()->label(fn($row) => view('livewire.index-paciente', compact('row'))),
         ];
         return $allColumns;

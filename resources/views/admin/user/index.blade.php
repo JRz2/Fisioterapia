@@ -2,52 +2,64 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Usuarios</h1>
 @stop
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <a class="btn btn btn-success" href="{{route('admin.user.create')}}"><i class="fa fa-clipboard"></i> AGREGAR USUARIO</a>
-        <a class="btn btn-info float-right " href="{{'use/pdf'}}"> <i class="fa fa-print"></i> IMPRIMIR PDF</a>
-    </div>
-    <div class="card-body">
-        <table id="usuarios" class="table table-striped">
-            <thead>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Acciones</th>
-            </thead>
-            <tbody>
-                @foreach ($user as $user)
-                    <tr>
-                        <td>{{$user->id}}</td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>  
-                        <td>
-                            @forelse ($user->roles as $rol)
-                            <span class="badge badge-info">{{$rol->name}}</span>
-                            @empty
-                            <span class="badge badge-danger">No asignado</span>
-                            @endforelse
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-warning" href="{{route('admin.user.edit', $user)}}"><i class="fa fa-user-secret"></i></a>
-                            @include('admin.user.roles', [$user -> id]) 
-                            <form class="d-inline eliminar" action="{{route('admin.user.destroy', $user)}}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-outline-danger" type="submit"><i class='fa fa-trash'></i></button>         
-                            </form>   
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+<x-app-layout>
+    <div class="card card-dark">
+        <div class="card-header">
+            <table width=100%>
+                <tr>
+                    <td align="left" width=5%>
+                        <h1><i class="fas fa-user-plus"></i></h1>
+                    </td>
+                    <td align="center">
+                        <h1 style="font-size: 30px;"> USUARIOS </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    
+        <div class="card-body">
+            <a class="btn btn btn-success" href="{{route('admin.user.create')}}"><i class="fa fa-clipboard"></i> AGREGAR USUARIO</a>
+            <a class="btn btn-info float-right " href="{{'users/pdf'}}"> <i class="fa fa-print"></i> IMPRIMIR PDF</a>
+            <table id="usuarios" class="table table-striped">
+                <thead>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </thead>
+                <tbody>
+                    @foreach ($user as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>  
+                            <td>
+                                @forelse ($user->roles as $rol)
+                                <span class="badge badge-info">{{$rol->name}}</span>
+                                @empty
+                                <span class="badge badge-danger">No asignado</span>
+                                @endforelse
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-warning" href="{{route('admin.user.edit', $user)}}"><i class="fa fa-user-secret"></i></a>
+                                @include('admin.user.roles', [$user -> id]) 
+                                <form class="d-inline eliminar" action="{{route('admin.user.destroy', $user)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-outline-danger" type="submit"><i class='fa fa-trash'></i></button>         
+                                </form>   
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</x-app-layout>
 
 @stop
 

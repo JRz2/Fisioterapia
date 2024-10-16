@@ -26,14 +26,18 @@
                                                 @if ($valueImage && method_exists($imagen, 'temporaryUrl'))
                                                     <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                                 @else
-                                                    <img src="{{ asset('storage/' . $imagen) }}" class="w-40 h-40 rounded-full">
+                                                    @if (strpos($imagen, 'image/') !== false)
+                                                        <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
+                                                    @else
+                                                        <img src="{{ asset('storage/' . $imagen) }}" class="w-40 h-40 rounded-full">
+                                                    @endif
                                                 @endif
                                             @else
                                                 <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                             @endif
                                         @else
                                             <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
-                                        @endif
+                                        @endif       
                                     </div>
                                     <input class="form-control" wire:model="imagen" wire:key="{{ $imagenkey }}" wire:click="clickImage"
                                         type="file" id="file" style="display: none;">
@@ -58,7 +62,7 @@
                                             <x-label class="mt-2">
                                                 Apellido Materno
                                             </x-label>
-                                            <x-input class="form-control" wire:model="materno"> </x-imput>
+                                            <x-input class="form-control" wire:model="materno" required> </x-imput>
                                                 <x-input-error for="materno"></x-input-error>
 
                                 </div>
@@ -94,7 +98,7 @@
                                     </x-label>
                                     <x-input class="form-control" type="number" min="1" wire:model.live="ci"
                                         oninput="if(this.value.length > 14) this.value = this.value.slice(0, 14);"
-                                        max="9999999999"> </x-imput>
+                                        max="9999999999" required> </x-imput>
                                         <x-input-error for="ci"></x-input-error>
                                 </div>
                                 <div class="col-md-4">
