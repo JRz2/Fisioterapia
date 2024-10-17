@@ -1,170 +1,214 @@
 <div>
-    <div style="margin: 10px 0 0 20px">
-        <x-label>
-            ANTROPOMETRIA {{$consultaId}}
+    <div>
+        <x-label class="text-lg">
+            ANTROPOMETRIA {{ $consultaId }}
         </x-label>
     </div>
     <form wire:submit="save">
-        <div style="display: flex;  gap:5%; margin:30px; height: 350px">
-        <div style="width: 50%">  
-            <div style="display: flex; height: 25%">
-                <div style="width: 70px">
-                    <img src="{{ asset('image/regla.png') }}" style="height: 70px">
-                </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                        Altura
-                    </x-label>
-                </div>
-
-                <div>   
-                    <x-input wire:model="talla" wire:change="calcularIMC" style="width: 70px">
-                    </x-input>Cm
-                </div>
+        <br />
+        <div class="row">
+            <div class="col-md-1">
             </div>
-    
-            <div style="display: flex; height: 25%">
-                <div style="width: 70px">
-                    <img src="{{ asset('image/balanza.png') }}" style="height: 70px">
-                </div>
-
-                <div style="width: 50px" >
-                    <x-label>
-                        Peso
-                    </x-label>
-                </div>
-                
-                <div>
-                    <x-input wire:model="peso" wire:change="calcularIMC" style="width: 70px"> 
-                    </x-input>Kg
-                </div>
-            </div>
-    
-            <div style="display: flex; height: 25%">
-                <div style="width: 70px">
-                    <img src="{{ asset('image/imc.png') }}" style="height: 70px">
-                </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                        IMC
-                    </x-label>
-                </div>
-    
-                <div>
-                    <x-input wire:model="imc" style="width: 70px" disabled>
-                    </x-input>
-                </div>
-
-                <div style="margin-left: 10px">
-                    @if($categoriaPeso)
-                        <span class="badge badge-{{ $colorCategoriaPeso }}">{{ $categoriaPeso }}</span>
-                    @endif
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/regla.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            Altura
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="talla" wire:change="calcularIMC">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            Cm
+                        </x-label>
+                    </div>
                 </div>
             </div>
 
-            <div style="display: flex; height: 25%">
-
-                <div style="width: 70px">
-                    <img src="{{ asset('image/pi.png') }}" style="height: 70px">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/pa.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            PA
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="pa">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            mmHg
+                        </x-label>
+                    </div>
                 </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                        PI
-                    </x-label>
-                </div>
-                
-                <div>
-                    <x-input wire:model="pi" style="width: 70px">
-                        
-                    </x-input>
-                </div>    
             </div>
         </div>
-    
-        <div style="width: 50%">
-            <div style="display: flex; height: 25%">
-                <div style="width: 70px">
-                    <img src="{{ asset('image/pa.png') }}" style="height: 70px">
-                </div>
 
-                <div style="width: 40px">
-                    <x-label>
-                         PA
-                     </x-label>
+        <div class="row mt-4">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/balanza.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            Peso
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="peso" wire:change="calcularIMC">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            Kg
+                        </x-label>
+                    </div>
                 </div>
-
-                
-                <div>
-                    <x-input wire:model="pa" style="width: 70px"></x-input>mmHg
-                </div>                     
-            </div>
-    
-            <div style="display: flex; height: 25%">
-                
-                <div style="width: 70px">
-                    <img src="{{ asset('image/corazon.png') }}" style="height: 70px">
-                </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                        SpO2
-                    </x-label>
-                </div>
-                
-                <div>
-                    <x-input wire:model="sp" style="width: 70px"></x-input>
-                </div>    
-            </div>
-    
-            <div style="display: flex; height: 25%">
-                
-                <div style="width: 70px">
-                    <img src="{{ asset('image/fc.png') }}" style="height: 70px">
-                </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                        F.C.
-                    </x-label>
-                </div>
-                
-                <div>
-                    <x-input wire:model="fc" style="width: 70px">
-    
-                    </x-input>f.c
-                </div>                   
             </div>
 
-            <div style="display: flex; height: 25%">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/corazon.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            SpO2
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="sp">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
 
-                <div style="width: 70px">
-                    <img src="{{ asset('image/temp.png') }}" style="height: 70px">
+                        </x-label>
+                    </div>
                 </div>
-
-                <div style="width: 50px">
-                    <x-label>
-                         Temp
-                     </x-label>
-                </div>
-          
-                <div>
-                    <x-input style="width: 70px"></x-input> °C
-                </div>                     
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/imc.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            IMC
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="imc">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            <div style="margin-left: 10px">
+                                @if ($categoriaPeso)
+                                    <span class="badge badge-{{ $colorCategoriaPeso }}">{{ $categoriaPeso }}</span>
+                                @endif
+                            </div>
+                        </x-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/fc.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            F.C.
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="fc">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            f.c
+                        </x-label>
+                    </div>
+                </div>
+            </div>
         </div>
-    
-        <div style="margin: 0 0 0 20px">
-            <x-danger-button wire:click="$parent.evaluacion">
-             Saltar
+
+        <div class="row mt-4">
+            <div class="col-md-1"></div>
+           
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/pi.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            PI
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="pi">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            
+                        </x-label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('image/temp.png') }}" class="w-30 h-30 rounded-full">
+                    </div>
+                    <div class="col-md-2">
+                        <x-label>
+                            Temp
+                        </x-label>
+                    </div>
+                    <div class="col-md-2">
+                        <x-input class="form-control" wire:model="fc">
+                        </x-input>
+                    </div>
+                    <div class="col-md-3">
+                        <x-label>
+                            °C
+                        </x-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mt-4">
+            <x-danger-button wire:click="validateNavBar('evaluacion')">
+                Saltar
             </x-danger-button>
             <x-button wire:click="$parent.evaluacion">
-             Guardar
+                Guardar
             </x-button>
         </div>
     </form>
 </div>
-

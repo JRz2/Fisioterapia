@@ -37,7 +37,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    
     <style>
         .informe-container {
             font-family: Arial, sans-serif;

@@ -83,6 +83,11 @@ class HorarioCreate extends Component
         return $fechaInicio->format('Y-m-d');
     }
 
+    public function validateNavBar($data)
+    {
+        $this->dispatch('confirmValidate', [$data]);
+    }
+
     public function render()
     {
         return view('livewire.horario-create');

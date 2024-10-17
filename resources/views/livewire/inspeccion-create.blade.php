@@ -1,46 +1,44 @@
 <div>
     <div>
-        <div style="margin: 10px 0 0 20px">
-            <x-label>
+        <div>
+            <x-label  class="text-lg">
                 INPECCION
             </x-label>
         </div>
 
         <form wire:submit="save">
-            <div style="height: 350px">
-                    <div style="margin-left: 10%; margin-right: 10% ">
+            <div class="row mt-2">
+                <div class="col-md-12">
                     <x-label>
                         Observacion
                     </x-label>
-                    <x-textarea wire:model="observacion" style="width: 100%"></x-textarea>
-                    </div>
-        
-                    <div style="display: flex;  gap:5%; margin:10px; height: 300px">
-                    <div style="width: 30%;">
-                        <x-label>
-                            Plano Anterior
-                        </x-label>
-                        <x-textarea wire:model="plano_anterior" style="height: 80%; width: 100%"></x-textarea>
-                    </div>
-        
-                    <div style="width: 30%">
-                        <x-label>
-                            Plano Lateral
-                        </x-label>
-                        <x-textarea wire:model="plano_lateral" style="height: 80%; width: 100%"></x-textarea>
-                    </div>
-        
-                    <div style="width: 30%">
-                        <x-label>
-                            Plano Posterior
-                        </x-label>
-                        <x-textarea wire:model="plano_posterior" style="height: 80%; width: 100%"></x-textarea>
-                    </div>
-                    </div>  
+                    <x-textarea class="form-control" wire:model="observacion" rows="3"></x-textarea>
+                </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <x-label>
+                        Plano Anterior
+                    </x-label>
+                    <x-textarea wire:model="plano_anterior" class="form-control" rows="10"></x-textarea>
+                </div>
+                <div class="col-md-4">
+                    <x-label>
+                        Plano Lateral
+                    </x-label>
+                    <x-textarea wire:model="plano_lateral" class="form-control" rows="10"></x-textarea>
+                </div>
+                <div class="col-md-4">
+                    <x-label>
+                        Plano Posterior
+                    </x-label>
+                    <x-textarea wire:model="plano_posterior" class="form-control" rows="10"></x-textarea>
+                </div>
+            </div>
+            
         
-            <div style="margin: 0 0 0 20px">
-                    <x-danger-button wire:click="$parent.movilizacion">
+            <div class="mt-4">
+                    <x-danger-button wire:click="validateNavBar('movilizacion')">
                         Saltar
                     </x-danger-button>
                     <x-button wire:click="$parent.movilizacion">

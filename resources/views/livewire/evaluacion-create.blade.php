@@ -92,8 +92,8 @@
             
             </div>
 
-            <div style="margin: 0 0 0 20px">
-                <x-danger-button wire:click="$parent.inspeccion">
+            <div class="mt-4">
+                <x-danger-button wire:click="validateNavBar('inspeccion')">
                     Saltar
                 </x-danger-button>
                 <x-button wire:click="$parent.inspeccion">
