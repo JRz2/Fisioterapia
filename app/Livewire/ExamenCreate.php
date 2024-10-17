@@ -50,6 +50,11 @@ class ExamenCreate extends Component
         }
     }
 
+    public function validateNavBar($data)
+    {
+        $this->dispatch('confirmValidate', [$data]);
+    }
+
     public function render()
     {
         return view('livewire.examen-create');

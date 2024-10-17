@@ -30,10 +30,10 @@
             <div class="col-md-3">
                 <div wire:model="btnterminar" class="float-end"
                     style="{{ $btnterminar ? '' : 'display: none;' }}; margin-left: auto">
-                    <a class="px-4 py-2 text-xs font-bold text-white bg-green-600 rounded-lg 
+                    <a class="px-4 py-2 text-md font-bold text-white bg-green-600 rounded-lg 
                 hover:bg-green-700 hover:no-underline"
                         href="{{ route('doctor.paciente.show', $paciente->id) }}">
-                        <i class="fas fa-solid fa-check fa-1x"></i>
+                        <i class="fas fa-solid fa-check fa-1x mr-2"></i>
                         Terminar Consulta
                     </a>
                 </div>
@@ -68,32 +68,30 @@
             </div>
         </div>
 
-        <hr class="flex-grow-1">
-
         <div wire:model="panel" style="{{ $panel ? '' : 'display: none;' }}"
-            class="p-4 bg-gray-100 rounded-lg shadow-lg">
+            class="p-4 bg-gray-100 rounded-lg">
             <!-- Botones de Navegación -->
-            <div x-data="{ activeSection: '' }" class="flex flex-wrap gap-2 mb-4">
-                <button class="btn-nav" :class="{ 'active': activeSection === 'ananmesis' }"
-                    @click="activeSection = 'ananmesis'; $wire.ananmesis()">Anamnesis</button>
+            <div x-data="{ activeSection: @entangle('activeSection') }" class="flex flex-wrap gap-2">
+                <button class="btn-nav" :class="{ 'active': activeSection == 'anamnesis' }"
+                    @click="activeSection = 'anamnesis'; $wire.anamnesis()"><h1 class="text-md">Anamnesis</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'antropometria' }"
-                    @click="activeSection = 'antropometria'; $wire.antropometria()">Antropometría</button>
+                    @click="activeSection = 'antropometria'; $wire.antropometria()"><h1 class="text-md">Antropometría</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'evaluacion' }"
-                    @click="activeSection = 'evaluacion'; $wire.evaluacion()">Evaluación</button>
+                    @click="activeSection = 'evaluacion'; $wire.evaluacion()"><h1 class="text-md">Evaluación</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'inspeccion' }"
-                    @click="activeSection = 'inspeccion'; $wire.inspeccion()">Inspección</button>
+                    @click="activeSection = 'inspeccion'; $wire.inspeccion()"><h1 class="text-md">Inspección</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'movilizacion' }"
-                    @click="activeSection = 'movilizacion'; $wire.movilizacion()">Palpación</button>
+                    @click="activeSection = 'movilizacion'; $wire.movilizacion()"><h1 class="text-md">Palpación</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'examen' }"
-                    @click="activeSection = 'examen'; $wire.examen()">Pruebas</button>
+                    @click="activeSection = 'examen'; $wire.examen()"><h1 class="text-md">Pruebas</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'diagnostico' }"
-                    @click="activeSection = 'diagnostico'; $wire.diagnostico()">Diagnóstico</button>
+                    @click="activeSection = 'diagnostico'; $wire.diagnostico()"><h1 class="text-md">Diagnóstico</h1></button>
                 <button class="btn-nav" :class="{ 'active': activeSection === 'horario' }"
-                    @click="activeSection = 'horario'; $wire.horario()">Horarios</button>
+                    @click="activeSection = 'horario'; $wire.horario()"><h1 class="text-md">Horarios</h1></button>
             </div>
 
             <!-- Paneles de contenido -->
-            <div class="space-y-4">
+            <div>
                 <div wire:model="openan" style="{{ $openan ? 'active' : 'display: none;' }}" class="panel-content">
                     @livewire('Anamnesis-create', ['consultaId' => $id])
                 </div>
@@ -141,16 +139,16 @@
                 cursor: pointer;
                 white-space: nowrap;
             }
-
+        
             .btn-nav.active {
                 background-color: #4f46e5;
                 color: #fff;
             }
-
+        
             .btn-nav:hover {
                 background-color: #e2e8f0;
             }
-
+        
             .panel-content {
                 background-color: #ffffff;
                 border-radius: 8px;
@@ -158,7 +156,8 @@
                 padding: 16px;
             }
         </style>
-
     </div>
 
 </div>
+
+
