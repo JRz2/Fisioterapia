@@ -1,32 +1,32 @@
 <div>
     <div>
-        <div style="margin: 10px 0 0 20px">
-            <x-label>
+        <div>
+            <x-label class="text-lg">
                 DIAGNOSTICO
             </x-label>
         </div>
 
         <form wire:submit="save">
-            <div style="display: flex;  gap:5%; margin:30px; height: 350px">
-                <div style="width: 30%">
+            <div class="row mt-4">
+                <div class="col-md-4">
                     <x-label>
                         DIAGNOSTICO SOBRE LA CONSULTA
                     </x-label>
                     
-                    <x-textarea wire:model="diagnostico" style="height: 80%; width: 100%"></x-textarea>
+                    <x-textarea wire:model="diagnostico" class="form-control" rows="10"></x-textarea>
                 </div>
-
-                <div style="width: 30%">
+                <div class="col-md-4">
                     <x-label>
                         PLAN DE TRATAMIENTO
                     </x-label>
                     
-                    <x-textarea wire:model="plan" style="height: 80%; width: 100%"></x-textarea>
+                    <x-textarea wire:model="plan" class="form-control" rows="10"></x-textarea>
                 </div>
             </div>
+            
     
-            <div style="margin: 0 0 0 20px">
-                <x-danger-button wire:click="$parent.ananmesis">
+            <div class="mt-4">
+                <x-danger-button wire:click="validateNavBar('prueba')">
                     Saltar
                 </x-danger-button>
                 <x-button wire:click="$parent.ananmesis">

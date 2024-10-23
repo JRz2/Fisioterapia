@@ -59,7 +59,12 @@ class EvaluacionCreate extends Component
             $evaluacion->save();
             //dd("guardar");
         }
-    }   
+    } 
+    
+    public function validateNavBar($data)
+    {
+        $this->dispatch('confirmValidate', [$data]);
+    }
 
     public function render()
     {
