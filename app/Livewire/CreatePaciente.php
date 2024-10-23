@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Models\Paciente;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
 
 class CreatePaciente extends Component
@@ -39,13 +38,6 @@ class CreatePaciente extends Component
     {
 
         $dataRes = json_decode(json_encode($data));
-        /*$this->dispatch('swal:confirm', [
-            'title' => 'Paciente ',
-            'text' => '¿Estas seguro de eliminarlo?',
-            'confirmButtonText' => 'Sí, Eliminar',
-            'cancelButtonText' => 'Cancelar',
-            'data' => $dataRes[0]->id
-        ]);*/
 
         if ($data) {
             $this->editMode = true;
@@ -162,18 +154,6 @@ class CreatePaciente extends Component
         $this->editMode = false;
         $this->reset(['nombre', 'paterno', 'materno', 'edad', 'ci', 'genero', 'direccion', 'ocupacion', 'deporte', 'celular', 'imagen']);
         $this->imagenkey = rand();
-        /*$this->imagen = "";
-        $this->ci = '';
-        $this->nombre = '';
-        $this->paterno = '';
-        $this->materno = '';
-        $this->direccion = '';
-        $this->ocupacion = '';
-        $this->deporte = '';
-        $this->genero = '';
-        $this->edad = '';
-        $this->celular = '';
-        $this->imagen = null;*/
     }
 
     public function clickImage(){
@@ -182,12 +162,6 @@ class CreatePaciente extends Component
         }else{
             $this->valueImage = false;
         } 
-
-        /*$this->dispatch('swal:confirm', [
-            'title' => 'Paciente',
-            'text' => 'Actualizado Correctamente',
-            'click' => $this->valueImage
-        ]);*/
     }
 
     public function render()

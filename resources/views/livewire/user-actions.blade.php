@@ -4,6 +4,10 @@
             href="{{route('doctor.paciente.show', $row)}}">
             <i class="fa fa-eye"> </i>
         </a>
+        <a class="px-2 py-2 text-xs font-bold text-white bg-orange-600 rounded-lg hover:bg-orange-700 hover:no-underline"
+            href="{{route('doctor.paciente.show', $row)}}">
+            <i class="fa fa-user-secret"> </i>
+        </a>
 
         @php
         $rowData = json_encode($row);

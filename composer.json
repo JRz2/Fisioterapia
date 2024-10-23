@@ -17,6 +17,7 @@
         "livewire/livewire": "^3.0",
         "nesbot/carbon": "^2.72",
         "rappasoft/laravel-livewire-tables": "^3.2",
+        "spatie/laravel-html": "*",
         "spatie/laravel-permission": "^6.3"
     },
     "require-dev": {

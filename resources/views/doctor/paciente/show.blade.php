@@ -36,7 +36,7 @@
                             </x-label>
                             <div>
                                 @if (strpos($paciente->imagen, 'image/') !== false)
-                                    <img src="{{ asset($paciente->imagen) }}" alt="Imagen del paciente" class="w-55 h-55 rounded-full">
+                                    <img src="{{ asset($paciente->imagen) }}"  class="w-55 h-55 rounded-full">
                                 @else
                                     <img src="{{ asset('storage/' . $paciente->imagen) }}" class="w-55 h-55 rounded-full">
                                 @endif

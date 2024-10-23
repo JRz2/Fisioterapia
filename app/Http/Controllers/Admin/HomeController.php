@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Consulta;
+use App\Models\Paciente;
+use App\Models\Sesion;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,7 +16,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $npacientes = Paciente::count();
+        $nconsultas = Consulta::count();
+        $nsesiones = Sesion::count();
+        $users = User::all();
+        return view('index', compact('npacientes','nconsultas','nsesiones'));
     }
 
     /**
