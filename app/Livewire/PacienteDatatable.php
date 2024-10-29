@@ -47,9 +47,9 @@ class PacienteDatatable extends DataTableComponent
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 
                     ? asset($row->imagen) 
-                    : asset('storage/' . $row->imagen),  
+                    : asset('storage'. '/'. $row->imagen),  
             ])),                       
-            Column::make("Nombre", "nombre")->sortable()->searchable(),
+            Column::make("NombreAA", "nombre")->sortable()->searchable(),
             Column::make("Paterno", "paterno")->sortable()->searchable(),
             Column::make("Materno", "materno")->sortable()->searchable(),
             Column::make("CI", "ci")->collapseOnTablet()->sortable()->searchable(),

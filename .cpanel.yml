@@ -1,0 +1,8 @@
+version: 1
+
+deployment:
+  tasks:
+    - type: git
+      repo: https://github.com/JRz2/Fisioterapia.git   # Reemplaza con la URL de tu repositorio
+      branch: john_deploy                                   # Reemplaza con la rama que deseas usar
+      directory: /home/fisiomed/public_html/Fisioterapia                  # Reemplaza con la ruta de tu directorio de destino
