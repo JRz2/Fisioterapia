@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Consulta;
+use App\Models\Sesion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -72,6 +77,12 @@ class UserController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('admin.user.profile', compact('user'));
     }
 
     /**

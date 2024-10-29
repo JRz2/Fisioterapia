@@ -11,14 +11,14 @@ use Carbon\Carbon;
 class ConsultaController extends Controller
 {
 
-    public function __construct()
+   /* public function __construct()
     {
         $this->middleware('can:doctor.consulta.index')->only('index');
         $this->middleware('can:doctor.consulta.create')->only('create','store');
         $this->middleware('can:doctor.consulta.edit')->only('edit','update');
         $this->middleware('can:doctor.consulta.destroy')->only('destroy');
 
-    }
+    }*/
 
     /**
      * Display a listing of the resource.

@@ -10,6 +10,7 @@ class HorarioCreate extends Component
     
     public $dias = []; // Días seleccionados
     public $consultaId;
+    public $sesiones;
     public $fecha_inicio;
     public $fecha_fin;
     public $horarios = [
@@ -23,31 +24,41 @@ class HorarioCreate extends Component
     ];
 
     public function save()
-    {
-        // Asegúrate de que 'dias' es un array de días seleccionados.
-        foreach ($this->dias as $dia) {
-            // Verifica si existe el horario correspondiente en $horarios
-            if (!empty($this->horarios[$dia]['hora_inicio']) && !empty($this->horarios[$dia]['hora_fin'])) {
-
-                // Calcular la fecha del primer día seleccionado a partir de la fecha de inicio
-                $primeraFecha = $this->getFechaPrimerDia($this->fecha_inicio, $dia);
-
-                // Crear la sesión con la fecha ajustada
-                Horario::create([
-                    'consulta_id' => $this->consultaId,
-                    'dia' => $dia,
-                    'hora_inicio' => $this->horarios[$dia]['hora_inicio'],
-                    'hora_fin' => $this->horarios[$dia]['hora_fin'],
-                    'fecha_inicio' => $primeraFecha, // Fecha calculada del primer día
-                    'fecha_fin' => $this->fecha_fin,
-                ]);
-            }
-        }
-
-        // Limpiar los campos después de guardar
-        $this->reset(['dias', 'horarios', 'fecha_inicio', 'fecha_fin']);
-        session()->flash('message', 'Horarios programados con éxito.');
+{
+    // Asegúrate de que se haya ingresado un número de sesiones
+    if (empty($this->sesiones) || $this->sesiones <= 0) {
+        session()->flash('error', 'Por favor, ingrese un número válido de sesiones.');
+        return;
     }
+
+    foreach ($this->dias as $dia) {
+        // Calcular la fecha del primer día seleccionado a partir de la fecha de inicio
+        $primeraFecha = $this->getFechaPrimerDia($this->fecha_inicio, $dia);
+
+        // Programar sesiones en el intervalo especificado
+        for ($i = 0; $i < $this->sesiones; $i++) {
+            // Calcular la fecha de la sesión
+            $fechaSesion = (new \DateTime($primeraFecha))->modify("+{$i} week");
+
+            // Crear la sesión con la fecha ajustada
+            Horario::create([
+                'consulta_id' => $this->consultaId,
+                'dia' => $dia,
+                'hora_inicio' => $this->horarios[$dia]['hora_inicio'],
+                'hora_fin' => $this->horarios[$dia]['hora_fin'],
+                'fecha_inicio' => $fechaSesion->format('Y-m-d'), // Fecha calculada de la sesión
+                'fecha_fin' => $this->fecha_fin,
+                'sesiones' => $this->sesiones, // Guardar el número de sesiones aquí
+            ]);
+        }
+    }
+
+    // Limpiar los campos después de guardar
+    $this->reset(['dias', 'horarios', 'fecha_inicio', 'sesiones']);
+    session()->flash('message', 'Horarios programados con éxito.');
+}
+
+    
 
     private function getFechaPrimerDia($fechaInicio, $diaSeleccionado)
     {

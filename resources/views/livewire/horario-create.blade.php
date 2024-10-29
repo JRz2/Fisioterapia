@@ -2,6 +2,12 @@
     <form wire:submit.prevent="save">
         @csrf
 
+        <div class="form-group">
+            <label for="numero_sesiones">Número de Sesiones</label>
+            <input type="number" wire:model.defer="sesiones" id="numero_sesiones" class="form-control" required min="1" max="100">
+        </div>
+        
+
         <!-- Checkboxes para los días de la semana -->
         <div class="form-group">
             <label for="dias">Días de la Semana</label>

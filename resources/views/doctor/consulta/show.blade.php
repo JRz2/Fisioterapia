@@ -113,9 +113,11 @@
                         @else
                             <p>No hay imágenes disponibles para este examen.</p>
                         @endif
-
                     </div>
-
+                    
+                    <div>
+                        @livewire('horario-edit', ['consultaId' => $consulta->id])
+                    </div>
 
                     <div>
                         <div>
@@ -126,6 +128,8 @@
                             @livewire('index-sesion', ['consultaId' => $consulta->id])
                         </div>
                     </div>
+
+                 
                 </div>
             </div>
         </div>

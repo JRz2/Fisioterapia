@@ -315,6 +315,11 @@ return [
             'icon' => 'fas fa-house',
             'can' => 'admin.user.index'
         ],
+        [
+            'text' => 'Perfil',
+            'route'  => 'admin.user.profile',
+            'icon' => 'fas fa-user',
+        ],
 
         ['header' => 'ADMINISTRADOR',
         'can' => 'admin.user.index'

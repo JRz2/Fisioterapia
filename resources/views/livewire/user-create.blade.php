@@ -8,7 +8,7 @@
         <form wire:submit.prevent="save">
             <x-dialog-modal wire:model="opencreate">
                 <x-slot name="title">
-                    <label style="margin-top: 15px"> {{ $editMode ? 'EDITAR USUARIO' : 'NUEVO USUARIO' }} </label>
+                    <label style="margin-top: 15px"> {{ 'NUEVO USUARIO' }} </label>
                 </x-slot>
                 <x-slot name="content">
                     <div class="card">
@@ -17,20 +17,8 @@
                                 <div class="col-md-4">
                                     <x-label>Foto</x-label>
                                     <div style="height: 170px">
-                                        @if ($imagen)
-                                            @if ($editMode)
-                                                @if ($valueImage && method_exists($imagen, 'temporaryUrl'))
-                                                    <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
-                                                @else
-                                                    @if (strpos($imagen, 'image/') !== false)
-                                                        <img src="{{ asset($imagen) }}" alt="Imagen del usuario" class="w-40 h-40 rounded-full">
-                                                    @else
-                                                        <img src="{{ asset('storage/' . $imagen) }}" class="w-40 h-40 rounded-full">
-                                                    @endif
-                                                @endif
-                                            @else
-                                                <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
-                                            @endif
+                                        @if($imagen)
+                                            <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                         @else
                                             <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
                                         @endif
@@ -77,13 +65,11 @@
                         <x-danger-button wire:click="keyrand" x-on:click="show = false">Cancelar</x-danger-button>
                         <x-button type="submit">
                             <span wire:loading wire:target="save" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            <span class="ml-2">{{ $editMode ? 'Actualizar' : 'Guardar' }} </span>
+                            <span class="ml-2">{{'Guardar' }} </span>
                         </x-button>
                     </div>
                 </x-slot>
             </x-dialog-modal>
         </form>
     </div>
-    
-    
 </div>

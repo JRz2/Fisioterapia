@@ -7,7 +7,10 @@ use App\Models\Consulta;
 use App\Models\Paciente;
 use App\Models\Sesion;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -20,7 +23,41 @@ class HomeController extends Controller
         $nconsultas = Consulta::count();
         $nsesiones = Sesion::count();
         $users = User::all();
-        return view('index', compact('npacientes','nconsultas','nsesiones'));
+        $ultimasConsultas = Consulta::latest()->take(5)->get();
+
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $consultas = Consulta::whereMonth('fecha', $currentMonth)
+                          ->whereYear('fecha', $currentYear)
+                          ->select(DB::raw('DATE(fecha) as date'), DB::raw('count(*) as count'))
+                          ->groupBy('date')
+                          ->orderBy('date')
+                          ->get();
+
+        $sesiones = Sesion::whereMonth('fecha', $currentMonth)
+                          ->whereYear('fecha', $currentYear)
+                          ->select(DB::raw('DATE(fecha) as date'), DB::raw('count(*) as count'))
+                          ->groupBy('date')
+                          ->orderBy('date')
+                          ->get();
+
+        $dias = [];
+        $consultasCount = [];
+        $sesionesCount = [];
+
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        foreach (new \DatePeriod($startOfMonth, new \DateInterval('P1D'), $endOfMonth->addDay()) as $date) {
+            $dateStr = $date->format('Y-m-d'); 
+            $dias[] = $dateStr;
+            $consultasCount[] = $consultas->where('date', $dateStr)->pluck('count')->first() ?? 0;
+            $sesionesCount[] = $sesiones->where('date', $dateStr)->pluck('count')->first() ?? 0;
+        }
+        
+        $user = Auth::user();
+        return view('index', compact('npacientes','nconsultas','nsesiones','dias', 'consultasCount', 'sesionesCount', 'user','users', 'ultimasConsultas'));
     }
 
     /**

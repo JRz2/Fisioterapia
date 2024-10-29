@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 
 class RolController extends Controller
 {
-    public function __construct()
+   public function __construct()
     {
         $this->middleware('can:admin.rol.index')->only('index');
         $this->middleware('can:admin.rol.create')->only('create','store');

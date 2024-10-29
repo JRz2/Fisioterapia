@@ -5,14 +5,18 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\User;
+use Livewire\Attributes\On;
 
 class UserDatatable extends DataTableComponent
 {
     protected $model = User::class;
+    public $usertabla;
+
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('id', 'desc');
     }
 
     public function columns(): array
@@ -42,5 +46,19 @@ class UserDatatable extends DataTableComponent
                 ->searchable(),
             Column::make("Acciones")->collapseOnTablet()->label(fn($row) => view('livewire.user-actions', compact('row')))
         ];
+    }
+
+    #[On('user-created')]
+    public function actualizarTabla()
+    {
+        $this->usertabla = $this->getUsers();
+    }
+    
+    private function getUsers()
+    {
+    }
+
+    public function createUpdate($data){
+        $this->dispatch('confirmUpdate', [$data]); 
     }
 }

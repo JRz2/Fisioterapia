@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('horarios', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('consulta_id');
+            $table->integer('sesiones');
             $table->string('dia'); 
             $table->time('hora_inicio');
             $table->time('hora_fin');
