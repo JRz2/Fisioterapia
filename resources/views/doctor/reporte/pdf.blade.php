@@ -46,6 +46,17 @@
     </style>
 </head>
 <body>
+    <header>
+        <h1>Bienvenido a Mi Página Web</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    
     <div class="informe-container">
         <div class="informe-header">
             <label><strong>Paciente:</strong> {{ $paciente }}</label>
@@ -71,5 +82,12 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2024 Mi Página Web. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
+
+
+

@@ -1,5 +1,5 @@
 <div>
-    <div class="p-4">
+    <div>
         <!-- Botón para agregar sesión -->
         <x-button 
             wire:click="create" 

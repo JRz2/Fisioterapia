@@ -102,11 +102,11 @@ class CreatePaciente extends Component
             ]);
 
             if($paciente->imagen == null || ''){
-                $paciente->imagen = $this->imagen->storeAs('pacientes');
+                $paciente->imagen = $this->imagen->store('pacientes');
                 $paciente->update();
             } else if($this->imagen != $paciente->imagen){
                 Storage::delete('pacientes/'.$paciente->imagen);
-                $paciente->imagen = $this->imagen->storeAs('pacientes');
+                $paciente->imagen = $this->imagen->store('pacientes');
                 $paciente->update();
             }
             $this->imagen = null;
@@ -123,7 +123,7 @@ class CreatePaciente extends Component
 
             $this->reset(['nombre', 'paterno', 'materno', 'edad', 'ci', 'genero', 'direccion', 'ocupacion', 'deporte', 'celular']);
             if ($this->imagen) {
-                $paciente->imagen = $this->imagen->storeAs('pacientes');  
+                $paciente->imagen = $this->imagen->store('pacientes');  
                 $paciente->save();  
             } else{
                 $this->imagen = "image/user.png"; 

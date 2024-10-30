@@ -1,43 +1,65 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Reporte')
 
 @section('content_header')
-    <h1>Informe Kinesico</h1>
-@stop
+@endsection
 
 @section('content')
-<div class="informe-container">
-    <div class="informe-header">
-        <label><strong>Paciente:</strong> Nombre del paciente</label>
-        <label><strong>Edad:</strong> 30 años</label>
-        <label><strong>Género:</strong> Masculino</label>
-        <label><strong>Fecha:</strong> 18/09/2024</label>
+    <x-app-layout>
+        <div class="card card-dark">
+            <div class="card-header">
+                <table width=100%>
+                    <tr>
+                        <td align="left" width=5%>
+                            <h1><a class="mr-5 ">
+                                    <i class="fas fa-solid fa-reply-all fa-2x"></i>
+                                </a></h1>
+                        </td>
+                        <td align="center">
+                            <h1 style="font-size: 30px;"> INFORME KINESICO </h1>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </x-app-layout>
+    <div class="informe-container">
+        <div class="informe-header">
+            <label><strong>Paciente:</strong> Nombre del paciente</label>
+            <label><strong>Edad:</strong> 30 años</label>
+            <label><strong>Género:</strong> Masculino</label>
+            <label><strong>Fecha:</strong> 18/09/2024</label>
+        </div>
+
+        <div class="informe-body">
+            <div class="informe-section">
+                <label><strong>Dx:</strong></label>
+                <input type="text" class="input-text">
+            </div>
+
+            <div class="informe-section">
+                <label><strong>Análisis Cinético Funcional:</strong></label>
+                <textarea></textarea>
+            </div>
+
+            <div class="informe-section">
+                <label><strong>Recomendaciones:</strong></label>
+                <textarea></textarea>
+            </div>
+        </div>
+        <a class="btn btn-info" href="{{ url('/doctor/reporte/pdf/' . $consulta->id) }}"><i class="fa fa-print"></i>
+            IMPRIMIR
+            PDF</a>
     </div>
 
-    <div class="informe-body">
-        <div class="informe-section">
-            <label><strong>Dx:</strong></label>
-            <input type="text" class="input-text">
-        </div>
-
-        <div class="informe-section">
-            <label><strong>Análisis Cinético Funcional:</strong></label>
-            <textarea></textarea>
-        </div>
-
-        <div class="informe-section">
-            <label><strong>Recomendaciones:</strong></label>
-            <textarea></textarea>
-        </div>
-    </div>
-    <a class="btn btn-info" href="{{url ('/doctor/reporte/pdf/' .$consulta->id)}}"><i class="fa fa-print"></i> IMPRIMIR PDF</a> 
-</div>
-
-@stop
+@endsection
 
 @section('css')
-    
+
     <style>
         .informe-container {
             font-family: Arial, sans-serif;
@@ -72,7 +94,8 @@
             margin-bottom: 8px;
         }
 
-        .input-text, .input-textarea {
+        .input-text,
+        .input-textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -96,10 +119,12 @@
             color: #333;
         }
     </style>
-@stop
+@endsection
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        console.log('Hi!');
+    </script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         document.querySelectorAll('textarea').forEach((textarea) => {
@@ -112,4 +137,4 @@
                 });
         });
     </script>
-@stop
+@endsection

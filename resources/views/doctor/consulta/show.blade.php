@@ -7,119 +7,179 @@
 
 @section('content')
     <x-app-layout>
-        <div>
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div style="margin: 20px 20px 10px 20px; position: relative;">
-                        <a class="mr-5" href="{{ route('doctor.paciente.show', $paciente->id) }}">
-                            <i class="fas fa-solid fa-reply-all fa-2x"></i>
-                        </a>
-                        Codigo de consulta {{ $consulta->codigo }}
+        <div class="card card-dark">
+            <div class="card-header">
+                <table width=100%>
+                    <tr>
+                        <td align="left" width=5%>
+                            <h1><a class="mr-5 " href="{{ route('doctor.paciente.show', $paciente->id) }}">
+                                    <i class="fas fa-solid fa-reply-all fa-2x"></i>
+                                </a></h1>
+                        </td>
+                        <td align="center">
+                            <h1 style="font-size: 30px;"> CODIGO DE CONSULTA {{ $consulta->codigo }} </h1>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <a href="{{ route('doctor.reporte.create', $consulta->id) }}">
+                        <x-button>
+                            <span wire:loading wire:target="doctor.reporte.create" class="spinner-border spinner-border-sm"
+                                role="status" aria-hidden="true"></span>
+                            <span class="ml-2"><i class="fas fa-file-pdf"></i>
+                                &nbsp;&nbsp; Informe
+                            </span>
+                        </x-button>
+                    </a>
 
-                        <a href="{{ route('doctor.reporte.create', $consulta->id) }}" class="btn btn-secondary btn-lg"
-                            style="float: right;">
-                            <i class="fas fa-file-pdf"></i> Informe
-                        </a>
-                    </div>
-
-                    <div style="display: flex;  gap:4%; margin:30px; height: 25vh">
-                        <div style="width: 30%">
-                            <div style="display: flex">
-                                <div>
-                                    <x-label>
-                                        Datos del paciente
-                                    </x-label>
-                                    <x-label>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card card-outline card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Datos del Paciente</h3>
+                            </div>
+                            <div class="row card-body">
+                                <div class="flex flex-col items-center">
+                                    <x-label class="text-lg">
                                         Foto
                                     </x-label>
-                                    <div style="display: flex">
-                                        <div style="width: 50%">
-                                            @if ($paciente->imagen)
-                                                <img src="{{ asset('storage/' . $paciente->imagen) }}">
-                                            @else
-                                                <img src="{{ asset('image/user2.jpg') }}" width="100%">
-                                            @endif
+                                    <div>
+                                        @if (strpos($paciente->imagen, 'image/') !== false)
+                                            <img src="{{ asset($paciente->imagen) }}" class="rounded-full"
+                                                style="width: 200px; height: 200px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ asset('storage/' . $paciente->imagen) }}" class="rounded-full"
+                                                style="width: 200px; height: 200px; object-fit: cover;">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="w-2/4 flex flex-col items-center">
+                                    <div>
+                                        <x-label class="text-base">
+                                            Nombre: <span
+                                                class="badge badge-pill font-normal text-base">{{ $paciente->nombre }}</span>
+                                        </x-label>
+                                    </div>
 
+                                    <div>
+                                        <x-label class="text-base">
+                                            Paterno: <span
+                                                class="badge badge-pill font-normal text-base">{{ $paciente->paterno }}</span>
+                                        </x-label>
+                                    </div>
+
+                                    <div>
+                                        <x-label class="text-base">
+                                            Materno: <span
+                                                class="badge badge-pill font-normal text-base">{{ $paciente->materno }}</span>
+                                        </x-label>
+                                    </div>
+
+                                    <div>
+                                        <x-label class="text-base">
+                                            Edad: <span
+                                                class="badge badge-pill font-normal text-base">{{ $paciente->edad }}</span>
+                                        </x-label>
+                                    </div>
+
+                                    <div>
+                                        <x-label class="text-base">
+                                            Celular: <span
+                                                class="badge badge-pill font-normal text-base">{{ $paciente->celular }}</span>
+                                        </x-label>
+                                    </div>
+
+                                    <div>
+                                        <x-label class="text-base">
+                                            Facha: <span
+                                                class="badge badge-pill font-normal text-base">{{ $consulta->fecha }}</span>
+                                        </x-label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        @if ($diagnostico)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-outline card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Diagnostico y plan de tratamientos</h3>
                                         </div>
-
-                                        <div style="width: 50%; margin:5px 5px 5px 5px">
-                                            <div>
-                                                <x-label> Nombre:
-                                                    {{ $paciente->nombre }}
-                                                </x-label>
-                                            </div>
-
-                                            <div>
-                                                <x-label> Apellido
-                                                    {{ $paciente->paterno }}
-                                                </x-label>
-                                            </div>
-
-                                            <div>
-                                                <x-label> Edad:
-                                                    {{ $paciente->edad }}
-                                                </x-label>
-                                            </div>
-
-                                            <div>
-                                                <x-label> Fecha:
-                                                    {{ $consulta->fecha }}
-                                                </x-label>
-                                            </div>
+                                        <div class="card-body">
+                                            <x-textarea class="w-full resize-none" style="height: 150px" disabled>
+                                                {{ $diagnostico->diagnostico }}
+                                            </x-textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card card-outline card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Plan de tratamientos</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <x-textarea class="w-full resize-none" style="height: 150px" disabled>
+                                                {{ $diagnostico->plan }}
+                                            </x-textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        @else
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Diagnostico</h3>
+                                </div>
+                                <div class="row card-body">
+                                    <p>No hay diagnóstico disponible para esta consulta.</p>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row mt-6 text-center">
+                    <div class="col-md-12">
+                        <div class="card card-outline card-secondary">
+                            <div class="card-header text-center">
+                                <h3 class="card-title">Imágenes del Examen</h3>
+                            </div>
+
+                            @if ($imgexamen)
+                                <div
+                                    style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px">
+                                    @foreach ($imgexamen as $imgExamen)
+                                        <a href="{{ asset('storage/' . $imgExamen->ruta) }}" data-lightbox="imagen-1">
+                                            <img src="{{ asset('storage/' . $imgExamen->ruta) }}" alt="Imagen de la sesión"
+                                                style="width: 200px; height: 200px;">
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @else
+                                <p>No hay imágenes disponibles para este examen.</p>
+                            @endif
                         </div>
-
-                        @if ($diagnostico)
-                            <div style="width: 30%">
-                                Diagnóstico
-                                <div>
-                                    <x-textarea class="w-full resize-none" style="height: 150px" disabled>
-                                        {{ $diagnostico->diagnostico }}
-                                    </x-textarea>
-                                </div>
-                            </div>
-
-                            <div style="width: 30%">
-                                Plan de tratamiento
-                                <div>
-                                    <x-textarea class="w-full resize-none" style="height: 150px" disabled>
-                                        {{ $diagnostico->plan }}
-                                    </x-textarea>
-                                </div>
-                            </div>
-                        @else
-                            <p>No hay diagnóstico disponible para esta consulta.</p>
-                        @endif
                     </div>
-
-                    <div style="margin: 30px">
-                        <x-label>
-                            Imágenes del Examen
-                        </x-label>
-
-                        @if ($imgexamen)
-                            <div
-                                style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px">
-                                @foreach ($imgexamen as $imgExamen)
-                                    <a href="{{ asset('storage/' . $imgExamen->ruta) }}" data-lightbox="imagen-1">
-                                        <img src="{{ asset('storage/' . $imgExamen->ruta) }}" alt="Imagen de la sesión"
-                                            style="width: 200px; height: 200px;">
-                                    </a>
-                                @endforeach
+                </div>
+                <div class="row mt-6">
+                    <div class="col-md-12">
+                        <div class="card card-outline card-secondary">
+                            <div class="card-header text-center">
+                                <h3 class="card-title">Modificar Sesiones Programadas</h3>
                             </div>
-                        @else
-                            <p>No hay imágenes disponibles para este examen.</p>
-                        @endif
+                            @livewire('horario-edit', ['consultaId' => $consulta->id])
+                        </div>
                     </div>
-                    
-                    <div>
-                        @livewire('horario-edit', ['consultaId' => $consulta->id])
-                    </div>
+                </div>
 
-                    <div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
                         <div>
                             @livewire('sesion-create', ['consultaId' => $consulta->id])
                         </div>
@@ -128,8 +188,6 @@
                             @livewire('index-sesion', ['consultaId' => $consulta->id])
                         </div>
                     </div>
-
-                 
                 </div>
             </div>
         </div>
@@ -137,7 +195,7 @@
 @endsection
 
 @section('css')
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.5/viewer.min.css">

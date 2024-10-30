@@ -25,8 +25,8 @@
                 </table>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="w-2/5">
+                <div class="row mt-4">
+                    <div class="col-md-6">
                         <div class="card card-outline card-primary">
                             <div class="card-header">
                               <h3 class="card-title">Datos del Paciente</h3>
@@ -82,9 +82,32 @@
                             </div>  
                             <div class="card-footer">
                             </div>
+                        </div>      
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div>
+                                <x-label class="text-lg">
+                                    Consultas del paciente
+                                </x-label>
+                            </div>
+                            <div class="ml-auto">
+                                @livewire('new-consulta', ['pacienteId' => $paciente->id])
+                            </div>
                         </div>
 
-                        <div class="card card-outline card-danger w-3/4 mx-auto">
+                        <div class="mt-4">
+                            @livewire('consulta-datatable', ['pacienteId' => $paciente->id])
+                        </div>
+
+                       
+                    </div>   
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card card-outline card-danger">
                             <div class="card-header">
                               <h3 class="card-title">Signos Vitales</h3>
                             </div>
@@ -277,31 +300,14 @@
                             <div class="card-footer">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="w-3/5">   
-                        <div class="mx-3">
-                            <div class="row">
-                                <div>
-                                    <x-label class="text-lg">
-                                        Consultas del paciente
-                                    </x-label>
-                                </div>
-                                <div class="ml-auto">
-                                    @livewire('new-consulta', ['pacienteId' => $paciente->id])
-                                </div>
-                            </div>
-    
-                            <div class="mt-4">
-                                @livewire('consulta-datatable', ['pacienteId' => $paciente->id])
-                            </div>
-    
-                            <div class="my-4">
-                                <x-label class="text-lg">
-                                    Consultas Agendadas
-                                </x-label>
-                            </div>        
-                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <x-label class="text-lg">
+                                Consultas Agendadas
+                            </x-label>
+                        </div> 
                     </div>
                 </div>
             </div>

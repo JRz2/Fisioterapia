@@ -20,7 +20,7 @@
                                     <x-label>
                                         Foto
                                     </x-label>
-                                    <div style="height: 170px">
+                                    <div>
                                         @if ($imagen)
                                             @if ($editMode)
                                                 @if ($valueImage && method_exists($imagen, 'temporaryUrl'))
@@ -29,7 +29,7 @@
                                                     @if (strpos($imagen, 'image/') !== false)
                                                         <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
                                                     @else
-                                                        <img src="{{ asset('storage/' . $imagen) }}" class="w-40 h-40 rounded-full">
+                                                        <img src="{{ asset('storage' . $imagen) }}" class="w-40 h-40 rounded-full">
                                                     @endif
                                                 @endif
                                             @else

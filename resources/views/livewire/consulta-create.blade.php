@@ -8,6 +8,7 @@
             </tr>
         </table>
     </div>
+    
     <div class="card-body">
         @php
             $id = request()->query('id');
