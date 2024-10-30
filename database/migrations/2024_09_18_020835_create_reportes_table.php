@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('informe');
             $table->string('Recomendacion');
             $table->string('nota');
+            $table->string('reabilitacion');
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });

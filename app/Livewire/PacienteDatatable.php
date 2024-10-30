@@ -47,9 +47,9 @@ class PacienteDatatable extends DataTableComponent
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 
                     ? asset($row->imagen) 
-                    : asset('storage'. '/'. $row->imagen),  
+                    : asset('storage/'. $row->imagen),  
             ])),                       
-            Column::make("NombreAA", "nombre")->sortable()->searchable(),
+            Column::make("Nombre", "nombre")->sortable()->searchable(),
             Column::make("Paterno", "paterno")->sortable()->searchable(),
             Column::make("Materno", "materno")->sortable()->searchable(),
             Column::make("CI", "ci")->collapseOnTablet()->sortable()->searchable(),
@@ -166,9 +166,9 @@ class PacienteDatatable extends DataTableComponent
         ]);
     }
 
-    public function destroy($pacienteId)
+    public function destroy($id)
     {
-        $paciente = Paciente::find($pacienteId);
+        $paciente = Paciente::find($id);
         $paciente->delete();
         $this->dispatch('swal:success', [
             'title' => 'Paciente',

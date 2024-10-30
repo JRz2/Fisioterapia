@@ -1,5 +1,5 @@
 <div class="container my-5">
-    <h3 class="text-center mb-4">Modificar Sesiones Programadas</h3>
+    
 
     <!-- Lista de sesiones programadas -->
     <div class="row justify-content-center">
