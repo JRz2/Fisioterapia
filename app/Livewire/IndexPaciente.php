@@ -11,6 +11,5 @@ class IndexPaciente extends Component
     {
         return view('livewire.index-paciente');
     }
-
     
 }

@@ -68,7 +68,7 @@ class UserCreate extends Component
         $user = User::create(
             $this->only('name', 'email')
                 + [
-                    'password' => bcrypt('password'),
+                    'password' => bcrypt($this->password),
                 ]
         );
 

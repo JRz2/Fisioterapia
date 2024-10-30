@@ -20,7 +20,7 @@
                 <div class="icon">
                   <i class="fas fa-user-plus"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('doctor.paciente.index') }}" class="small-box-footer">
                   More info <i class="fas fa-arrow-circle-right"></i>
                 </a>
               </div>
@@ -35,7 +35,7 @@
                 <div class="icon">
                   <i class="fas fa-folder"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('doctor.consulta.index') }}" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
                 </a>
               </div>
@@ -50,7 +50,7 @@
                 <div class="icon">
                   <i class="fas fa-heart-pulse"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('doctor.sesion.index') }}" class="small-box-footer">
                   More info <i class="fas fa-arrow-circle-right"></i>
                 </a>
               </div>
@@ -59,13 +59,13 @@
             <div class="col-lg-3 col-md-6">
               <div class="small-box bg-secondary">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3>{{$nhorarios}}</h3>
                   <p>Calendario</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-calendar"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('doctor.horario.index') }}" class="small-box-footer">
                   More info <i class="fas fa-arrow-circle-right"></i>
                 </a>
               </div>
@@ -99,7 +99,7 @@
                   </table>                
                 </div>
                 <div class="card-footer">
-                  <a href="">ver todos</a>
+                  <a href="{{ route('doctor.consulta.index') }}">ver todos</a>
                 </div>
               </div>
             </div>
@@ -166,7 +166,6 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @stop
 
 @section('js')

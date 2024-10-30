@@ -313,7 +313,6 @@ return [
             'text' => 'Inicio',
             'route'  => 'home.index',
             'icon' => 'fas fa-house',
-            'can' => 'admin.user.index'
         ],
         [
             'text' => 'Perfil',
@@ -362,6 +361,16 @@ return [
             'text' => 'Calendario',
             'route'  => 'doctor.horario.index',
             'icon' => 'fa-regular fa-calendar',
+        ],
+        [
+            'text' => 'Reprogramar Sesiones',
+            'route'  => '',
+            'icon' => 'fa-regular fa-clock',
+        ],
+        [
+            'text' => 'Informes',
+            'route'  => 'doctor.reporte.index',
+            'icon' => 'fa-regular fa-file-pdf',
         ],
         ['header' => 'MODELOS'],
 

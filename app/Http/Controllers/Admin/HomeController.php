@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Consulta;
+use App\Models\Horario;
 use App\Models\Paciente;
 use App\Models\Sesion;
 use App\Models\User;
@@ -22,6 +23,7 @@ class HomeController extends Controller
         $npacientes = Paciente::count();
         $nconsultas = Consulta::count();
         $nsesiones = Sesion::count();
+        $nhorarios = Horario::count();
         $users = User::all();
         $ultimasConsultas = Consulta::latest()->take(5)->get();
 
@@ -57,7 +59,7 @@ class HomeController extends Controller
         }
         
         $user = Auth::user();
-        return view('index', compact('npacientes','nconsultas','nsesiones','dias', 'consultasCount', 'sesionesCount', 'user','users', 'ultimasConsultas'));
+        return view('index', compact('npacientes','nconsultas','nsesiones','dias', 'consultasCount', 'sesionesCount', 'user','users', 'ultimasConsultas', 'nhorarios'));
     }
 
     /**

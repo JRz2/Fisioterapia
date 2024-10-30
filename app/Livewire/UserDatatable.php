@@ -11,7 +11,8 @@ class UserDatatable extends DataTableComponent
 {
     protected $model = User::class;
     public $usertabla;
-
+    public $userId;
+    protected $listeners = ['destroy'];
 
     public function configure(): void
     {
@@ -48,6 +49,11 @@ class UserDatatable extends DataTableComponent
         ];
     }
 
+    public function mount($userId = null)
+    {
+        $this->userId = $userId;
+    }
+
     #[On('user-created')]
     public function actualizarTabla()
     {
@@ -60,5 +66,33 @@ class UserDatatable extends DataTableComponent
 
     public function createUpdate($data){
         $this->dispatch('confirmUpdate', [$data]); 
+    }
+
+    public function confirm($dataUser)
+    {
+        $this->dispatch('swal:confirm', [
+            'title' => 'Usuario ' . $dataUser['name'],
+            'text' => '¿Estas seguro de eliminarlo?',
+            'confirmButtonText' => 'Sí, Eliminar',
+            'cancelButtonText' => 'Cancelar',
+            'data' => $dataUser
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            $this->dispatch('swal:success', [
+                'title' => 'Usuario',
+                'text' => 'Eliminado Correctamente',
+            ]);
+        } else {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'No se pudo eliminar el usuario',
+            ]);
+        }
     }
 }

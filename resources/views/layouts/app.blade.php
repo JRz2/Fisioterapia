@@ -23,6 +23,8 @@
     <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
 " rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="/css/admin_custom.css">
 </head>
 
 <body class="font-sans antialiased">
@@ -85,7 +87,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
                 if (result.isConfirmed) {
                     // Si el usuario confirma, puedes ejecutar una acción en Livewire
                     Livewire.dispatch('destroy', {
-                        pacienteId: param[0].data.id
+                        id: param[0].data.id
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     // Acción si se cancela (opcional)
@@ -93,7 +95,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
                     Swal.close();
                 }
             });
-            console.log(param[0]);
+            console.log(param[0].data.id);
         });
     </script>
 

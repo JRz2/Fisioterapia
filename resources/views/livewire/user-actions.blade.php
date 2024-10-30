@@ -13,8 +13,8 @@
             <i class="fa fa-pen"></i>
         </a>
         <a class="px-2 py-2 ml-2 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 hover:no-underline"
-            wire:click="confirm({{$rowData}})">
-            <i class="fa fa-trash"></i>
-        </a>
+            wire:click="confirm({{ $rowData }})">
+        <i class="fa fa-trash"></i>
+    </a>
     </div>
 </div>
