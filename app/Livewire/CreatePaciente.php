@@ -78,6 +78,7 @@ class CreatePaciente extends Component
             'genero' => 'required|string',
             'edad' => 'required|integer', 
             'celular' => 'nullable|integer', 
+            'imagen' => 'file|max:10240'
         ], [
             'nombre' => 'Nombre requerido',
             'paterno' => 'Apellido Paterno requerido',
