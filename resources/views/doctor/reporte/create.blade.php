@@ -29,28 +29,40 @@
     </x-app-layout>
     <div class="informe-container">
         <div class="informe-header">
-            <label><strong>Paciente:</strong> Nombre del paciente</label>
-            <label><strong>Edad:</strong> 30 años</label>
-            <label><strong>Género:</strong> Masculino</label>
-            <label><strong>Fecha:</strong> 18/09/2024</label>
+            <label><strong>Paciente:</strong> {{$consulta->paciente->nombre}}</label>
+            <label><strong>Paciente:</strong> {{$consulta->paciente->ci}}</label>
+            <label><strong>Edad del Paciente:</strong> {{$consulta->paciente->edad}}</label>
+            <label><strong>Género:</strong> {{$consulta->paciente->genero}}</label>
         </div>
+        <form wire:submit="save">
+            <div class="informe-body">
+                <div class="informe-section">
+                    <label><strong>Dx:</strong></label>
+                    <input type="text" class="input-text">
+                </div>
 
-        <div class="informe-body">
-            <div class="informe-section">
-                <label><strong>Dx:</strong></label>
-                <input type="text" class="input-text">
+                <div class="informe-section">
+                    <label><strong>Análisis Cinético Funcional:</strong></label>
+                    <textarea></textarea>
+                </div>
+
+                <div class="informe-section">
+                    <label><strong>Rehabilitación fisioterapéutica y kinesiología:</strong></label>
+                    <textarea></textarea>
+                </div>
+
+                <div class="informe-section">
+                    <label><strong>Recomendaciones:</strong></label>
+                    <textarea></textarea>
+                </div>
             </div>
 
-            <div class="informe-section">
-                <label><strong>Análisis Cinético Funcional:</strong></label>
-                <textarea></textarea>
-            </div>
-
-            <div class="informe-section">
-                <label><strong>Recomendaciones:</strong></label>
-                <textarea></textarea>
-            </div>
-        </div>
+            <div>
+                <x-button>
+                    Guardar
+                </x-button>
+            </div>  
+        </form>
         <a class="btn btn-info" href="{{ url('/doctor/reporte/pdf/' . $consulta->id) }}"><i class="fa fa-print"></i>
             IMPRIMIR
             PDF</a>
