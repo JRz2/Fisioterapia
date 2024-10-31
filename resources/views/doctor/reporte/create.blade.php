@@ -22,52 +22,26 @@
                     </tr>
                 </table>
             </div>
-            <div class="card-body">
 
+            <div class="card-body">
+                <div class="informe-date">
+                    <strong>INFORME KINESICO</strong>
+                    <div class="row">
+                        <div>
+                            <label><strong>Paciente:</strong> {{$consulta->paciente->nombre}}</label>
+                            <label><strong>CI:</strong> {{$consulta->paciente->ci}}</label>
+                        </div>
+                        <div>
+                            <label><strong>Edad del Paciente:</strong> {{$consulta->paciente->edad}}</label>
+                            <label><strong>Género:</strong> {{$consulta->paciente->genero}}</label>
+                        </div>
+                    </div>             
+                </div>
+                @livewire('informe-create', ['consultaId' => $consulta->id])
             </div>
+            
         </div>
     </x-app-layout>
-    <div class="informe-container">
-        <div class="informe-header">
-            <label><strong>Paciente:</strong> {{$consulta->paciente->nombre}}</label>
-            <label><strong>Paciente:</strong> {{$consulta->paciente->ci}}</label>
-            <label><strong>Edad del Paciente:</strong> {{$consulta->paciente->edad}}</label>
-            <label><strong>Género:</strong> {{$consulta->paciente->genero}}</label>
-        </div>
-        <form wire:submit="save">
-            <div class="informe-body">
-                <div class="informe-section">
-                    <label><strong>Dx:</strong></label>
-                    <input type="text" class="input-text">
-                </div>
-
-                <div class="informe-section">
-                    <label><strong>Análisis Cinético Funcional:</strong></label>
-                    <textarea></textarea>
-                </div>
-
-                <div class="informe-section">
-                    <label><strong>Rehabilitación fisioterapéutica y kinesiología:</strong></label>
-                    <textarea></textarea>
-                </div>
-
-                <div class="informe-section">
-                    <label><strong>Recomendaciones:</strong></label>
-                    <textarea></textarea>
-                </div>
-            </div>
-
-            <div>
-                <x-button>
-                    Guardar
-                </x-button>
-            </div>  
-        </form>
-        <a class="btn btn-info" href="{{ url('/doctor/reporte/pdf/' . $consulta->id) }}"><i class="fa fa-print"></i>
-            IMPRIMIR
-            PDF</a>
-    </div>
-
 @endsection
 
 @section('css')

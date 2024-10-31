@@ -42,7 +42,7 @@ class PacienteDatatable extends DataTableComponent
     public function columns(): array
     {
         $allColumns = [
-            Column::make("Id", "id")->sortable()->searchable(),
+            Column::make("Id", "id")->sortable()->collapseOnTablet()->searchable(),
             Column::make("Imagen", "imagen")->hideIf(true),
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 

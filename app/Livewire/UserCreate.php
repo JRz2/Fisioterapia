@@ -140,6 +140,7 @@ class UserCreate extends Component
         $this->openedit = false;
         $this->reset(['name', 'email', 'password', 'password_confirmation']);
         $this->imagenkey = rand();
+        $this->imagen = "";
     }
 
     public function clickImage()

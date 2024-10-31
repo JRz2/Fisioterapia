@@ -28,8 +28,8 @@
                                                 @else
                                                     @if (strpos($imagen, 'image/') !== false)
                                                         <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
-                                                    @else
-                                                        <img src="{{ asset('storage' . $imagen) }}" class="w-40 h-40 rounded-full">
+                                                    @else 
+                                                        <img src="{{ asset('storage/' . $imagen) }}" class="w-40 h-40 rounded-full">
                                                     @endif
                                                 @endif
                                             @else

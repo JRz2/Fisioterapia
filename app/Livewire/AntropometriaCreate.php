@@ -70,6 +70,11 @@ class AntropometriaCreate extends Component
             //dd("guardar");
         }
 
+        $this->dispatch('swal:success', [
+            'title' => 'Antropometria',
+            'text' => 'Creado Correctamente',
+        ]);
+
         $ultimaConsulta = Consulta::latest('id')->first();
         $this->consulta_id = $ultimaConsulta->id;
 

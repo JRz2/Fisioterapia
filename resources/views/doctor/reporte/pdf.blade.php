@@ -2,92 +2,134 @@
 <html>
 <head>
     <style>
-        .informe-container {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
+        body {
+            padding-bottom: 100px; 
+            margin-top: 110px;
+            margin-left: -10px;
+            margin-right: 10px;
+        }
+        header {
+            position: fixed;
+            top: -40px;
+            margin-bottom: -20px;
+            text-align: center;
+        }
+        footer {
+            position: fixed; 
+            left: 0;
+            bottom: -40px; 
+            width: 100%; 
+            text-align: center; 
+
         }
 
-        .informe-header {
-            font-size: 14px;
-            margin-bottom: 20px;
+        .informe-header{
+            text-align: center;
         }
 
-        .informe-header label {
-            display: block;
-            margin-bottom: 5px;
+        .footer-firm{
+            display: flex;
+            justify-content: space-between;
         }
 
-        .informe-body {
-            font-size: 12px;
+        .footer-fecha{
+            text-align: left;
         }
 
-        .informe-section {
-            margin-bottom: 20px;
+        .footer-firma{
+            text-align: right;
         }
 
-        .informe-section label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .input-text, textarea {
+        .header-content {
+            position: relative;
+            display: inline-block;
             width: 100%;
-            border: 1px solid #ccc;
-            padding: 10px;
-            font-size: 12px;
+        }
+        .header-text {
+            position: absolute;
+            top: 120px; /* Ajusta según sea necesario */
+            width: 100%;
+            text-align: center;
+            color: black; /* Cambia el color si es necesario */
         }
 
-        textarea {
-            height: 100px;
+        .informe-container{
+            margin-left: 60px;
+            margin-right: 60px;
         }
+
     </style>
 </head>
 <body>
     <header>
-        <h1>Bienvenido a Mi Página Web</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <div class="header-text">
+                <strong>CENTRO DE FISIOTERAPIA Y KINESIOLOGÍA</strong><br>
+                <strong>"FISIOMEDEP"</strong>
+            </div>
+            <img src="image/imgencabezado.png" style="width: 700px; height: 150px;">
+        </div>
     </header>
     
-    <div class="informe-container">
-        <div class="informe-header">
-            <label><strong>Paciente:</strong> {{ $paciente }}</label>
-            <label><strong>Edad:</strong> {{ $edad }} años</label>
-            <label><strong>Género:</strong> {{ $genero }}</label>
-            <label><strong>Fecha:</strong> {{ $fecha }}</label>
+    <main>
+        <div class="informe-container">
+            <div class="informe-date">
+                <strong>INFORME KINESICO</strong>
+                <table style="width: 100%; margin-top: 10px;">
+                    <tr>
+                        <td style="text-align: left; width: 50%;"><strong>Paciente:</strong> {{ $nombre }} {{ $paterno }} {{ $materno }}</td>
+                        <td style="text-align: right; width: 50%;"><strong>Edad:</strong> {{ $edad }} años</td>
+                        <td style="text-align: right; width: 50%;"><strong>Genero:</strong> {{ $genero }}</td>
+                    </tr>
+                </table>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; width: 30%;"><strong>CI:</strong> {{ $ci }}</td>
+                        <td style="text-align: right; width: 70%;"><strong>ESPECIALIDAD FISIOTERAPIA Y KINESIOLOGÍA</strong></td>
+                    </tr>
+                </table>              
+            </div>
+            <br>
+            <div class="informe-body">
+                <div class="informe-section">
+                    <label><strong>Dx:</strong></label>
+                    <p>{{ $diagnostico }}</p>
+                </div>
+    
+                <div class="informe-section">
+                    <label><strong>ANÁLISIS CINÉTICO FUNCIONAL:</strong></label>
+                    <p>{{ $informe }}</p>
+                </div>
+    
+                <div class="informe-section">
+                    <label><strong>REHABILITACIÓN FISIOTERAPÉUTICA Y KINESIOLOGÍA:</strong></label>
+                    <p>{{ $rehabilitacion }}</p>
+                </div>
+
+                <div class="informe-section">
+                    <label><strong>RECOMENDACIONES:</strong></label>
+                    <p>{{ $recomendacion }}</p>
+                </div>
+
+                <div class="informe-section">
+                    <label><strong>NOTA:</strong></label>
+                    <p>{{ $nota }}</p>
+                </div>
+            </div>
         </div>
-
-        <div class="informe-body">
-            <div class="informe-section">
-                <label><strong>Dx:</strong></label>
-                <p>{{ $diagnostico }}</p>
-            </div>
-
-            <div class="informe-section">
-                <label><strong>Análisis Cinético Funcional:</strong></label>
-                <p>{{ $analisis }}</p>
-            </div>
-
-            <div class="informe-section">
-                <label><strong>Recomendaciones:</strong></label>
-                <p>{{ $recomendaciones }}</p>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        <p>&copy; 2024 Mi Página Web. Todos los derechos reservados.</p>
+        <div style="text-align: left">
+            <label> Sin otro particular me despido atentamente a quien corresponsa.</label>
+        </div>
+        <div class="footer-fecha">
+            <label> Lugar y fecha: La Paz {{$fecha}} </label>
+        </div>
+        <div class="footer-firma">
+            <label> Firma y sello fisioterapeuta</label>
+        </div>
+        <img src="image/imgpiepagina.png" style="width: 700px; height: 150px;">
     </footer>
 </body>
 </html>
-
-
-

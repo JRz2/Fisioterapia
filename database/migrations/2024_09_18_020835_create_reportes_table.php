@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('reportes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('consulta_id');
-            $table->date('fecha');
-            $table->string('diagnostico');
-            $table->string('informe');
-            $table->string('Recomendacion');
-            $table->string('nota');
-            $table->string('reabilitacion');
+            $table->date('fecha')->nullable();
+            $table->string('diagnostico')->nullable();
+            $table->string('informe')->nullable();
+            $table->string('Recomendacion')->nullable();
+            $table->string('nota')->nullable();
+            $table->string('rehabilitacion')->nullable();
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });

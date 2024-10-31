@@ -203,9 +203,6 @@
         
 
         <div class="mt-4">
-            <x-danger-button wire:click="validateNavBar('evaluacion')">
-                Saltar
-            </x-danger-button>
             <x-button wire:click="$parent.evaluacion">
                 Guardar
             </x-button>

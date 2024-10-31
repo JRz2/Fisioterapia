@@ -37,6 +37,11 @@ class DiagnosticoCreate extends Component
             $diagnostico->save();
             //dd("guardar");
         }
+
+        $this->dispatch('swal:success', [
+            'title' => 'Diagnostico',
+            'text' => 'Creado Correctamente',
+        ]);
     }
 
     public function validateNavBar($data)

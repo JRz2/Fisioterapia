@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Doctor;
 use App\Http\Controllers\Controller;
 use App\Models\Consulta;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class ReporteController extends Controller
 {
@@ -77,19 +80,26 @@ class ReporteController extends Controller
     }
 
     public function pdf($consultaId)
-    {
+    {   
+        App::setLocale('es');
         $consulta = Consulta::findOrFail($consultaId);
         
         $data = [
-            'paciente' => $consulta->paciente->nombre,
+            'nombre' => $consulta->paciente->nombre,
+            'paterno' => $consulta->paciente->paterno,
+            'materno' => $consulta->paciente->materno,
+            'ci' => $consulta->paciente->ci,
             'edad' => $consulta->paciente->edad,
             'genero' => $consulta->paciente->genero,
-            'fecha' => now()->format('d/m/Y'),
-            'diagnostico' => $consulta->diagnostico,
-            'analisis' => 'Análisis cinético funcional del paciente...',
-            'recomendaciones' => 'Recomendaciones específicas...'
+            'diagnostico' => $consulta->diagnostico->diagnostico ?? 'Sin diagnostico',
+            'informe' => $consulta->reporte->informe ?? 'Sin analisis',
+            'rehabilitacion' => $consulta->reporte->rehabilitacion ?? 'Sin rehabilitacion',
+            'recomendacion' => $consulta->reporte->recomendacion ?? 'Sin recomendaciones',
+            'nota' => $consulta->reporte->nota ?? 'Sin nota',
+            'fecha' => Carbon::parse($consulta->reporte->fecha ?? '')
+                ->locale('es')
+                ->translatedFormat('d \d\e F \d\e Y'),
         ];
-
         $pdf = Pdf::loadView('doctor.reporte.pdf', $data);
         return $pdf->stream(); 
         //return $pdf->download('reporte.pdf');

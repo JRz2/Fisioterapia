@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-3">
                 @if ($ultima_consulta->fecha)
-                    <x-label class="text-lg">Codigo de Consulta: <span
+                    <x-label class="text-lg">Codigo: <span
                             class="badge badge-pill font-normal text-lg">{{ $ultima_consulta->codigo }}</span></x-label>
                 @endif
             </div>
@@ -68,97 +68,82 @@
                         class="badge badge-pill font-normal text-lg">{{ $paciente->celular }}</span></x-label>
             </div>
         </div>
-
-        <div wire:model="panel" style="{{ $panel ? '' : 'display: none;' }}"
-            class="p-4 bg-gray-100 rounded-lg">
-            <!-- Botones de Navegación -->
-            <div x-data="{ activeSection: @entangle('activeSection') }" class="flex flex-wrap gap-2">
-                <button class="btn-nav" :class="{ 'active': activeSection == 'anamnesis' }"
-                    @click="activeSection = 'anamnesis'; $wire.anamnesis()"><h1 class="text-md">Anamnesis</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'antropometria' }"
-                    @click="activeSection = 'antropometria'; $wire.antropometria()"><h1 class="text-md">Antropometría</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'evaluacion' }"
-                    @click="activeSection = 'evaluacion'; $wire.evaluacion()"><h1 class="text-md">Evaluación</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'inspeccion' }"
-                    @click="activeSection = 'inspeccion'; $wire.inspeccion()"><h1 class="text-md">Inspección</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'movilizacion' }"
-                    @click="activeSection = 'movilizacion'; $wire.movilizacion()"><h1 class="text-md">Palpación</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'examen' }"
-                    @click="activeSection = 'examen'; $wire.examen()"><h1 class="text-md">Pruebas</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'diagnostico' }"
-                    @click="activeSection = 'diagnostico'; $wire.diagnostico()"><h1 class="text-md">Diagnóstico</h1></button>
-                <button class="btn-nav" :class="{ 'active': activeSection === 'horario' }"
-                    @click="activeSection = 'horario'; $wire.horario()"><h1 class="text-md">Horarios</h1></button>
-            </div>
-
-            <!-- Paneles de contenido -->
-            <div>
-                <div wire:model="openan" style="{{ $openan ? 'active' : 'display: none;' }}" class="panel-content">
-                    @livewire('Anamnesis-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openantro" style="{{ $openantro ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('antropometria-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openval" style="{{ $openval ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('evaluacion-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openins" style="{{ $openins ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('inspeccion-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openmov" style="{{ $openmov ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('movilizacion-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openexa" style="{{ $openexa ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('examen-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="opendiag" style="{{ $opendiag ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('diagnostico-create', ['consultaId' => $id])
-                </div>
-
-                <div wire:model="openhorario" style="{{ $openhorario ? '' : 'display: none;' }}" class="panel-content">
-                    @livewire('horario-create', ['consultaId' => $id])
+        
+        <div class="w-full">
+            <!-- Custom Tabs -->
+            <div x-data="{ activeTab: 'anamnesis' }"  class="border border-gray-300 rounded-lg shadow">
+                <ul class="flex flex-wrap border-b border-gray-300 bg-gray-100">
+                    <li class="mr-2">
+                        <a href="#anamnesis" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'anamnesis' }"
+                            @click.prevent="activeTab = 'anamnesis'">Anamnesis</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#antropometria" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'antropometria' }"
+                            @click.prevent="activeTab = 'antropometria'">Antropometría</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#evaluacion" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'evaluacion' }"
+                            @click.prevent="activeTab = 'evaluacion'">Evaluación</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#inspeccion" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'inspeccion' }"
+                            @click.prevent="activeTab = 'inspeccion'">Inspección</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#movilizacion" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'movilizacion' }"
+                            @click.prevent="activeTab = 'movilizacion'">Palpación</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#examen" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'examen' }"
+                            @click.prevent="activeTab = 'examen'">Pruebas</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#diagnostico" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'diagnostico' }"
+                            @click.prevent="activeTab = 'diagnostico'">Diagnóstico</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#horario" class="inline-block px-4 py-2 text-gray-600 hover:text-blue-600 focus:text-blue-600"
+                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'horario' }"
+                            @click.prevent="activeTab = 'horario'">Horarios</a>
+                    </li>
+                </ul>
+        
+                <div class="p-4">
+                    <div x-show="activeTab === 'anamnesis'" class="tab-content">
+                        @livewire('Anamnesis-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'antropometria'" class="tab-content">
+                        @livewire('antropometria-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'evaluacion'" class="tab-content">
+                        @livewire('evaluacion-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'inspeccion'" class="tab-content">
+                        @livewire('inspeccion-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'movilizacion'" class="tab-content">
+                        @livewire('movilizacion-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'examen'" class="tab-content">
+                        @livewire('examen-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'diagnostico'" class="tab-content">
+                        @livewire('diagnostico-create', ['consultaId' => $id])
+                    </div>
+                    <div x-show="activeTab === 'horario'" class="tab-content">
+                        @livewire('horario-create', ['consultaId' => $id])
+                    </div>
                 </div>
             </div>
         </div>
-
-        <style>
-            .btn-nav {
-                padding: 8px 16px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                background-color: #f9f9f9;
-                font-size: 14px;
-                font-weight: bold;
-                color: #333;
-                transition: background-color 0.3s, color 0.3s;
-                cursor: pointer;
-                white-space: nowrap;
-            }
-        
-            .btn-nav.active {
-                background-color: #4f46e5;
-                color: #fff;
-            }
-        
-            .btn-nav:hover {
-                background-color: #e2e8f0;
-            }
-        
-            .panel-content {
-                background-color: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                padding: 16px;
-            }
-        </style>
     </div>
-
 </div>
 
 
