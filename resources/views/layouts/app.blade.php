@@ -96,6 +96,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
                 }
             });
             console.log(param[0].data.id);
+            console.log(param[0].data);
         });
     </script>
 
