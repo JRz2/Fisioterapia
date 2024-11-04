@@ -163,7 +163,7 @@
                                 <div id="gallery-{{ $examen->id }}" class="gallery flex flex-wrap justify-center gap-4 mt-4">
                                     @foreach ($imgexamen as $imgExamen)
                                         <div class="flex-shrink-0">
-                                            <img src="{{ asset('storage/app/public/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/' . $imgExamen->ruta) }}">
+                                            <img src="{{ asset('storage/app/public/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/app/public/' . $imgExamen->ruta) }}">
                                         </div>
                                     @endforeach
                                 </div>
