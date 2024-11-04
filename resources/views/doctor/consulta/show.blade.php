@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                @livewire('reporteconsulta-datatable', ['consultaId' => $consulta->id])
+                                @livewire('ReporteConsulta-datatable', ['consultaId' => $consulta->id])
                             </div>
                         </div>
                     </div>

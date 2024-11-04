@@ -47,6 +47,11 @@ class ExamenCreate extends Component
                 }
             }
         }
+
+        $this->dispatch('swal:success', [
+            'title' => 'Pruebas',
+            'text' => 'Creado Correctamente',
+        ]);
     }
 
     public function validateNavBar($data)
