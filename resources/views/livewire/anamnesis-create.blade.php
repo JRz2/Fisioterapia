@@ -18,7 +18,7 @@
                 <x-textarea class="w-full h-32" wire:model="historia_actual"></x-textarea>
             </div>
         </div>
-        <div class="mt-4">
+        <div class="mt-4 text-center">
             <x-button wire:click="$parent.antropometria">Guardar</x-button>
         </div>
     </form>

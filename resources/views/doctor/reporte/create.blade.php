@@ -12,9 +12,11 @@
                 <table width=100%>
                     <tr>
                         <td align="left" width=5%>
-                            <h1><a class="mr-5 ">
+                            <h1><a href="{{route('doctor.consulta.show', $consulta->id)}}"  class="mr-5 ">
                                     <i class="fas fa-solid fa-reply-all fa-2x"></i>
-                                </a></h1>
+ 
+                                </a>
+                            </h1>
                         </td>
                         <td align="center">
                             <h1 style="font-size: 30px;"> INFORME KINESICO </h1>
@@ -22,105 +24,111 @@
                     </tr>
                 </table>
             </div>
-
             <div class="card-body">
                 <div class="informe-date">
-                    <strong>INFORME KINESICO</strong>
-                    <div class="row">
-                        <div>
-                            <label><strong>Paciente:</strong> {{$consulta->paciente->nombre}}</label>
-                            <label><strong>CI:</strong> {{$consulta->paciente->ci}}</label>
+                    <div class="p-4 bg-white shadow rounded-lg mb-4">
+                        <h2 class="text-lg font-bold mb-2">Información del Paciente</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="font-semibold"><strong>Paciente:</strong></label>
+                                <span class="block text-gray-700">{{$consulta->paciente->nombre}}</span>
+                            </div>
+                            <div>
+                                <label class="font-semibold"><strong>CI:</strong></label>
+                                <span class="block text-gray-700">{{$consulta->paciente->ci}}</span>
+                            </div>
+                            <div>
+                                <label class="font-semibold"><strong>Edad del Paciente:</strong></label>
+                                <span class="block text-gray-700">{{$consulta->paciente->edad}}</span>
+                            </div>
+                            <div>
+                                <label class="font-semibold"><strong>Género:</strong></label>
+                                <span class="block text-gray-700">{{$consulta->paciente->genero}}</span>
+                            </div>
                         </div>
-                        <div>
-                            <label><strong>Edad del Paciente:</strong> {{$consulta->paciente->edad}}</label>
-                            <label><strong>Género:</strong> {{$consulta->paciente->genero}}</label>
-                        </div>
-                    </div>             
+                    </div>
+                     
+                    <div>
+                        {!! Form::open(['route'=> 'doctor.reporte.store']) !!}
+                            <div class="max-w-3xl mx-auto p-6 bg-sky-50 rounded-lg shadow-md">
+                                <h2 class="text-2xl font-bold text-center mb-4">Informe de Rehabilitación</h2>
+                                
+                                <input name="consulta_id" type="text" value="{{ $consulta->id }}" hidden>
+                        
+                                <div class="mb-4">
+                                    <label class="block text-lg font-semibold mb-2"><strong>Fecha:</strong></label>
+                                    <input name="fecha" type="date" class="input-text w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                                </div>
+                        
+                                <div class="mb-4">
+                                    <label class="block text-lg font-semibold mb-2"><strong>Dx:</strong></label>
+                                    <input name="diagnostico" type="text" class="input-text w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                                </div>
+                        
+                                <label class="block text-lg font-semibold mb-2"><strong>Informe:</strong></label>
+                                <div id="editor-container-informe" class="border rounded-lg mb-4" style="height: 150px;"></div>
+                                <input type="hidden" name="informe" id="contenido-informe">
+                        
+                                <label class="block text-lg font-semibold mb-2"><strong>Rehabilitación fisioterapéutica y kinesiología:</strong></label>
+                                <div id="editor-container-rehabilitacion" class="border rounded-lg mb-4" style="height: 150px;"></div>
+                                <input type="hidden" name="rehabilitacion" id="contenido-rehabilitacion">
+                        
+                                <label class="block text-lg font-semibold mb-2"><strong>Recomendaciones:</strong></label>
+                                <div id="editor-container-recomendacion" class="border rounded-lg mb-4" style="height: 150px;"></div>
+                                <input type="hidden" name="recomendacion" id="contenido-recomendacion">
+                        
+                                <label class="block text-lg font-semibold mb-2"><strong>Nota:</strong></label>
+                                <div id="editor-container-nota" class="border rounded-lg mb-4" style="height: 150px;"></div>
+                                <input type="hidden" name="nota" id="contenido-nota">
+                        
+                                {!! Form::submit('Guardar Informe', ['class'=> 'w-full py-2 mt-4 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300']) !!}
+                            </div>
+                        {!! Form::close() !!}
+                    
+                    </div>           
                 </div>
-                @livewire('informe-create', ['consultaId' => $consulta->id])
             </div>
-            
-        </div>
+        </div>  
     </x-app-layout>
 @endsection
 
 @section('css')
-
-    <style>
-        .informe-container {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-
-        .informe-header {
-            margin-bottom: 20px;
-        }
-
-        .informe-header label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        .informe-body {
-            margin-top: 20px;
-        }
-
-        .informe-section {
-            margin-bottom: 15px;
-        }
-
-        .informe-section label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .input-text,
-        .input-textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: #fff;
-        }
-
-        .input-text {
-            height: 40px;
-            margin-bottom: 10px;
-        }
-
-        .input-textarea {
-            resize: vertical;
-            font-size: 14px;
-        }
-
-        .informe-container strong {
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 @endsection
 
 @section('js')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
-        console.log('Hi!');
-    </script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-    <script>
-        document.querySelectorAll('textarea').forEach((textarea) => {
-            ClassicEditor
-                .create(textarea, {
-                    toolbar: ['bold', 'italic', 'underline', 'bulletedList', 'numberedList']
-                })
-                .catch(error => {
-                    console.error(error);
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar Quill para cada editor
+            const editors = [
+                { container: '#editor-container-informe', hiddenInput: '#contenido-informe' },
+                { container: '#editor-container-rehabilitacion', hiddenInput: '#contenido-rehabilitacion' },
+                { container: '#editor-container-recomendacion', hiddenInput: '#contenido-recomendacion' },
+                { container: '#editor-container-nota', hiddenInput: '#contenido-nota' },
+            ];
+
+            editors.forEach(editor => {
+                const quill = new Quill(editor.container, {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline'], // botones conmutables
+                            [{ list: 'ordered' }, { list: 'bullet' }], // lista
+                        ]
+                    },
+                    placeholder: 'Escribe aquí...',
+                    height: 150
                 });
+
+                // Almacenar el contenido del editor en el input oculto
+                quill.on('text-change', function() {
+                    document.querySelector(editor.hiddenInput).value = quill.root.innerHTML;
+                    const content = quill.root.innerHTML;
+                    document.querySelector(editor.hiddenInput).value = content;
+                    console.log(`Contenido en ${editor.hiddenInput}:`, content);
+                });
+            });
         });
     </script>
 @endsection

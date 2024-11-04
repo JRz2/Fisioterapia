@@ -37,10 +37,10 @@
             </div>
             
         
-            <div class="mt-4">
-                    <x-button wire:click="$parent.movilizacion">
-                        Guardar
-                    </x-button>
+            <div class="mt-4 text-center">
+                <x-button wire:click="$parent.movilizacion">
+                    Guardar
+                </x-button>
             </div>   
         </form>
     </div>

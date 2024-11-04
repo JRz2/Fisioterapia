@@ -45,14 +45,19 @@ class PacienteController extends Controller
      */
     public function show(Paciente $paciente)
     {
-        //$antropometria = Antropometria::all();
         $consultas = $paciente->consulta;
-        //$antro = $consultas->antropometria;
-        //$antro = $paciente->consulta()->with('antropometria')->latest()->first();
-        //$antro = $paciente->consulta()->with('antropometria')->get();
+
+        $consulta = $paciente->consulta()
+        ->with('antropometria')
+        ->orderByDesc('fecha')
+        ->orderByDesc('id')
+        ->get();
+
+        $ultimaAntropometria = $consulta->firstWhere('antropometria', '!=', null)?->antropometria;
+
         $ultimaConsulta = $paciente->consulta()->latest()->first();
-        //dd($antro);
-        return view('doctor.paciente.show', compact('paciente', 'consultas', 'ultimaConsulta'));
+                
+        return view('doctor.paciente.show', compact('paciente', 'consultas', 'ultimaConsulta', 'ultimaAntropometria'));
     }
 
     /**

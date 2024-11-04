@@ -7,41 +7,26 @@
         </div>
 
         <form wire:submit="save">
-            <div style="display: flex;  gap:5%; margin:30px; height: 350px"> 
-            <div>
-                <div style="display: flex; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label>Localidad</x-label>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Localidad</x-label></label>
+                        <x-input wire:model="localidad" class="w-75"></x-input>
                     </div>
-                    <div>
-                        <x-input wire:model="localidad" style="align-self: flex-start; width: 250px;"></x-input>
-                    </div>
-                </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">   
-                        <x-label style="align-self: flex-start;">Aparicion</x-label>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Aparicion</x-label></label>
+                        <x-input wire:model="aparicion" class="w-75"></x-input>
                     </div>
-                    <div>
-                        <x-input wire:model="aparicion" style="width: 250px"></x-input>
-                    </div>
-                </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label style="align-self: flex-start;">Duracion</x-label>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Duracion</x-label></label>
+                        <x-input wire:model="duracion" class="w-75"></x-input>
                     </div>
-                    <div>
-                        <x-input wire:model="duracion" style="width: 250px"></x-input>
-                    </div>
-                </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label style="align-self: flex-start;">Intensidad</x-label>
-                    </div>
-                    <div>
-                        <x-select wire:model="intensidad" style="align-self: flex-start; width: 250px">
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Intensidad</x-label></label>
+                        <x-select wire:model="intensidad" class="w-75">
                             <option value="0 - Sin Dolor">0 - Sin Dolor</option>
                             <option value="1 - Dolor Leve">1 - Dolor Leve</option>
                             <option value="2 - Dolor Leve/Moderado">2 - Dolor Leve/Moderado</option>
@@ -55,49 +40,34 @@
                             <option value="10 - Dolor Insoportable">10 - Dolor Insoportable</option>
                         </x-select>
                     </div>
-                </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label>Caracter</x-label>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Caracter</x-label></label>
+                        <x-input wire:model="caracter" class="w-75"></x-input>
                     </div>
-                    <div>
-                        <x-input wire:model="caracter" style="align-self: flex-start; width: 250px"></x-input>
-                    </div>
-                </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label>Irradiacion</x-label>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Irradiacion</x-label></label>
+                        <x-input wire:model="irradiacion" class="w-75"></x-input>
                     </div>
-                    <div>
-                        <x-input wire:model="irradiacion" style="align-self: flex-start; width: 250px"></x-input>
+
+                    <div class="mb-3 d-flex justify-content-end">
+                        <label class="me-3"><x-label>Atenuantes</x-label></label>
+                        <x-input wire:model="atenuantes" class="w-75"></x-input>
                     </div>
                 </div>
 
-                <div style="display: flex; margin-top: 10px; justify-content: flex-end">
-                    <div style="margin-right: 25px">
-                        <x-label>Atenuantes</x-label>
-                    </div>
-                    <div>
-                        <x-input wire:model="atenuantes" style="align-self: flex-start; width: 250px"></x-input>
-                    </div>
+                <div class="col-md-6 text-center">
+                    <p>Localizacion de la zona del dolor</p>
+                    <img src="{{ asset('image/cuerpo.jpg') }}" class="img-fluid" style="height: auto; max-height: 300px;">
                 </div>
-            </div>  
-
-                <div>
-                    Localizacion de la zona del dolor
-                    <img src="{{ asset('image/cuerpo.jpg') }}" style="height: 300px">
-                </div>
-            
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <x-button wire:click="$parent.inspeccion">
                     Guardar
                 </x-button>
-            </div>    
+            </div>
         </form>
     </div>
-
 </div>

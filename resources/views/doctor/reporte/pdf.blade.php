@@ -93,27 +93,27 @@
             <div class="informe-body">
                 <div class="informe-section">
                     <label><strong>Dx:</strong></label>
-                    <p>{{ $diagnostico }}</p>
+                    <p>{{ $dx }}</p>
                 </div>
     
                 <div class="informe-section">
                     <label><strong>ANÁLISIS CINÉTICO FUNCIONAL:</strong></label>
-                    <p>{{ $informe }}</p>
+                    <p> {!! $informe !!}</p>
                 </div>
     
                 <div class="informe-section">
                     <label><strong>REHABILITACIÓN FISIOTERAPÉUTICA Y KINESIOLOGÍA:</strong></label>
-                    <p>{{ $rehabilitacion }}</p>
+                    <p>{!! $rehabilitacion !!}</p>
                 </div>
 
                 <div class="informe-section">
                     <label><strong>RECOMENDACIONES:</strong></label>
-                    <p>{{ $recomendacion }}</p>
+                    <p>{!! $recomendacion !!}</p>
                 </div>
 
                 <div class="informe-section">
                     <label><strong>NOTA:</strong></label>
-                    <p>{{ $nota }}</p>
+                    <p>{!! $nota !!}</p>
                 </div>
             </div>
         </div>

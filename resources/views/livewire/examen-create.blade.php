@@ -6,31 +6,45 @@
             </x-label>
         </div> 
         <form wire:submit="save">
-            <div class="row mt-4">
-                <div class="col-md-4">
+            <div>
+                <div>
                     <x-label>
                         EXAMENES LABORATORIALES
                     </x-label>
-                    <x-textarea wire:model="examen" class="form-control" rows="10"></x-textarea>
+                    <x-textarea wire:model="examen" class="w-full h-32"></x-textarea>
                 </div>
-                <div class="col-md-4">
+                <div>
                     <x-label>
                         PRUEBAS KINESICAS
                     </x-label>
-                    <x-textarea wire:model="prueba" class="form-control" rows="10"></x-textarea>
+                    <x-textarea wire:model="prueba" class="w-full h-32"></x-textarea>
                 </div>
-                <div class="col-md-4">
-                    <x-label>
-                        ANEXOS
-                    </x-label>
-                    <div>
-                        <input type="file" wire:model="ruta" multiple class="form-control">
-                        @error('ruta.*') <span class="error">{{ $message }}</span> @enderror
+
+                <div>
+                    <div class="row">
+                        <x-label class="col-md-2">
+                            ANEXOS
+                        </x-label>
+                        <input class="form-control" wire:model="ruta" multiple class="form-control"  type="file" id="file" style="display: none;">
+                        <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">
+                            <span wire:loading wire:target="ruta" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Seleccionar archivos
+                        </label>
+                    </div>
+
+                    <div class="d-flex flex-wrap mt-3">
+                        @if($ruta && is_array($ruta))
+                            @foreach($ruta as $image)
+                                <img src="{{ $image->temporaryUrl() }}" class="w-40 h-40" alt="Imagen cargada">
+                            @endforeach
+                        @else
+                            
+                        @endif
                     </div>
                 </div>
             </div>
                
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <x-button wire:click="$parent.diagnostico">
                     Guardar
                 </x-button>

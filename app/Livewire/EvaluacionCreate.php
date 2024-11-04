@@ -59,6 +59,10 @@ class EvaluacionCreate extends Component
             $evaluacion->save();
             //dd("guardar");
         }
+        $this->dispatch('swal:success', [
+            'title' => 'Evaluacion',
+            'text' => 'Creado Correctamente',
+        ]);
     } 
     
     public function validateNavBar($data)

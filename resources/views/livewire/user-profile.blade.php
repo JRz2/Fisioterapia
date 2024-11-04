@@ -4,7 +4,7 @@
             @if (strpos($user->imagen, 'image/') !== false)
                 <img src="{{ asset($user->imagen) }}" class="rounded-full w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover mb-4">
             @else
-                <img src="{{ asset('storage/' . $user->imagen) }}" class="rounded-full w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover mb-4">
+                <img src="{{ asset('storage/app/public/' . $user->imagen) }}" class="rounded-full w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover mb-4">
             @endif
             <div>
                 <label class="text-lg font-semibold text-gray-800">{{ $user->name }}</label>

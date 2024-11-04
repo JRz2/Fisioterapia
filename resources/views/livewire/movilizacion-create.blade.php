@@ -56,7 +56,7 @@
             </div>
             
 
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <x-button wire:click="$parent.prueba">
                     Guardar
                 </x-button>

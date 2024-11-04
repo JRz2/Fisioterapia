@@ -48,6 +48,10 @@ class InspeccionCreate extends Component
             $insp->save();
             //dd("guardar");
         }
+        $this->dispatch('swal:success', [
+            'title' => 'Inspeccion',
+            'text' => 'Creado Correctamente',
+        ]);
     }
 
     public function validateNavBar($data)

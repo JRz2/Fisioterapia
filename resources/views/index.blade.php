@@ -116,7 +116,7 @@
                         @if (strpos($user->imagen, 'image/') !== false)
                             <img src="{{ asset($user->imagen) }}" class="rounded-circle mb-2" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                         @else
-                            <img src="{{ asset('storage/' . $user->imagen) }}" class="rounded-circle mb-2" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                            <img src="{{ asset('storage/app/public/' . $user->imagen) }}" class="rounded-circle mb-2" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                         @endif                      
                         <div>
                           @forelse ($user->roles as $rol)

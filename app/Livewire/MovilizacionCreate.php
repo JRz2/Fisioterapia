@@ -59,6 +59,10 @@ class MovilizacionCreate extends Component
             $mov->save();
             //dd("guardar");
         }
+        $this->dispatch('swal:success', [
+            'title' => 'Palpacion',
+            'text' => 'Creado Correctamente',
+        ]);
     }
 
     public function validateNavBar($data)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Consulta;
+use App\Models\Reporte;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -44,7 +45,22 @@ class ReporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        Reporte::create([
+            'consulta_id' => $request->consulta_id,
+            'fecha' => $request->fecha,
+            'diagnostico' => $request->diagnostico,
+            'informe' => $request->informe,
+            'rehabilitacion' => $request->rehabilitacion,
+            'recomendacion' => $request->recomendacion,
+            'nota' => $request->nota,
+        ]);
+        $id = Consulta::find($request->consulta_id);
+        /*$this->dispatch('swal:success', [
+            'title' => 'Informe',
+            'text' => 'Creado Correctamente',
+        ]);*/
+        return redirect()->route('doctor.consulta.show', ['consulta' => $id]);
     }
 
     /**
@@ -79,29 +95,29 @@ class ReporteController extends Controller
         //
     }
 
-    public function pdf($consultaId)
+    public function pdf($id)
     {   
+
         App::setLocale('es');
-        $consulta = Consulta::findOrFail($consultaId);
-        
+        $reporte = Reporte::find($id);
         $data = [
-            'nombre' => $consulta->paciente->nombre,
-            'paterno' => $consulta->paciente->paterno,
-            'materno' => $consulta->paciente->materno,
-            'ci' => $consulta->paciente->ci,
-            'edad' => $consulta->paciente->edad,
-            'genero' => $consulta->paciente->genero,
-            'diagnostico' => $consulta->diagnostico->diagnostico ?? 'Sin diagnostico',
-            'informe' => $consulta->reporte->informe ?? 'Sin analisis',
-            'rehabilitacion' => $consulta->reporte->rehabilitacion ?? 'Sin rehabilitacion',
-            'recomendacion' => $consulta->reporte->recomendacion ?? 'Sin recomendaciones',
-            'nota' => $consulta->reporte->nota ?? 'Sin nota',
-            'fecha' => Carbon::parse($consulta->reporte->fecha ?? '')
+            'nombre' => $reporte->consulta->paciente->nombre,
+            'paterno' => $reporte->consulta->paciente->paterno,
+            'materno' => $reporte->consulta->paciente->materno,
+            'ci' => $reporte->consulta->paciente->ci,
+            'edad' => $reporte->consulta->paciente->edad,
+            'genero' => $reporte->consulta->paciente->genero,
+            'diagnostico' => $reporte->consulta->diagnostico->diagnostico ?? 'Sin diagnostico',
+            'dx' => $reporte->diagnostico ?? 'Sin diagnostico',
+            'informe' => $reporte->informe ?? 'Sin analisis',
+            'rehabilitacion' => $reporte->rehabilitacion ?? 'Sin rehabilitacion',
+            'recomendacion' => $reporte->recomendacion ?? 'Sin recomendaciones',
+            'nota' => $reporte->nota ?? 'Sin nota',
+            'fecha' => Carbon::parse($reporte->reporte->fecha ?? '')
                 ->locale('es')
                 ->translatedFormat('d \d\e F \d\e Y'),
         ];
         $pdf = Pdf::loadView('doctor.reporte.pdf', $data);
         return $pdf->stream(); 
-        //return $pdf->download('reporte.pdf');
     }
 }

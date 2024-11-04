@@ -17,7 +17,7 @@
                                 </a></h1>
                         </td>
                         <td align="center">
-                            <h1 style="font-size: 30px;"> CODIGO DE CONSULTA {{ $consulta->codigo }} </h1>
+                            <h1 style="font-size: 30px;"> CONSULTA {{ $consulta->codigo }} /  {{ $consulta->fecha }}</h1>
                         </td>
                     </tr>
                 </table>
@@ -51,7 +51,7 @@
                                             <img src="{{ asset($paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
                                         @else
-                                            <img src="{{ asset('storage/' . $paciente->imagen) }}" class="rounded-full"
+                                            <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
                                         @endif
                                     </div>
@@ -91,42 +91,24 @@
                                                 class="badge badge-pill font-normal text-base">{{ $paciente->celular }}</span>
                                         </x-label>
                                     </div>
-
-                                    <div>
-                                        <x-label class="text-base">
-                                            Facha: <span
-                                                class="badge badge-pill font-normal text-base">{{ $consulta->fecha }}</span>
-                                        </x-label>
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">
+                                @livewire('reporteconsulta-datatable', ['consultaId' => $consulta->id])
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        @if ($diagnostico)
+                        @if ($diagnostico && $diagnostico->diagnostico)
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-outline card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Diagnostico y plan de tratamientos</h3>
+                                            <h3 class="card-title">Diagnostico</h3>
                                         </div>
                                         <div class="card-body">
                                             <x-textarea class="w-full resize-none" style="height: 150px" disabled>
                                                 {{ $diagnostico->diagnostico }}
-                                            </x-textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card card-outline card-primary">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Plan de tratamientos</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <x-textarea class="w-full resize-none" style="height: 150px" disabled>
-                                                {{ $diagnostico->plan }}
                                             </x-textarea>
                                         </div>
                                     </div>
@@ -141,6 +123,32 @@
                                     <p>No hay diagnóstico disponible para esta consulta.</p>
                                 </div>
                             </div>
+                        @endif 
+                        
+                        @if ($diagnostico && $diagnostico->plan)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-outline card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Plan de tratamiento</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <x-textarea class="w-full resize-none" style="height: 150px" disabled>
+                                                {{ $diagnostico->plan }}
+                                            </x-textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Plan de tratamiento</h3>
+                                </div>
+                                <div class="row card-body">
+                                    <p>No hay plan de tratamiento disponible para esta consulta.</p>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -151,19 +159,18 @@
                                 <h3 class="card-title">Imágenes del Examen</h3>
                             </div>
 
-                            @if ($imgexamen)
-                                <div
-                                    style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px">
+                            @if($imgexamen)
+                                <div id="gallery-{{ $examen->id }}" class="gallery flex flex-wrap justify-center gap-4 mt-4">
                                     @foreach ($imgexamen as $imgExamen)
-                                        <a href="{{ asset('storage/' . $imgExamen->ruta) }}" data-lightbox="imagen-1">
-                                            <img src="{{ asset('storage/' . $imgExamen->ruta) }}" alt="Imagen de la sesión"
-                                                style="width: 200px; height: 200px;">
-                                        </a>
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ asset('storage/app/public/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/' . $imgExamen->ruta) }}">
+                                        </div>
                                     @endforeach
                                 </div>
                             @else
-                                <p>No hay imágenes disponibles para este examen.</p>
+                                <p class="text-gray-500">No hay imágenes disponibles para esta sesión.</p>
                             @endif
+
                         </div>
                     </div>
                 </div>

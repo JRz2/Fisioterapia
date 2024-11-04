@@ -7,25 +7,25 @@
         </div>
 
         <form wire:submit="save">
-            <div class="row mt-4">
-                <div class="col-md-4">
+            <div>
+                <div>
                     <x-label>
                         DIAGNOSTICO SOBRE LA CONSULTA
                     </x-label>
                     
-                    <x-textarea wire:model="diagnostico" class="form-control" rows="10"></x-textarea>
+                    <x-textarea wire:model="diagnostico" class="w-full h-32"></x-textarea>
                 </div>
-                <div class="col-md-4">
+                <div>
                     <x-label>
                         PLAN DE TRATAMIENTO
                     </x-label>
                     
-                    <x-textarea wire:model="plan" class="form-control" rows="10"></x-textarea>
+                    <x-textarea wire:model="plan" class="w-full h-32"></x-textarea>
                 </div>
             </div>
             
     
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <x-button wire:click="$parent.diagnostico">
                     Guardar
                 </x-button>

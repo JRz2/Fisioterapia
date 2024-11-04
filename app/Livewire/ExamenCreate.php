@@ -13,7 +13,7 @@ class ExamenCreate extends Component
     public $examen;
     public $prueba;
     public $consultaId;
-    public $ruta;
+    public $ruta = [];
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
@@ -40,7 +40,6 @@ class ExamenCreate extends Component
             if ($this->ruta) {
                 foreach ($this->ruta as $img) {
                     $path = $img->store('examens', 'public'); 
-    
                     Imgexamen::create([
                         'examen_id' => $examen->id, 
                         'ruta' => $path,

@@ -12,10 +12,10 @@
                     <input wire:model="diagnostico" type="text" class="input-text">
                 </div>
 
-                <div class="informe-section">
-                    <label><strong>Análisis Cinético Funcional:</strong></label>
-                    <textarea wire:model="informe"></textarea>
-                </div>
+           
+
+                <div id="editor-container" style="height: 300px;"></div>
+                <input type="hidden" wire:model="informe" id="contenido">
 
                 <div class="informe-section">
                     <label><strong>Rehabilitación fisioterapéutica y kinesiología:</strong></label>

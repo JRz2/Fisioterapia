@@ -17,63 +17,30 @@ class HorarioEdit extends Component
 
     public function mount($consultaId)
     {
-        $this->consultaId = $consultaId;
+        // Cargar las sesiones programadas para la consulta específica
         $this->horarios = Horario::where('consulta_id', $consultaId)->get();
     }
 
-    public function edit($horarioId)
+    public function edit($id)
     {
-        $this->selectedHorario = Horario::find($horarioId);
-        $this->nuevaFecha = $this->selectedHorario->fecha_inicio;
-
-        // Buscar todas las sesiones similares (por ejemplo, todos los lunes)
-        $this->diasSimilares = Horario::where('dia', $this->selectedHorario->dia)
-                                     ->where('consulta_id', $this->consultaId)
-                                     ->get()->toArray();
-    }
-
-    public function cancelEdit()
-    {
-        $this->reset(['selectedHorario', 'nuevaFecha', 'aplicarATodas', 'diasSeleccionados']);
+        // Seleccionar la sesión a editar
+        $this->selectedHorario = Horario::find($id);
+        $this->nuevaFecha = $this->selectedHorario->fecha_inicio; // Inicializar con la fecha actual
     }
 
     public function update()
     {
+        // Validar que la nueva fecha no esté vacía
         $this->validate([
             'nuevaFecha' => 'required|date',
         ]);
 
-        if ($this->aplicarATodas) {
-            // Actualizar todas las sesiones del mismo día
-            Horario::where('dia', $this->selectedHorario->dia)
-                   ->where('consulta_id', $this->consultaId)
-                   ->update(['fecha_inicio' => $this->nuevaFecha]);
+        // Actualizar la sesión seleccionada
+        $this->selectedHorario->update(['fecha_inicio' => $this->nuevaFecha]);
 
-            $this->dispatchBrowserEvent('swal:success', [
-                'message' => 'Todas las sesiones de ' . ucfirst($this->selectedHorario->dia) . ' se han actualizado con éxito.',
-            ]);
-        } elseif (count($this->diasSeleccionados) > 0) {
-            // Actualizar solo los días seleccionados
-            Horario::whereIn('id', $this->diasSeleccionados)
-                   ->update(['fecha_inicio' => $this->nuevaFecha]);
-
-            $this->dispatchBrowserEvent('swal:success', [
-                'message' => 'Las sesiones seleccionadas se han actualizado con éxito.',
-            ]);
-        } else {
-            // Actualizar solo la sesión seleccionada
-            $this->selectedHorario->update([
-                'fecha_inicio' => $this->nuevaFecha,
-            ]);
-
-            $this->dispatchBrowserEvent('swal:success', [
-                'message' => 'La sesión se ha actualizado con éxito.',
-            ]);
-        }
-
-        // Limpiar el formulario y recargar la lista
-        $this->reset(['selectedHorario', 'nuevaFecha', 'aplicarATodas', 'diasSeleccionados']);
-        $this->horarios = Horario::where('consulta_id', $this->consultaId)->get();
+        // Limpiar campos después de la actualización
+        $this->reset(['selectedHorario', 'nuevaFecha']);
+        session()->flash('message', 'Sesión actualizada con éxito.');
     }
 
     public function render()

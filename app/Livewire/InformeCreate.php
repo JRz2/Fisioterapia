@@ -17,6 +17,16 @@ class InformeCreate extends Component
     public $nota;
     public $fecha;
 
+
+    public $contenido;
+
+    protected $listeners = ['contenidoActualizado' => 'updateContenido'];
+
+    public function updateContenido($contenido)
+    {
+        $this->contenido = $contenido;
+    }
+
     public function mount($consultaId)
     {
         $this->consulta = Consulta::find($consultaId);

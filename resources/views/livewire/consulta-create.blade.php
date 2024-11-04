@@ -3,7 +3,7 @@
         <table width=100%>
             <tr>
                 <td align="center">
-                    <h1 style="font-size: 30px;"> CONSULTA EXPEDIENTE </h1>
+                    <h1 style="font-size: 30px;"> NUEVA CONSULTA </h1>
                 </td>
             </tr>
         </table>
@@ -27,17 +27,6 @@
                     <x-label class="text-lg">Fecha: <span
                             class="badge badge-pill font-normal text-lg">{{ $ultima_consulta->fecha }}</span></x-label>
                 @endif
-            </div>
-            <div class="col-md-3">
-                <div wire:model="btnterminar" class="float-end"
-                    style="{{ $btnterminar ? '' : 'display: none;' }}; margin-left: auto">
-                    <a class="px-4 py-2 text-md font-bold text-white bg-green-600 rounded-lg 
-                hover:bg-green-700 hover:no-underline"
-                        href="{{ route('doctor.paciente.show', $paciente->id) }}">
-                        <i class="fas fa-solid fa-check fa-1x mr-2"></i>
-                        Terminar Consulta
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -66,6 +55,17 @@
             <div class="col-md-3">
                 <x-label class="text-lg">Celular: <span
                         class="badge badge-pill font-normal text-lg">{{ $paciente->celular }}</span></x-label>
+            </div>
+            <div class="col-md-3">
+                <div wire:model="btnterminar" 
+                    style="{{ $btnterminar ? '' : 'display: none;' }}; margin-left: auto">
+                    <a class="px-4 py-2 text-md font-bold text-white bg-green-600 rounded-lg 
+                hover:bg-green-700 hover:no-underline"
+                        href="{{ route('doctor.paciente.show', $paciente->id) }}">
+                        <i class="fas fa-solid fa-check fa-1x mr-2"></i>
+                        Terminar Consulta
+                    </a>
+                </div>
             </div>
         </div>
         

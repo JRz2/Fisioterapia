@@ -1,5 +1,11 @@
 <div class="container my-5">
-    
+    <h3 class="text-center mb-4">Modificar Sesiones Programadas</h3>
+
+    @if (session()->has('message'))
+        <div class="alert alert-success text-center">
+            {{ session('message') }}
+        </div>
+    @endif
 
     <!-- Lista de sesiones programadas -->
     <div class="row justify-content-center">
@@ -27,35 +33,14 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                    <div class="card-header bg-secondary text-white">
                         <h5 class="mb-0">Modificar Fecha para {{ ucfirst($selectedHorario->dia) }}</h5>
-                        <button wire:click="cancelEdit" class="btn btn-sm btn-danger">Cancelar</button>
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
                             <label for="nuevaFecha">Nueva Fecha</label>
                             <input type="date" wire:model="nuevaFecha" class="form-control" required>
                         </div>
-
-                        <!-- Casilla de verificación -->
-                        <div class="form-check mb-3">
-                            <input type="checkbox" wire:model="aplicarATodas" class="form-check-input" id="aplicarATodas">
-                            <label class="form-check-label" for="aplicarATodas">Aplicar a todas las sesiones de {{ ucfirst($selectedHorario->dia) }}</label>
-                        </div>
-
-                        <!-- Selector para seleccionar días específicos -->
-                        <div class="form-group mb-3">
-                            <label for="diasSeleccionados">Selecciona los días específicos (si no deseas aplicar a todos)</label>
-                            <select wire:model="diasSeleccionados" multiple class="form-control" id="diasSeleccionados">
-                                @foreach ($diasSimilares as $dia)
-                                    <option value="{{ $dia['id'] }}">
-                                        {{ \Carbon\Carbon::parse($dia['fecha_inicio'])->format('d/m/Y') }} ({{ ucfirst($dia['dia']) }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="text-muted">Usa Ctrl (Cmd en Mac) para seleccionar múltiples días.</small>
-                        </div>
-
                         <div class="d-flex justify-content-end">
                             <button wire:click="update" class="btn btn-primary">Actualizar Sesión</button>
                         </div>

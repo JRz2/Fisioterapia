@@ -28,7 +28,7 @@ class UserDatatable extends DataTableComponent
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 
                     ? asset($row->imagen) 
-                    : asset('storage/' . $row->imagen),  
+                    : asset('storage/app/public/' . $row->imagen),  
             ])),  
             Column::make("Name", "name")->sortable(),
             Column::make("Email", "email")->collapseOnTablet()->sortable()->searchable(),
