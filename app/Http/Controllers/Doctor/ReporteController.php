@@ -119,5 +119,6 @@ class ReporteController extends Controller
         ];
         $pdf = Pdf::loadView('doctor.reporte.pdf', $data);
         return $pdf->stream(); 
+        //return $pdf->download('reporte.pdf');
     }
 }
