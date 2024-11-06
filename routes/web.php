@@ -37,6 +37,7 @@ Route::view('/craneo', 'doctor.model.craneo');
 Route::view('/musculo ', 'doctor.model.musculo');
 Route::view('/minferior', 'doctor.model.minferior');
 Route::view('/msuperior', 'doctor.model.msuperior');
+Route::view('/mcara', 'doctor.model.mcara');
 
 
 

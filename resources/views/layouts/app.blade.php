@@ -18,13 +18,13 @@
     <!-- Styles -->
     @livewireStyles
     <script src="
-    https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
-    "></script>
+        https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
+        "></script>
     <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
 " rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin_custom.css">
 </head>
 
 <body class="font-sans antialiased">
@@ -68,6 +68,23 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#1d9a06',
                 background: '#def4da',
+            });
+        });
+    </script>
+
+    <script>
+        Livewire.on('swal:loading', param => {
+            Swal.fire({
+                title: param.title || 'Generando consulta',
+                text: param.text || 'Por favor, espere...',
+                icon: 'info',
+                showConfirmButton: false,
+                background: '#def4da',
+                didOpen: () => {
+                    Swal.showLoading(); 
+                },
+                timer: 5000, 
+                timerProgressBar: true,
             });
         });
     </script>

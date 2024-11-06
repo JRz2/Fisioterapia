@@ -22,12 +22,16 @@
             </table>
         </div>
     </div>
-
-    <h2 class="text-secondary" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Consultas de Hoy</h2>
+    @livewire('create-consulta')
+    <div style="text-align: center">
+        <h2 class="text-secondary" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Consultas de Hoy</h2>
+    </div>
+    
     <table class="table table-striped table-bordered">
         <thead class="thead-light">
             <tr>
                 <th>ID</th>
+                <th>Codigo</th>
                 <th>Paciente</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -42,8 +46,9 @@
                 @foreach ($consultasHoy as $consulta)
                 <tr>
                     <td>{{ $consulta->id }}</td>
-                    <td>{{ $consulta->paciente->nombre }}</td>
-                    <td>{{ $consulta->created_at }}</td>
+                    <td>{{ $consulta->codigo }}</td>
+                    <td>{{ $consulta->paciente->nombre }} {{ $consulta->paciente->paterno }} {{ $consulta->paciente->materno }}</td>
+                    <td>{{ $consulta->fecha }}</td>
                     <td>
                         <a class="btn btn-info btn-sm" 
                         href="{{ route('doctor.consulta.show', $consulta->id) }}">
@@ -56,11 +61,14 @@
         </tbody>
     </table>
 
-    <h2 class="text-secondary" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Todas las Consultas</h2>
+    <div style="text-align: center">
+        <h2 class="text-secondary" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Todas las Consultas</h2>
+    </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-light">
             <tr>
                 <th>ID</th>
+                <th>Codigo</th>
                 <th>Paciente</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -70,8 +78,9 @@
             @foreach ($consultas as $consulta)
             <tr>
                 <td>{{ $consulta->id }}</td>
-                <td>{{ $consulta->paciente->nombre }}</td>
-                <td>{{ $consulta->created_at }}</td>
+                <td>{{$consulta->codigo}}</td>
+                <td>{{ $consulta->paciente->nombre }} {{ $consulta->paciente->paterno }} {{ $consulta->paciente->materno }} </td>
+                <td>{{ $consulta->fecha }}</td>
                 <td>
                     <a class="btn btn-info btn-sm" 
                     href="{{ route('doctor.consulta.show', $consulta->id) }}">
@@ -91,4 +100,5 @@
 @stop
 
 @section('js')
+
 @stop

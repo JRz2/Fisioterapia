@@ -395,6 +395,11 @@ return [
             'icon'    => 'fas fa-shield',
             'submenu' => [
                 [
+                    'text'    => 'Cara',
+                    'icon'    => 'fas fa-face-smile',
+                    'url'     => '/mcara',
+                ],
+                [
                     'text'    => 'Inferior',
                     'icon'    => 'fas fa-socks',
                     'url'     => '/minferior',

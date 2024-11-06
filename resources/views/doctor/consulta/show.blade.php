@@ -94,6 +94,9 @@
                                 </div>
                             </div>
                             <div class="card-footer">
+                                <p>
+                                    Informes
+                                </p>
                                 @livewire('ReporteConsulta-datatable', ['consultaId' => $consulta->id])
                             </div>
                         </div>
