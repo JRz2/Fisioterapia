@@ -78,13 +78,11 @@ class CreatePaciente extends Component
             'genero' => 'required|string',
             'edad' => 'required|integer', 
             'celular' => 'nullable|integer', 
-            'imagen' => 'file|max:10240'
         ], [
             'nombre' => 'Nombre requerido',
             'paterno' => 'Apellido Paterno requerido',
             'edad' => 'Edad requerido',
             'genero' => 'Genero requerido',
-            'imagen' => 'Imagen requerido'
         ]);
         if ($this->editMode) {
             $paciente = Paciente::find($this->paciente_edit_id);
@@ -126,14 +124,11 @@ class CreatePaciente extends Component
                 $paciente->imagen = $this->imagen->store('pacientes');  
                 $paciente->save();  
             } else{
-                $this->imagen = "image/user.png"; 
-                $paciente->imagen = $this->imagen;  
-                $paciente->save();  
-                
+                $this->imagen = "image/user.png";
+                $paciente->imagen = $this->imagen;
+                $paciente->save(); 
             }
                     
-            
-
             $this->imagenkey = rand();
             $this->dispatch('swal:success', [
                 'title' => 'Paciente',
