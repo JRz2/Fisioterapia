@@ -24,8 +24,7 @@ class ReporteDatatable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
-                ->sortable(),
+            Column::make("Id", "id")->sortable()->collapseOnTablet()->searchable(),
             Column::make("Fecha", "fecha")
                 ->sortable(),
             Column::make("Diagnostico", "diagnostico")

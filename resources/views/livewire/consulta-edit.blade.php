@@ -3,7 +3,7 @@
         <table width=100%>
             <tr>
                 <td align="center">
-                    <h1 style="font-size: 30px;"> {{ $editMode ? 'Actualizar Consulta' : 'Nueva Consulta' }} </h1>
+                    <h1 style="font-size: 30px;"> NUEVA CONSULTA </h1>
                 </td>
             </tr>
         </table>
@@ -117,28 +117,28 @@
         
                 <div class="p-4">
                     <div x-show="activeTab === 'anamnesis'" class="tab-content">
-                        @livewire('Anamnesis-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'antropometria'" class="tab-content">
-                        @livewire('antropometria-create', ['consultaId' => $id])
+                       
                     </div>
                     <div x-show="activeTab === 'evaluacion'" class="tab-content">
-                        @livewire('evaluacion-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'inspeccion'" class="tab-content">
-                        @livewire('inspeccion-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'movilizacion'" class="tab-content">
-                        @livewire('movilizacion-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'examen'" class="tab-content">
-                        @livewire('examen-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'diagnostico'" class="tab-content">
-                        @livewire('diagnostico-create', ['consultaId' => $id])
+                        
                     </div>
                     <div x-show="activeTab === 'horario'" class="tab-content">
-                        @livewire('horario-create', ['consultaId' => $id])
+                        
                     </div>
                 </div>
             </div>

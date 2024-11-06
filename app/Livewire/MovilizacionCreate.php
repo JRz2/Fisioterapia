@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Consulta;
 use App\Models\Movilizacion;
 use Livewire\Component;
 
@@ -19,6 +18,7 @@ class MovilizacionCreate extends Component
     public $ultimaConsultaId;
     public $consulta_id;
     public $consultaId;
+    public $editMode = false;
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
@@ -31,21 +31,27 @@ class MovilizacionCreate extends Component
             $this->balance_muscular = $mov->balance_muscular;
             $this->mensuras = $mov->mensuras;
             $this->perimetros = $mov->perimetros;
+            $this->editMode = true;
         }
     }
 
-    public function save(){
-
-        $existemov = Movilizacion::where('consulta_id',$this->consultaId)->first();
-        if ($existemov){
-            $this->contractura = $existemov->contractura;
-            $this->retraccion = $existemov->retraccion;
-            $this->gatillo = $existemov->gatillo;
-            $this->goniometria = $existemov->goniometria;
-            $this->balance_muscular = $existemov->balance_muscular;
-            $this->mensuras = $existemov->mensuras;
-            $this->perimetros = $existemov->perimetros;
-            //dd("actualizar");
+    public function save()
+    {
+        if ($this->editMode){
+            $movilizacion = Movilizacion::where('consulta_id',$this->consultaId)->first();
+            $movilizacion->update([
+                'contractura' => $this->contractura,
+                'retraccion' => $this->retraccion,
+                'gatillo' => $this->gatillo,
+                'goniometria' => $this->goniometria,
+                'balance_muscular' => $this->balance_muscular,
+                'mensuras' => $this->mensuras,
+                'perimetros' => $this->perimetros,
+            ]);
+            $this->dispatch('swal:success', [
+                'title' => 'Palpacion',
+                'text' => 'Actualizado Correctamente',
+            ]);
         }else{
             $mov = new Movilizacion();
             $mov->consulta_id = $this->consultaId;
@@ -57,12 +63,13 @@ class MovilizacionCreate extends Component
             $mov->mensuras = $this->mensuras;
             $mov->perimetros = $this->perimetros;
             $mov->save();
-            //dd("guardar");
+            $this->dispatch('swal:success', [
+                'title' => 'Palpacion',
+                'text' => 'Creado Correctamente',
+            ]);
+            $this->editMode = true;
         }
-        $this->dispatch('swal:success', [
-            'title' => 'Palpacion',
-            'text' => 'Creado Correctamente',
-        ]);
+
     }
 
     public function validateNavBar($data)

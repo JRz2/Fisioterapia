@@ -14,6 +14,7 @@ class ExamenCreate extends Component
     public $prueba;
     public $consultaId;
     public $ruta = [];
+    public $editMode = false;
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
@@ -21,17 +22,23 @@ class ExamenCreate extends Component
         if ($exa){
             $this->examen = $exa->examen;
             $this->prueba = $exa->prueba;
+            $this->editMode = true;
         }
     }
 
-    public function save(){
-
-        $existemov = Examen::where('consulta_id',$this->consultaId)->first();
-        if ($existemov){
-            $this->examen = $existemov->examen;
-            $this->prueba = $existemov->prueba;
+    public function save()
+    {
+        if ($this->editMode){
+            $examen = Examen::where('consulta_id',$this->consultaId)->first();
+            $examen->update([
+                'examen' => $this->examen,
+                'prueba' => $this->prueba,
+            ]);
+            $this->dispatch('swal:success', [
+                'title' => 'Pruebas',
+                'text' => 'Actualizado Correctamente',
+            ]);
         }else{
-
             $examen = Examen::create([
                 'consulta_id' => $this->consultaId,
                 'examen' => $this->examen,
@@ -46,12 +53,12 @@ class ExamenCreate extends Component
                     ]);
                 }
             }
+            $this->dispatch('swal:success', [
+                'title' => 'Pruebas',
+                'text' => 'Creado Correctamente',
+            ]);
+            $this->editMode = true;
         }
-
-        $this->dispatch('swal:success', [
-            'title' => 'Pruebas',
-            'text' => 'Creado Correctamente',
-        ]);
     }
 
     public function validateNavBar($data)

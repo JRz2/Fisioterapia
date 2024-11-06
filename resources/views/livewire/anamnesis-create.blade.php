@@ -1,4 +1,4 @@
-<div >
+<div>
     <div>
         <x-label class="text-lg">ANAMNESIS</x-label>
     </div>
@@ -19,7 +19,11 @@
             </div>
         </div>
         <div class="mt-4 text-center">
-            <x-button wire:click="$parent.antropometria">Guardar</x-button>
+            <x-button>
+                <span wire:loading wire:target="save" class="spinner-border spinner-border-sm"
+                    role="status" aria-hidden="true"></span>
+                <span class="ml-2">{{ $editMode ? 'Actualizar' : 'Guardar' }} </span>
+            </x-button>
         </div>
     </form>
 </div>

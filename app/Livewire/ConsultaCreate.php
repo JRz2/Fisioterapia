@@ -9,6 +9,8 @@ use Livewire\Component;
 
 class ConsultaCreate extends Component
 {
+    public $editMode = false;
+    
     public $activeSection = 'anamnesis';
 
     protected $listeners = ['confirmValidate'];
@@ -240,15 +242,9 @@ class ConsultaCreate extends Component
         $consulta = Consulta::find($this->consultaId);
         $paciente = $consulta->paciente;
         $this->paciente = $paciente;
-        //dd($paciente);
-        //$pacienteId = $request->query('paciente');
-        //dd($pacienteId);
-        // $this->paciente = Paciente::findOrFail($pacienteId);
-        // $this->paciente_id = $this->pacienteId;
         date_default_timezone_set('America/La_Paz');
         $this->fecha = Carbon::now()->toDateString();
 
-        //$this->ultima_consulta = Consulta::where('paciente_id', $this->paciente_id)
         $this->ultima_consulta = Consulta::where('paciente_id', $consulta->paciente_id)
             ->latest()
             ->first() ?? new Consulta;;

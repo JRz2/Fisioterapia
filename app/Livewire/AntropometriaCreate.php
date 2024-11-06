@@ -4,25 +4,34 @@ namespace App\Livewire;
 
 use App\Models\Antropometria;
 use App\Models\Consulta;
-use App\Models\Signo;
-use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
 class AntropometriaCreate extends Component
 {
-    public $talla,
-        $peso,
-        $imc,
-        $pi,
-        $pa,
-        $sp,
-        $fc;
+    public $talla, $peso, $imc, $pi,
+        $pa, $sp, $fc;
     public $categoriaPeso ="";
     public $colorCategoriaPeso;
     public $ultimaConsultaId;
     public $consulta_id;
     public $consultaId;
+    public $editMode = false;
 
+    public function mount($consultaId){
+        $this->consultaId = $consultaId;
+        $an = Antropometria::where('consulta_id',$this->consultaId)->first();
+        if ($an){
+            $this->talla = $an->talla;
+            $this->peso = $an->peso;
+            $this->imc = $an->imc;
+            $this->pi = $an->pi;
+            $this->pa = $an->pa;
+            $this->sp = $an->sp;
+            $this->fc = $an->fc;
+            $this->editMode = true;
+        }
+    }
+    
     public function calcularIMC()
     {
         if ($this->talla > 0 && $this->peso > 0) {
@@ -49,13 +58,23 @@ class AntropometriaCreate extends Component
     }
     
 
-    public function save(){
-        //dd($this->consultaId);
-        $existeantro = Antropometria::where('consulta_id',$this->consultaId)->first();
-        if ($existeantro){
-            $this->talla = $existeantro->talla;
-            $this->peso = $existeantro->peso; 
-            //dd("actualizar");
+    public function save()
+    {
+        if ($this->editMode){
+            $an = Antropometria::where('consulta_id', $this->consultaId)->first();
+            $an->update([
+                'talla' => $this->talla,
+                'peso' => $this->peso,
+                'imc' => $this->imc,
+                'pe' => $this->pi,
+                'pa' => $this->pa,
+                'sp' => $this->sp,
+                'fc' => $this->fc,
+            ]);
+            $this->dispatch('swal:success', [
+                'title' => 'Antropometria',
+                'text' => 'Actualizado Correctamente',
+            ]);
         }else{
             $antropometria = new Antropometria();
             $antropometria->consulta_id = $this->consultaId;
@@ -67,17 +86,12 @@ class AntropometriaCreate extends Component
             $antropometria->sp = $this->sp; 
             $antropometria->fc = $this->fc;
             $antropometria->save();
-            //dd("guardar");
+            $this->dispatch('swal:success', [
+                'title' => 'Antropometria',
+                'text' => 'Creado Correctamente',
+            ]);
+            $this->editMode = true;
         }
-
-        $this->dispatch('swal:success', [
-            'title' => 'Antropometria',
-            'text' => 'Creado Correctamente',
-        ]);
-
-        $ultimaConsulta = Consulta::latest('id')->first();
-        $this->consulta_id = $ultimaConsulta->id;
-
     }    
 
     public function validateNavBar($data)
@@ -90,12 +104,4 @@ class AntropometriaCreate extends Component
         return view('livewire.antropometria-create');
     }
 
-    public function mount($consultaId){
-        $this->consultaId = $consultaId;
-        $existeantro = Antropometria::where('consulta_id',$this->consultaId)->first();
-        if ($existeantro){
-            $this->talla = $existeantro->talla;
-            $this->peso = $existeantro->peso;
-        }
-    }
 }

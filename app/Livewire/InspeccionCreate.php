@@ -16,6 +16,7 @@ class InspeccionCreate extends Component
     public $ultimaConsultaId;
     public $consulta_id;
     public $consultaId;
+    public $editMode = false;
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
@@ -25,19 +26,25 @@ class InspeccionCreate extends Component
             $this->plano_anterior = $insp->plano_anterior;
             $this->plano_lateral = $insp->plano_lateral;
             $this->plano_posterior = $insp->plano_posterior;
+            $this->editMode = true;
         }
     }
 
 
-    public function save(){
-
-        $existeinsp = Inspeccion::where('consulta_id',$this->consultaId)->first();
-        if ($existeinsp){
-            $this->observacion = $existeinsp->observacion;
-            $this->plano_anterior = $existeinsp->plano_anterior;
-            $this->plano_lateral = $existeinsp->plano_lateral;
-            $this->plano_posterior = $existeinsp->plano_posterior;
-            //dd("actualizar");
+    public function save()
+    {
+        if ($this->editMode){
+            $inspeccion = Inspeccion::where('consulta_id',$this->consultaId)->first();
+            $inspeccion->update([
+                'observacion' => $this->observacion,
+                'plano_anterior' => $this->plano_anterior,
+                'plano_lateral' => $this->plano_lateral,
+                'plano_posterior' => $this->plano_posterior,
+            ]);
+            $this->dispatch('swal:success', [
+                'title' => 'Inspeccion',
+                'text' => 'Actualizado Correctamente',
+            ]);
         }else{
             $insp = new Inspeccion();
             $insp->consulta_id = $this->consultaId;
@@ -46,12 +53,13 @@ class InspeccionCreate extends Component
             $insp->plano_lateral = $this->plano_lateral;
             $insp->plano_posterior = $this->plano_posterior;
             $insp->save();
-            //dd("guardar");
+            $this->dispatch('swal:success', [
+                'title' => 'Inspeccion',
+                'text' => 'Creado Correctamente',
+            ]);
+            $this->editMode = true;
         }
-        $this->dispatch('swal:success', [
-            'title' => 'Inspeccion',
-            'text' => 'Creado Correctamente',
-        ]);
+
     }
 
     public function validateNavBar($data)

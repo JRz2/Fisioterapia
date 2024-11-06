@@ -12,6 +12,7 @@ class DiagnosticoCreate extends Component
     public $ultimaConsultaId;
     public $consulta_id;
     public $consultaId;
+    public $editMode = false;
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
@@ -19,29 +20,35 @@ class DiagnosticoCreate extends Component
         if ($diagnostico){
             $this->diagnostico = $diagnostico->diagnostico;
             $this->plan = $diagnostico->plan;
+            $this->editMode = true;
         }
     }
 
-    public function save(){
-
-        $diagnostico = Diagnostico::where('consulta_id',$this->consultaId)->first();
-        if ($diagnostico){
-            $this->diagnostico = $diagnostico->diagnostico;
-            $this->plan = $diagnostico->plan;
-            //dd("actualizar");
+    public function save()
+    {
+        if ($this->editMode){
+            $diagnostico = Diagnostico::where('consulta_id',$this->consultaId)->first();
+            $diagnostico->update([
+                'diagnostico' => $this->diagnostico,
+                'plan' => $this->plan,
+            ]);
+            $this->dispatch('swal:success', [
+                'title' => 'Diagnostico',
+                'text' => 'Actualizado Correctamente',
+            ]);
         }else{
             $diagnostico = new Diagnostico();
             $diagnostico->consulta_id = $this->consultaId;
             $diagnostico->diagnostico = $this->diagnostico;
             $diagnostico->plan = $this->plan;
             $diagnostico->save();
-            //dd("guardar");
-        }
-
-        $this->dispatch('swal:success', [
+            $this->dispatch('swal:success', [
             'title' => 'Diagnostico',
             'text' => 'Creado Correctamente',
-        ]);
+            ]);
+            $this->editMode = true;
+        }
+
     }
 
     public function validateNavBar($data)

@@ -11,6 +11,7 @@ class ConsultaDatatable extends DataTableComponent
 {
     protected $model = Consulta::class;
     public $pacienteId;
+    protected $listeners = ['destroy'];
 
     public function configure(): void
     {
@@ -48,6 +49,34 @@ class ConsultaDatatable extends DataTableComponent
         }
 
         return $query;
+    }
+
+    public function confirm($dataConsulta)
+    {
+        $this->dispatch('swal:confirm', [
+            'title' => 'Consulta ' . $dataConsulta['codigo'],
+            'text' => '¿Estas seguro de eliminarlo?',
+            'confirmButtonText' => 'Sí, Eliminar',
+            'cancelButtonText' => 'Cancelar',
+            'data' => $dataConsulta
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $cosnulta = Consulta::find($id);
+        if ($cosnulta) {
+            $cosnulta->delete();
+            $this->dispatch('swal:success', [
+                'title' => 'Consulta',
+                'text' => 'Eliminado Correctamente',
+            ]);
+        } else {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'No se pudo eliminar la consulta',
+            ]);
+        }
     }
 
 }

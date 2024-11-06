@@ -45,8 +45,10 @@
             </div>
                
             <div class="mt-4 text-center">
-                <x-button wire:click="$parent.diagnostico">
-                    Guardar
+                <x-button>
+                    <span wire:loading wire:target="save" class="spinner-border spinner-border-sm"
+                        role="status" aria-hidden="true"></span>
+                    <span class="ml-2">{{ $editMode ? 'Actualizar' : 'Guardar' }} </span>
                 </x-button>
             </div>           
         </form>

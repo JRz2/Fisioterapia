@@ -67,9 +67,9 @@ class ConsultaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit( $id)
+    {   
+        return view('doctor.consulta.edit',compact('id'));
     }
 
     /**
