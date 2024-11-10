@@ -32,7 +32,6 @@ class CreatePaciente extends Component
     public $paciente_edit_id;
     public $paciente;
     public $editMode = false;
-
         
     public function confirmUpdate($data)
     {
@@ -42,6 +41,7 @@ class CreatePaciente extends Component
         if ($data) {
             $this->editMode = true;
             $this->opencreate = true;
+            $this->paciente = Paciente::find($dataRes[0]->id);
             $paciente = Paciente::find($dataRes[0]->id);
             $this->paciente_edit_id = $paciente->id;
             $this->nombre = $paciente->nombre;
