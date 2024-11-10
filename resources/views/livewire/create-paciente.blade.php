@@ -24,18 +24,25 @@
                                         @if ($imagen)
                                             @if ($editMode)
                                                 @if ($valueImage && method_exists($imagen, 'temporaryUrl'))
+                                                    1
                                                     <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                                 @else
                                                     @if (strpos($imagen, 'image/') !== false)
+                                                    2
                                                         <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
-                                                    @else 
+                                                    @elseif(isset($paciente) && $paciente->imagen) 
+                                                    3
                                                         <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="w-40 h-40 rounded-full">
+                                                    @else 
+                                                        no hay imagen
                                                     @endif
                                                 @endif
                                             @else
+                                            4
                                                 <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                             @endif
                                         @else
+                                        5
                                             <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
                                         @endif       
                                     </div>
