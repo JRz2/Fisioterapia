@@ -29,7 +29,7 @@
                                                     @if (strpos($imagen, 'image/') !== false)
                                                         <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
                                                     @else 
-                                                        <img src="{{ asset('storage/app/public/' . $user->imagen) }}" class="w-40 h-40 rounded-full">
+                                                        <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="w-40 h-40 rounded-full">
                                                     @endif
                                                 @endif
                                             @else
