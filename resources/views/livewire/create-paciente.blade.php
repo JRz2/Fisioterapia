@@ -21,21 +21,35 @@
                                         Foto
                                     </x-label>
                                     <div>
-                                        @if ($imagen && $editMode)
+                                        @if ($imagen)
+                                        @if ($editMode)
                                             @if ($valueImage && method_exists($imagen, 'temporaryUrl'))
+                                                {{-- Caso 1: Imagen temporal subida recientemente en modo edición --}}
+                                                1
                                                 <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
-                                            @elseif (is_string($imagen) && strpos($imagen, 'image/') !== false)
-                                                <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">                                       
-                                            @elseif(isset($paciente) && !empty($paciente->imagen))
-                                                <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="w-40 h-40 rounded-full">                   
+                                            @elseif (strpos($imagen, 'image/') !== false)
+                                                {{-- Caso 2: Imagen existente con ruta válida en modo edición --}}
+                                                2
+                                                <img src="{{ asset($imagen) }}" alt="Imagen del paciente" class="w-40 h-40 rounded-full">
+                                            @elseif (isset($paciente) && $paciente->imagen)
+                                                {{-- Caso 3: Imagen almacenada en el perfil del paciente --}}
+                                                3
+                                                <img src="{{ asset('storage/' . $paciente->imagen) }}" class="w-40 h-40 rounded-full">
                                             @else
-                                                <p>No hay imagen</p>
+                                                {{-- Caso sin imagen cuando debería haberla --}}
+                                                no hay imagen
                                             @endif
-                                        @elseif ($imagen)
-                                            <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
                                         @else
-                                            <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
-                                        @endif      
+                                            {{-- Caso 4: Imagen temporal en modo de creación o edición desactivada --}}
+                                            4
+                                            <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
+                                        @endif
+                                    @else
+                                        {{-- Caso 5: Imagen por defecto cuando no hay imagen cargada --}}
+                                        5
+                                        <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
+                                    @endif
+                                         
                                     </div>
                                     <input class="form-control" wire:model="imagen" wire:key="{{ $imagenkey }}" wire:click="clickImage"
                                         type="file" id="file" style="display: none;">
