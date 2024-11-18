@@ -50,8 +50,8 @@
                                 </div>
                                                                    
                                 <div>
-                                    <input class="form-control" wire:model="ruta" multiple type="file" id="file" style="display: none;">
-                                    <label for="file" class="inline-block py-2 px-4 cursor-pointer bg-gray-700 text-white rounded-lg">
+                                    <input class="form-control" wire:model="ruta" multiple class="form-control"  type="file" id="file" style="display: none;">
+                                    <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">
                                         <span wire:loading wire:target="ruta" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                         Seleccionar archivos
                                     </label>
