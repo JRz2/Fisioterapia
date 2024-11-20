@@ -16,6 +16,9 @@
         <div class="card-footer flex justify-center">
             @livewire('user-edit', ['userId' => $user->id])
         </div>
+        <div class="card-footer flex justify-center">
+            @livewire('update-password', ['userId' => $user->id])
+        </div>
     </div>
 </div>
 
