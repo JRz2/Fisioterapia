@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-3">
                 @if ($ultima_consulta->fecha)
-                    <x-label class="text-lg">Codigo: <span
+                    <x-label class="text-lg">Código: <span
                             class="badge badge-pill font-normal text-lg">{{ $ultima_consulta->codigo }}</span></x-label>
                 @endif
             </div>

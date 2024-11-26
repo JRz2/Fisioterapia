@@ -1,7 +1,7 @@
 <div class="container mt-4">
     <div>
         <x-label class="text-lg">
-            ANTROPOMETRIA
+            ANTROPOMETRÍA
         </x-label>
     </div>
     <form wire:submit="save">

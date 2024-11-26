@@ -1,7 +1,7 @@
 <div>
     <div>
         <x-label class="text-lg">
-            Palpacion - Movilizacion
+            PALPACIÓN - MOVILIZACIÓN
         </x-label>
     </div>
     <div>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-4">
                     <x-label>
-                        Retraccion - Acortamiento
+                        Retracción - Acortamiento
                     </x-label>
                     <x-textarea wire:model="retraccion" class="form-control" rows="5"></x-textarea>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-md-6">
                     <x-label>
-                        Perimetros
+                        Perímetros
                     </x-label>
                     <x-textarea wire:model="perimetros" class="form-control" rows="3"></x-textarea>
                 </div>

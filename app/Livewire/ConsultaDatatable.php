@@ -29,7 +29,7 @@ class ConsultaDatatable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("Codigo", "codigo")
+            Column::make("Código", "codigo")
                 ->sortable(),
             Column::make("Fecha", "fecha")
                 ->sortable(),

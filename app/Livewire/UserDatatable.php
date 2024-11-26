@@ -36,7 +36,7 @@ class UserDatatable extends DataTableComponent
                     ? asset($row->imagen) 
                     : asset('storage/app/public/' . $row->imagen),  
             ])),  
-            Column::make("Name", "name")->sortable(),
+            Column::make("Nombre", "name")->sortable(),
             Column::make("Email", "email")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Rol", "roles.name")
                 ->label(function ($row) {

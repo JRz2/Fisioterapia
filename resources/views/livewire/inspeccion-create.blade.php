@@ -2,7 +2,7 @@
     <div>
         <div>
             <x-label  class="text-lg">
-                INPECCION
+                INSPECCIÓN
             </x-label>
         </div>
 
@@ -10,7 +10,7 @@
             <div class="row mt-2">
                 <div class="col-md-12">
                     <x-label>
-                        Observacion
+                        Observación
                     </x-label>
                     <x-textarea class="form-control" wire:model="observacion" rows="3"></x-textarea>
                 </div>

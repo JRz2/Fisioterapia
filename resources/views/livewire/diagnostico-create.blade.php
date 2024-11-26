@@ -2,7 +2,7 @@
     <div>
         <div>
             <x-label class="text-lg">
-                DIAGNOSTICO
+                DIAGNÓSTICO
             </x-label>
         </div>
 
@@ -10,7 +10,7 @@
             <div>
                 <div>
                     <x-label>
-                        DIAGNOSTICO SOBRE LA CONSULTA
+                        DIAGNÓSTICO SOBRE LA CONSULTA
                     </x-label>
                     
                     <x-textarea wire:model="diagnostico" class="w-full h-32"></x-textarea>

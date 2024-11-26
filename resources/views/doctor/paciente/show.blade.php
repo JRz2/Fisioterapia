@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Expediente Clinico')
+@section('title', 'Historia Clínica')
 
 @section('content_header')
 
@@ -19,7 +19,7 @@
                                 </a></h1>
                         </td>
                         <td align="center">
-                            <h1 style="font-size: 30px;"> EXPEDIENTE CLINICO </h1>
+                            <h1 style="font-size: 30px;"> HISTORIA CLÍNICA </h1>
                         </td>
                     </tr>
                 </table>
@@ -118,7 +118,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <div class="my-4 mt-4">
                                         <x-label class="text-lg">
-                                            Ultimos Signos Vitales
+                                            últimos Signos Vitales
                                         </x-label>
 
                                         @if ($ultimaAntropometria)

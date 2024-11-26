@@ -76,7 +76,7 @@
             <div class="col-lg-6">
               <div class="card card-outline card-success">
                 <div class="card-header">
-                  <h3 class="card-title">Ultimas consultas</h3>
+                  <h3 class="card-title">Últimas consultas</h3>
                 </div>
                 <div class="card-body">
                   <table class="table ">

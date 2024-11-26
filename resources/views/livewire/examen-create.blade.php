@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <x-label>
-                        PRUEBAS KINESICAS
+                        PRUEBAS KINÉSICAS
                     </x-label>
                     <x-textarea wire:model="prueba" class="w-full h-32"></x-textarea>
                 </div>
@@ -26,7 +26,7 @@
                             ANEXOS
                         </x-label>
                         <input class="form-control" wire:model="ruta" multiple class="form-control"  type="file" id="file" style="display: none;">
-                        <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">
+                        <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #c8dbf0; color: rgb(0, 0, 0); border-radius: 4px;">
                             <span wire:loading wire:target="ruta" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Seleccionar archivos
                         </label>

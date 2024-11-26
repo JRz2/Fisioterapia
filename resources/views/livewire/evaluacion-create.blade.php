@@ -2,7 +2,7 @@
     <div>
         <div style="margin: 10px 0 0 20px">
             <x-label>
-                EVALUACION KINESICA ESPECIFICA
+                EVALUACIÓN KINÉSICA ESPECÍFICA
             </x-label>
         </div>
 
@@ -15,12 +15,12 @@
                     </div>
 
                     <div class="mb-3 d-flex justify-content-end">
-                        <label class="me-3"><x-label>Aparicion</x-label></label>
+                        <label class="me-3"><x-label>Aparición</x-label></label>
                         <x-input wire:model="aparicion" class="w-75"></x-input>
                     </div>
 
                     <div class="mb-3 d-flex justify-content-end">
-                        <label class="me-3"><x-label>Duracion</x-label></label>
+                        <label class="me-3"><x-label>Duración</x-label></label>
                         <x-input wire:model="duracion" class="w-75"></x-input>
                     </div>
 
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="mb-3 d-flex justify-content-end">
-                        <label class="me-3"><x-label>Irradiacion</x-label></label>
+                        <label class="me-3"><x-label>Irradiación</x-label></label>
                         <x-input wire:model="irradiacion" class="w-75"></x-input>
                     </div>
 
