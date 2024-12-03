@@ -44,13 +44,8 @@ class SesionDatatable extends DataTableComponent
                 ->collapseOnTablet()
                 ->label(
                     function($row) {
-                        // Suponiendo que tienes una colección que deseas enviar
-                       // $collection = SomeModel::where('some_column', $row->id)->get();
-    
-                        // Enviar el objeto $row y la colección a la vista
                         return view('livewire.index-sesion', [
                             'row' => $row,
-                            //collection' => $collection,
                         ]);
                     }
                 ),

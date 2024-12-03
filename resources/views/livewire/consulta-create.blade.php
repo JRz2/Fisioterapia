@@ -3,7 +3,7 @@
         <table width=100%>
             <tr>
                 <td align="center">
-                    <h1 style="font-size: 30px;"> {{ $editMode ? 'Actualizar Consulta' : 'Nueva Consulta' }} </h1>
+                    <h1 style="font-size: 30px;"> {{ $editMode ? 'Actualizar Consulta' : 'Generar Consulta' }} </h1>
                 </td>
             </tr>
         </table>
@@ -57,11 +57,10 @@
                         class="badge badge-pill font-normal text-lg">{{ $paciente->celular }}</span></x-label>
             </div>
             <div class="col-md-3">
-                <div wire:model="btnterminar" 
-                    style="{{ $btnterminar ? '' : 'display: none;' }}; margin-left: auto">
+                <div wire:click="btnload"
+                    style="margin-left: auto; cursor: pointer;">
                     <a class="px-4 py-2 text-md font-bold text-white bg-green-600 rounded-lg 
-                hover:bg-green-700 hover:no-underline"
-                        href="{{ route('doctor.paciente.show', $paciente->id) }}">
+                    hover:bg-green-700 hover:no-underline">
                         <i class="fas fa-solid fa-check fa-1x mr-2"></i>
                         Terminar Consulta
                     </a>
@@ -70,7 +69,6 @@
         </div>
         
         <div class="w-full">
-            <!-- Custom Tabs -->
             <div x-data="{ activeTab: 'anamnesis' }"  class="border border-gray-300 rounded-lg shadow">
                 <ul class="flex flex-wrap border-b border-gray-300 bg-gray-100">
                     <li class="mr-2">

@@ -250,6 +250,16 @@ class ConsultaCreate extends Component
             ->first() ?? new Consulta;;
     }
 
+    public function btnload(){
+        //dd($this->paciente->id);
+        $this->dispatch('swal:success', [
+            'title' => 'Consulta',
+            'text' => 'Consulta Creado Correctamente',
+        ]);
+        $pacienteId = $this->paciente->id;
+        return redirect()->route('doctor.paciente.show', ['paciente' => $pacienteId]);
+    }
+
     public function render()
     {
         return view('livewire.consulta-create');

@@ -60,6 +60,12 @@ class NewConsulta extends Component
         ->latest()
         ->first();
         
+        $this->dispatch('swal:loading', [
+            'title' => 'Generando consulta',
+            'text' => 'Por favor espere...',
+            'icon' => 'info',
+        ]);
+        
         return redirect()->route('doctor.consulta.create', ['id' => $consulta->id]);
     }
 

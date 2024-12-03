@@ -281,8 +281,12 @@
                     <div class="col-md-6">
                         <div>
                             <x-label class="text-lg">
-                                Consultas Agendadas
+                                Sesiones Agendadas
                             </x-label>
+                        </div>
+                        <div>
+                            @livewire('horario-show')
+                            @livewire('horario-datatable', ['pacienteId' => $paciente->id])
                         </div>
                     </div>
                 </div>

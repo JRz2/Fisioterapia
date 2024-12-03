@@ -134,8 +134,6 @@
 
                 </x-slot>
 
-
-
                 <x-slot name="footer">
                     <div>
                         <x-danger-button wire:click="keyrand" x-on:click="show = false">
