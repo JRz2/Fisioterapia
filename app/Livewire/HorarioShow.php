@@ -17,6 +17,7 @@ class HorarioShow extends Component
     public $hora_inicio;
     public $hora_fin;
     public $fecha_inicio;
+    public $estado;
     public $horarioId;
 
     public function editHorario($data)
@@ -32,6 +33,7 @@ class HorarioShow extends Component
             $this->hora_inicio = $horario->hora_inicio;
             $this->hora_fin = $horario->hora_fin;
             $this->fecha_inicio = $horario->fecha_inicio;
+            $this->estado = $horario->estado;
         }
 
     }

@@ -7,7 +7,6 @@
         </div>
     @endif
 
-    <!-- Lista de sesiones programadas -->
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm mb-4">
@@ -28,7 +27,6 @@
         </div>
     </div>
 
-    <!-- Formulario de modificación de la fecha de la sesión -->
     @if ($selectedHorario)
         <div class="row justify-content-center">
             <div class="col-md-6">

@@ -35,10 +35,8 @@ class HorarioDatatable extends DataTableComponent
             Column::make("Dia", "dia")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Hora", "hora_inicio")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Fecha", "fecha_inicio")->collapseOnTablet()->sortable()->searchable(),
-            Column::make("Estado", "estado")
-            ->label(
-                fn($row) => $row->calcularEstado()
-            )->sortable()->searchable(),
+            Column::make("Estado", "estado")->collapseOnTablet()->sortable()->searchable()
+                ->label(fn($row) => $row->estado_badge)->html(), 
             Column::make("Acciones")->collapseOnTablet()->sortable()->searchable()
                 ->label(
                     fn($row) => view('livewire.horario-actions', compact('row'))

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->time('hora_fin');
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
+            $table->boolean('estado')->default(0);
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });

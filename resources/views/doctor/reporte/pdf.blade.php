@@ -67,7 +67,7 @@
                 <strong>CENTRO DE FISIOTERAPIA Y KINESIOLOGÍA</strong><br>
                 <strong>"FISIOMEDEP"</strong>
             </div>
-            <img src="image/imgencabezado.png" style="width: 700px; height: 150px;">
+            <img src="{{ asset('image/imgencabezado.png') }}" style="width: 700px; height: 150px;">
         </div>
     </header>
     
@@ -129,7 +129,7 @@
         <div class="footer-firma">
             <label> Firma y sello fisioterapeuta</label>
         </div>
-        <img src="image/imgpiepagina.png" style="width: 700px; height: 150px;">
+        <img src="{{ asset('image/imgpiepagina.png') }}" style="width: 700px; height: 150px;">
     </footer>
 </body>
 </html>
