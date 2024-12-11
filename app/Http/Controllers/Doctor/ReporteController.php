@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Doctor;
 use App\Http\Controllers\Controller;
 use App\Models\Consulta;
 use App\Models\Reporte;
-use Barryvdh\DomPDF\Facade\Pdf;
+//use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
-//use PDF;
+use PDF;
 
 class ReporteController extends Controller
 {
@@ -117,7 +117,7 @@ class ReporteController extends Controller
                 ->locale('es')
                 ->translatedFormat('d \d\e F \d\e Y'),
         ];
-        $pdf = pdf::loadView('doctor.reporte.pdf', $data);
+        $pdf = PDF::loadView('doctor.reporte.pdf', $data);
         return $pdf->stream(); 
         //return $pdf->download('reporte.pdf');
     }
