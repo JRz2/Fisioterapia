@@ -9,7 +9,7 @@ class Horario extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['consulta_id','dia','hora_inicio','hora_fin','fecha_inicio','fecha_fin','sesiones'];
+    protected $fillable = ['consulta_id','dia','hora_inicio','hora_fin','fecha_inicio','fecha_fin','sesiones','estado'];
     
     public function consulta(){
         return $this-> belongsTo(Consulta::class);
@@ -19,14 +19,5 @@ class Horario extends Model
         {
             return $this->hasMany(Sesion::class, 'consulta_id', 'consulta_id');
         }
-        
-    public function getEstadoBadgeAttribute()
-        {
-            if ($this->estado) {
-                return '<span class="badge bg-success">Completado</span>';
-            } else {
-                return '<span class="badge bg-warning text-dark">Pendiente</span>';
-            }
-        }
-            
+                
 }

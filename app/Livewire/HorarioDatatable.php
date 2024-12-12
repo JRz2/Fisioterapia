@@ -7,6 +7,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Horario;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
+use Illuminate\Support\HtmlString;
 
 class HorarioDatatable extends DataTableComponent
 {
@@ -18,10 +19,11 @@ class HorarioDatatable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('id', 'desc');
         $this->setSearchStatus(false);
         $this->setColumnSelectStatus(false);
         $this->setPerPageVisibilityStatus(false);
-        $this->setPerPageAccepted([5, 10, 15, 25, 50, 100]);
+        $this->setPerPageAccepted([10, 15, 25, 50, 100]);
         $this->setPerPage(10);
     }
 
@@ -30,13 +32,20 @@ class HorarioDatatable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("Consulta", "consulta.codigo")
-                ->sortable(),
+           // Column::make("Consulta", "consulta.codigo")
+                //->sortable(),
             Column::make("Dia", "dia")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Hora", "hora_inicio")->collapseOnTablet()->sortable()->searchable(),
             Column::make("Fecha", "fecha_inicio")->collapseOnTablet()->sortable()->searchable(),
-            Column::make("Estado", "estado")->collapseOnTablet()->sortable()->searchable()
-                ->label(fn($row) => $row->estado_badge)->html(), 
+            Column::make("Estado", "estado")
+            ->collapseOnTablet()
+            ->sortable()
+            ->searchable()
+            ->label(function ($row) {
+                $estado = $row->estado === 1 ? 'Completado' : 'Pendiente';
+                $color = $row->estado === 1 ? 'bg-success' : 'bg-warning';
+                return new HtmlString("<span class='badge {$color}'>{$estado}</span>");
+            }),
             Column::make("Acciones")->collapseOnTablet()->sortable()->searchable()
                 ->label(
                     fn($row) => view('livewire.horario-actions', compact('row'))
@@ -44,19 +53,23 @@ class HorarioDatatable extends DataTableComponent
         ];
     }
 
+    
     public function builder(): Builder
     {
-        $query = Horario::query();
-
+        $query = Horario::with('sesiones', 'consulta')
+        ->select('horarios.id', 'horarios.estado', 'horarios.dia', 'horarios.hora_inicio', 'horarios.fecha_inicio', 'horarios.consulta_id', 'consultas.codigo')
+        ->leftJoin('consultas', 'consultas.id', '=', 'horarios.consulta_id');
+        
+        //$query = Horario::query();
         if ($this->pacienteId !== null) {
             $query->whereHas('consulta', function ($consultaQuery) {
                 $consultaQuery->where('paciente_id', $this->pacienteId);
             });
         }
-    
+        //dd($query->get());
         return $query;
-        return Horario::with('sesiones', 'consulta');
     }
+    
 
     public function editHorario($data){
         $this->dispatch('editHorario', [$data]); 

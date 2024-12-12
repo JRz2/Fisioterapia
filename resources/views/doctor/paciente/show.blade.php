@@ -29,7 +29,9 @@
                     <div class="col-md-5">
                         <div class="card card-outline card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Datos del Paciente</h3>
+                                <x-label class="text-lg">
+                                    Datos del Paciente
+                                </x-label>
                             </div>
                             <div class="row card-body">
                                 <div class="w-2/4 flex flex-col items-center">
@@ -84,6 +86,10 @@
                                 </div>
                             </div>
                             <div class="card-footer">
+                                <x-label class="text-lg">
+                                    Informes
+                                </x-label>
+                                @livewire('reporte-datatable', ['pacienteId' => $paciente->id])
                             </div>
                         </div>
                     </div>
@@ -112,7 +118,9 @@
                     <div class="col-md-5">
                         <div class="card card-outline card-danger">
                             <div class="card-header">
-                                <h3 class="card-title">Signos Vitales</h3>
+                                <x-label class="text-lg">
+                                    Signos Vitales
+                                </x-label>
                             </div>
                             <div class="card-body">
                                 <div class="w-full flex flex-col items-center">
@@ -172,8 +180,9 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <x-label>
-                                                            IMC
+                                                            IMC 
                                                         </x-label>
+                                                        "Indice de Masa COrporal"
                                                     </div>
                                                     <div class="col-md-3">
                                                         @php
@@ -263,8 +272,9 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <x-label>
-                                                            IMC
+                                                            IMC 
                                                         </x-label>
+                                                        "Indice de Masa Corporal"
                                                     </div>
                                                     <div class="col-md-3">
                                                         <x-input class="form-control" disabled>
@@ -278,7 +288,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div>
                             <x-label class="text-lg">
                                 Sesiones Agendadas

@@ -47,18 +47,21 @@
         }
         .header-text {
             position: absolute;
-            top: 120px; /* Ajusta según sea necesario */
+            top: 120px;
             width: 100%;
             text-align: center;
-            color: black; /* Cambia el color si es necesario */
+            color: black;
         }
 
         .informe-container{
             margin-left: 60px;
             margin-right: 60px;
         }
-
     </style>
+            @php
+            $title = $nombre . ' ' . $paterno . ' ' . $materno;
+            @endphp
+        <title>{{ $title }}</title>
 </head>
 <body>
     <header>
@@ -95,26 +98,34 @@
                     <label><strong>Dx:</strong></label>
                     <p>{{ $dx }}</p>
                 </div>
-    
-                <div class="informe-section">
-                    <label><strong>ANÁLISIS CINÉTICO FUNCIONAL:</strong></label>
-                    <p> {!! $informe !!}</p>
-                </div>
-    
-                <div class="informe-section">
-                    <label><strong>REHABILITACIÓN FISIOTERAPÉUTICA Y KINESIOLOGÍA:</strong></label>
-                    <p>{!! $rehabilitacion !!}</p>
-                </div>
-
-                <div class="informe-section">
-                    <label><strong>RECOMENDACIONES:</strong></label>
-                    <p>{!! $recomendacion !!}</p>
-                </div>
-
-                <div class="informe-section">
-                    <label><strong>NOTA:</strong></label>
-                    <p>{!! $nota !!}</p>
-                </div>
+                
+                @if ($informe)
+                    <div class="informe-section">
+                        <label><strong>ANÁLISIS CINÉTICO FUNCIONAL:</strong></label>
+                        <p> {!! $informe !!}</p>
+                    </div>        
+                @endif
+                
+                @if ($rehabilitacion)
+                    <div class="informe-section">
+                        <label><strong>REHABILITACIÓN FISIOTERAPÉUTICA Y KINESIOLOGÍA:</strong></label>
+                        <p>{!! $rehabilitacion !!}</p>
+                    </div>
+                @endif
+                
+                @if ($recomendacion) 
+                    <div class="informe-section">
+                        <label><strong>RECOMENDACIONES:</strong></label>
+                        <p>{!! $recomendacion !!}</p>
+                    </div>
+                @endif
+                
+                @if ($nota )
+                    <div class="informe-section">
+                        <label><strong>NOTA:</strong></label>
+                        <p>{!! $nota !!}</p>
+                    </div>       
+                @endif
             </div>
         </div>
     </main>

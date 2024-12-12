@@ -100,6 +100,7 @@ class ReporteController extends Controller
 
         App::setLocale('es');
         $reporte = Reporte::find($id);
+        $nombrePaciente = $reporte->consulta->paciente->nombre . '' . $reporte->consulta->paciente->paterno;
         $data = [
             'nombre' => $reporte->consulta->paciente->nombre,
             'paterno' => $reporte->consulta->paciente->paterno,
@@ -108,17 +109,19 @@ class ReporteController extends Controller
             'edad' => $reporte->consulta->paciente->edad,
             'genero' => $reporte->consulta->paciente->genero,
             'diagnostico' => $reporte->consulta->diagnostico->diagnostico ?? 'Sin diagnostico',
-            'dx' => $reporte->diagnostico ?? 'Sin diagnostico',
-            'informe' => $reporte->informe ?? 'Sin analisis',
-            'rehabilitacion' => $reporte->rehabilitacion ?? 'Sin rehabilitacion',
-            'recomendacion' => $reporte->recomendacion ?? 'Sin recomendaciones',
-            'nota' => $reporte->nota ?? 'Sin nota',
+            'dx' => $reporte->diagnostico,
+            'informe' => $reporte->informe,
+            'rehabilitacion' => $reporte->rehabilitacion,
+            'recomendacion' => $reporte->recomendacion,
+            'nota' => $reporte->nota,
             'fecha' => Carbon::parse($reporte->reporte->fecha ?? '')
                 ->locale('es')
                 ->translatedFormat('d \d\e F \d\e Y'),
         ];
+        //dd($nombrePaciente);
+        $nombreArchivo = 'Informe_' . $nombrePaciente . '.pdf';
         $pdf = PDF::loadView('doctor.reporte.pdf', $data);
-        return $pdf->stream(); 
+        return $pdf->stream($nombreArchivo); 
         //return $pdf->download('reporte.pdf');
     }
 }

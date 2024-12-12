@@ -19,9 +19,10 @@ class HorarioShow extends Component
     public $fecha_inicio;
     public $estado;
     public $horarioId;
-
+  
     public function editHorario($data)
-    {
+    {   
+        $this->resetModal();
         $dataRes = json_decode(json_encode($data));
         if ($data) {
             $this->openMode = true;
@@ -33,7 +34,7 @@ class HorarioShow extends Component
             $this->hora_inicio = $horario->hora_inicio;
             $this->hora_fin = $horario->hora_fin;
             $this->fecha_inicio = $horario->fecha_inicio;
-            $this->estado = $horario->estado;
+            $this->estado = (bool) $horario->estado;
         }
 
     }
@@ -56,6 +57,7 @@ class HorarioShow extends Component
                 'hora_inicio' => $this->hora_inicio,
                 'hora_fin' => $this->hora_fin,
                 'dia' => $this->dia,
+                'estado' => $this->estado,
             ]);
             $this->dispatch('horario-update');
             $this->openmodal = false;
@@ -69,6 +71,16 @@ class HorarioShow extends Component
 
     public function createUpdate() {
         
+    }
+
+    public function resetModal()
+    {
+        $this->reset(['openMode', 'openmodal', 'horario', 'dia', 'hora_inicio', 'hora_fin', 'fecha_inicio', 'estado', 'horarioId']);
+    }
+
+    public function updatedEstado($value)
+    {
+        \Log::info('Estado actualizado:', ['estado' => $value]);
     }
     
     public function render()
