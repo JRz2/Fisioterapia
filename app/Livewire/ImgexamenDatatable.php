@@ -29,7 +29,7 @@ class ImgexamenDatatable extends DataTableComponent
                 ->sortable(),
             Column::make("Imagen", "ruta")->hideIf(true),
             Column::make("Imagen")->label(fn($row) => view('livewire.imgexamen-datatable', [
-                'ruta' => asset('storage/' . $row->ruta),
+                'ruta' => asset('storage/app/public/' . $row->ruta),
             ])),
             Column::make("Acciones")->collapseOnTablet()
                 ->label(fn($row) => view('livewire.imgexamen-actions', compact('row'))),    
