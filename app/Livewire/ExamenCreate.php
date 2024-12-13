@@ -13,16 +13,18 @@ class ExamenCreate extends Component
     public $examen;
     public $prueba;
     public $consultaId;
-    public $ruta = [];
     public $editMode = false;
+    public $examenId;
 
     public function mount($consultaId){
         $this->consultaId = $consultaId;
         $exa = Examen::where('consulta_id',$this->consultaId)->first();
         if ($exa){
+            $this->examenId = $exa->id;
             $this->examen = $exa->examen;
             $this->prueba = $exa->prueba;
             $this->editMode = true;
+            //$this->ruta = Imgexamen::where('examen_id', $exa->id)->pluck('ruta')->toArray();
         }
     }
 
@@ -34,6 +36,7 @@ class ExamenCreate extends Component
                 'examen' => $this->examen,
                 'prueba' => $this->prueba,
             ]);
+            //$this->examenId = $examen->id;
             $this->dispatch('swal:success', [
                 'title' => 'Pruebas',
                 'text' => 'Actualizado Correctamente',
@@ -44,7 +47,8 @@ class ExamenCreate extends Component
                 'examen' => $this->examen,
                 'prueba' => $this->prueba,
             ]);
-            if ($this->ruta) {
+            //$this->examenId = $examen->id;
+            /*if ($this->ruta) {
                 foreach ($this->ruta as $img) {
                     $path = $img->store('examens', 'public'); 
                     Imgexamen::create([
@@ -52,7 +56,7 @@ class ExamenCreate extends Component
                         'ruta' => $path,
                     ]);
                 }
-            }
+            }*/
             $this->dispatch('swal:success', [
                 'title' => 'Pruebas',
                 'text' => 'Creado Correctamente',

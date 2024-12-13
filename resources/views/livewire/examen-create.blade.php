@@ -9,7 +9,7 @@
             <div>
                 <div>
                     <x-label>
-                        EXAMENES LABORATORIALES
+                        EXAMENES LABORATORIALES 
                     </x-label>
                     <x-textarea wire:model="examen" class="w-full h-32"></x-textarea>
                 </div>
@@ -25,22 +25,17 @@
                         <x-label class="col-md-2">
                             ANEXOS
                         </x-label>
-                        <input class="form-control" wire:model="ruta" multiple class="form-control"  type="file" id="file" style="display: none;">
-                        <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #c8dbf0; color: rgb(0, 0, 0); border-radius: 4px;">
-                            <span wire:loading wire:target="ruta" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Seleccionar archivos
-                        </label>
                     </div>
-
-                    <div class="d-flex flex-wrap mt-3">
-                        @if($ruta && is_array($ruta))
-                            @foreach($ruta as $image)
-                                <img src="{{ $image->temporaryUrl() }}" class="w-40 h-40" alt="Imagen cargada">
-                            @endforeach
-                        @else
-                            
-                        @endif
+                   
+                    <div >
+                    <div class="col-md-2">
+                        @livewire('imgexamen-add', ['examenId' => $examenId])
                     </div>
+                    <div class=" col-md-6">
+                        @livewire('imgexamen-datatable', ['consultaId' => $consultaId])
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
                
