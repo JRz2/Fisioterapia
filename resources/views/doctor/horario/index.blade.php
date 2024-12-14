@@ -1,37 +1,51 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Sesiones')
 
 @section('content_header')
-    <h1>Dashboard</h1>
 @stop
 
 @section('content')
-<div class="container">
-    <h1>Calendario de Sesiones</h1>
+<x-app-layout>
+</br>
+<div class="card card-dark">
+    <div class="card-header">
+        <table width=100%>
+            <tr>
+                <td align="left" width=5%>
+                    <h1><i class="fas fa-clock"></i></h1>
+                </td>
+                <td align="center">
+                    <h1 style="font-size: 30px;"> Reprogramar Sesiones </h1>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="card-body">
+        @if (Session::has('mensaje'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                {{ Session::get('mensaje') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
 
-    <div id="calendario"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendario');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // Vista inicial, puede ser dayGridWeek o timeGridDay
-                locale: 'es', // Cambiar a español si lo deseas
-                events: @json($eventos), // Insertar los eventos desde la variable $eventos
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                editable: false, // Si quieres que los eventos se puedan mover
-            });
-
-            calendar.render();
-        });
-    </script>
+        <div class="row">
+            
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-12">
+                <span wire:loading.table class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+                    @livewire('horario-show')
+                    @livewire('horarios-datatable')
+            </div>
+        </div>
+    </div>
 </div>
+
+</x-app-layout>
 @stop
 
 @section('css')

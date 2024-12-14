@@ -358,14 +358,14 @@ return [
             'icon' => 'fas fa-heart-pulse',
         ],
         [
-            'text' => 'Calendario',
+            'text' => 'Reprogramar Sesion',
             'route'  => 'doctor.horario.index',
-            'icon' => 'fa-regular fa-calendar',
+            'icon' => 'fa-regular fa-clock',
         ],
         [
-            'text' => 'Reprogramar Sesiones',
-            'route'  => '',
-            'icon' => 'fa-regular fa-clock',
+            'text' => 'Calendario',
+            'route'  => 'doctor.horario.calendario',
+            'icon' => 'fa-regular fa-calendar',
         ],
         [
             'text' => 'Informes',
@@ -410,6 +410,12 @@ return [
                     'url'     => '/msuperior',
                 ],
             ],
+        ],
+        ['header' => 'PRUEBAS'],
+        [
+            'text'    => 'Pruebas',
+            'icon'    => 'fas fa-person-walking',
+            'url'     => '/pruebas',
         ],
     ],
 

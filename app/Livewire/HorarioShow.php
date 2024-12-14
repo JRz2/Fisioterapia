@@ -19,7 +19,7 @@ class HorarioShow extends Component
     public $fecha_inicio;
     public $estado;
     public $horarioId;
-  
+    
     public function editHorario($data)
     {   
         $this->resetModal();

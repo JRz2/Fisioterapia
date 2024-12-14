@@ -65,7 +65,7 @@
 
                         <x-button>
                             <span wire:loading wire:target="save" class="spinner-border spinner-border-sm"
-                                role="status" aria-hidden="true"></span>
+                                role="status" ></span>
                             <span class="ml-2">{{ $openMode ? 'Actualizar' : 'Cerrar' }} </span>
                         </x-button>
                     </div>

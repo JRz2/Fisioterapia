@@ -13,24 +13,9 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        // Obtener todas las sesiones programadas con los horarios
-        $horarios = Horario::all();
 
-        // Formatear los horarios para el FullCalendar
-        $eventos = [];
-        foreach ($horarios as $horario) {
-            $eventos[] = [
-                'title' => 'Sesión de Paciente ID: ' . $horario->consulta->paciente_id, // o el nombre del paciente si tienes la relación
-                'start' => $horario->fecha_inicio . 'T' . $horario->hora_inicio,
-                'end'   => $horario->fecha_inicio . 'T' . $horario->hora_fin,
-                'backgroundColor' => '#007bff', // Puedes cambiar el color
-                'borderColor' => '#007bff',
-            ];
-    }
-
-    // Retornar a la vista con los eventos
-    return view('doctor.horario.index', compact('eventos'));
-
+    return view('doctor.horario.index');
+ 
     }
 
     /**
@@ -79,5 +64,21 @@ class HorarioController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function calendario(){
+              $horarios = Horario::all();
+              $eventos = [];
+              foreach ($horarios as $horario) {
+                  $eventos[] = [
+                      'title' => 'Sesión de Paciente ID: ' . $horario->consulta->paciente_id,
+                      'start' => $horario->fecha_inicio . 'T' . $horario->hora_inicio,
+                      'end'   => $horario->fecha_inicio . 'T' . $horario->hora_fin,
+                      'backgroundColor' => '#007bff', 
+                      'borderColor' => '#007bff',
+                  ];
+          }
+      
+          return view('doctor.horario.calendario', compact('eventos'));
     }
 }

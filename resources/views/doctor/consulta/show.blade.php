@@ -183,7 +183,12 @@
                             <div class="card-header text-center">
                                 <h3 class="card-title">Modificar Sesiones Programadas</h3>
                             </div>
-                            @livewire('horario-edit', ['consultaId' => $consulta->id])
+                            <div class="w-3/4"> 
+                                <div>
+                                    @livewire('horario-show')
+                                    @livewire('horarioconsulta-datatable', ['consultaId' => $consulta->id])
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
