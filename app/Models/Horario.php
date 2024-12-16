@@ -18,6 +18,5 @@ class Horario extends Model
     public function sesiones()
         {
             return $this->hasMany(Sesion::class, 'consulta_id', 'consulta_id');
-        }
-                
+        }   
 }
