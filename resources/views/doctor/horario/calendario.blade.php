@@ -17,15 +17,15 @@
             var calendarEl = document.getElementById('calendario');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // Vista inicial, puede ser dayGridWeek o timeGridDay
-                locale: 'es', // Cambiar a español si lo deseas
-                events: @json($eventos), // Insertar los eventos desde la variable $eventos
+                initialView: 'dayGridMonth', 
+                locale: 'es', 
+                events: @json($eventos), 
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                editable: false, // Si quieres que los eventos se puedan mover
+                editable: false, 
             });
 
             calendar.render();
