@@ -34,6 +34,7 @@
                         <option value="antebrazo">Ante Brazo</option>
                         <option value="mano">Mano</option>
                         <option value="pierna">Pierna</option>
+                        <option value="rodilla">Rodilla</option>
                         <option value="pie">Pie</option>
                     </x-select>
                 </div>

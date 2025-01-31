@@ -75,7 +75,9 @@ class ConsultaController extends Controller
             $img = "https://sketchfab.com/models/a9e52fc383a84f8095128e27f602b218/embed";
         }elseif($diagnostico->img == "pie"){
             $img = "https://sketchfab.com/models/cf3074f2a9a44b029f79c08d0b279b38/embed";
-        }else{
+        }elseif($diagnostico->img == "rodilla"){
+            $img = "https://sketchfab.com/models/5a0d77ca78f84697ab4a967b35b549fe/embed";
+        } else{
             $img = null;
         }
         return view('doctor.consulta.show', ['consulta' => $consulta, 'paciente' => $paciente, 'diagnostico' => $diagnostico, 'examen' => $examen, 'imgexamen' => $imgexamen, 'img' => $img]);
