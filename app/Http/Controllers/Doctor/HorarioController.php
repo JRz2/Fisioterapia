@@ -71,7 +71,7 @@ class HorarioController extends Controller
               $eventos = [];
               foreach ($horarios as $horario) {
                   $eventos[] = [
-                      'title' => 'Paciente ' . $horario->consulta->paciente->nombre,
+                      'title' => 'Paciente ' . $horario->consulta->paciente->nombrefisio,
                       'start' => $horario->fecha_inicio . 'T' . $horario->hora_inicio,
                       'end'   => $horario->fecha_inicio . 'T' . $horario->hora_fin,
                       'backgroundColor' => '#007bff', 

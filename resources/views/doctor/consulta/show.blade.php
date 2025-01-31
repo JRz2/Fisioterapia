@@ -153,6 +153,27 @@
                                 </div>
                             </div>
                         @endif
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-outline card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">IMAGEN DE APOYO</h3>
+                                    </div>
+                                    {{$diagnostico->img}}
+                                    <div class="card-body">
+                                        <div class="sketchfab-embed-wrapper w-full"> 
+                                            <iframe class="w-full" title="esqueleto" frameborder="0" allowfullscreen mozallowfullscreen="true" 
+                                                webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" 
+                                                xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share height="400" 
+                                                src="{{$img}}"> 
+                                            </iframe> 
+                                        </div>              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row mt-6 text-center">

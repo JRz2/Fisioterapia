@@ -22,6 +22,21 @@
                     
                     <x-textarea wire:model="plan" class="w-full h-32"></x-textarea>
                 </div>
+                <div>
+                    <x-label>
+                        IMAGEN 3D DE LA ZONA AFECTADA
+                    </x-label>
+                    <x-select class="form-control" wire:model="img">
+                        <option value=""> Selecione una zona</option>
+                        <option value="cara">Cara</option>
+                        <option value="torso">torso</option>
+                        <option value="brazo">Brazo</option>
+                        <option value="antebrazo">Ante Brazo</option>
+                        <option value="mano">Mano</option>
+                        <option value="pierna">Pierna</option>
+                        <option value="pie">Pie</option>
+                    </x-select>
+                </div>
             </div>
             
     

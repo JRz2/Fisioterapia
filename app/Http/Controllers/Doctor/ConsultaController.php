@@ -59,9 +59,26 @@ class ConsultaController extends Controller
         $paciente = $consulta->paciente;
         $diagnostico = $consulta->diagnostico;
         $examen = $consulta->examen;
-        $imgexamen = $consulta->examen?->imgexamen;          
-        
-        return view('doctor.consulta.show', ['consulta' => $consulta, 'paciente' => $paciente, 'diagnostico' => $diagnostico, 'examen' => $examen, 'imgexamen' => $imgexamen]);
+        $imgexamen = $consulta->examen?->imgexamen; 
+        $img= "";         
+        if($diagnostico->img == "torso"){
+            $img = "https://sketchfab.com/models/76ae95bb378e448ebcebcfd6d331a0b4/embed";
+        }elseif($diagnostico->img == "brazo"){
+            $img = "https://sketchfab.com/models/c429dcefb2a3423ea0438f0d661b4c4a/embed";
+        }elseif($diagnostico->img == "antebrazo"){
+            $img = "https://sketchfab.com/models/0515550a617c4d9f896f9e2aee4631fc/embed";
+        }elseif($diagnostico->img == "mano"){
+            $img = "https://sketchfab.com/models/6c685cffa0cf4e1986d0440b8b9eba87/embed";
+        }elseif($diagnostico->img == "pierna"){
+            $img = "https://sketchfab.com/models/4dc37d737a354f9cb13b0d513630f6b9/embed";
+        }elseif($diagnostico->img == "entrepierna"){
+            $img = "https://sketchfab.com/models/a9e52fc383a84f8095128e27f602b218/embed";
+        }elseif($diagnostico->img == "pie"){
+            $img = "https://sketchfab.com/models/cf3074f2a9a44b029f79c08d0b279b38/embed";
+        }else{
+            $img = null;
+        }
+        return view('doctor.consulta.show', ['consulta' => $consulta, 'paciente' => $paciente, 'diagnostico' => $diagnostico, 'examen' => $examen, 'imgexamen' => $imgexamen, 'img' => $img]);
     }
 
     /**

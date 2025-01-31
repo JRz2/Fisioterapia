@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('consulta_id')->unique();
             $table->text('diagnostico')->nullable();
             $table->text('plan')->nullable();
+            $table->text('img')->nullable();
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });

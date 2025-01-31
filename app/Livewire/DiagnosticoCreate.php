@@ -9,6 +9,7 @@ class DiagnosticoCreate extends Component
 {
     public $diagnostico;
     public $plan;
+    public $img;
     public $ultimaConsultaId;
     public $consulta_id;
     public $consultaId;
@@ -20,6 +21,7 @@ class DiagnosticoCreate extends Component
         if ($diagnostico){
             $this->diagnostico = $diagnostico->diagnostico;
             $this->plan = $diagnostico->plan;
+            $this->plan = $diagnostico->img;
             $this->editMode = true;
         }
     }
@@ -31,6 +33,7 @@ class DiagnosticoCreate extends Component
             $diagnostico->update([
                 'diagnostico' => $this->diagnostico,
                 'plan' => $this->plan,
+                'img' => $this->img,
             ]);
             $this->dispatch('swal:success', [
                 'title' => 'Diagnostico',
@@ -41,6 +44,7 @@ class DiagnosticoCreate extends Component
             $diagnostico->consulta_id = $this->consultaId;
             $diagnostico->diagnostico = $this->diagnostico;
             $diagnostico->plan = $this->plan;
+            $diagnostico->img = $this->img;
             $diagnostico->save();
             $this->dispatch('swal:success', [
             'title' => 'Diagnostico',
