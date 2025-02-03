@@ -68,12 +68,12 @@
                                     <h1>Evaluacion del movimiento</h1>
                                 </div>
                                 
-                                <div>
-                                    <div>
-                                        <video id="input_video" autoplay></video>
-                                        <canvas id="output_canvas" width="640" height="480"></canvas>
-                                    </div>
+                                <div class="flex flex-col items-center mt-4">
+                                    <video id="video" autoplay playsinline></video>
+                                    <canvas id="outputCanvas"></canvas>
+                                    
                                 </div>
+                                
                                 
                             </div>
                         </div>
@@ -102,44 +102,59 @@
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script>
-    const videoElement = document.getElementById('input_video');
-    const canvasElement = document.getElementById('output_canvas');
-    const canvasCtx = canvasElement.getContext('2d');
+    const videoElement = document.getElementById('video'); // Tu elemento de video
+const canvasElement = document.getElementById('outputCanvas');
+const ctx = canvasElement.getContext('2d');
 
-    function onResults(results) {
-        canvasCtx.save();
-        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-        if (results.multiHandLandmarks) {
-            for (const landmarks of results.multiHandLandmarks) {
-                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
-                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1 });
-            }
-        }
-        canvasCtx.restore();
+// Crear el modelo de MediaPipe Hands
+const hands = new Hands({
+    locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`;
     }
+});
 
-    const hands = new Hands({
-        locateFile: (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+hands.setOptions({
+    selfieMode: true, // Usa la cámara frontal
+    maxNumHands: 2, // Número máximo de manos a detectar
+    minDetectionConfidence: 0.5, // Confianza mínima para detección
+    minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
+});
+
+// Llamar a la función para procesar los resultados
+hands.onResults(onResults);
+
+function onResults(results) {
+    ctx.save();
+    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+    if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+            drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
+            drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
         }
+    }
+    ctx.restore();
+}
+
+// Iniciar la cámara
+async function startCamera() {
+    const stream = await navigator.mediaDevices.getUserMedia({
+        video: true
     });
+    videoElement.srcObject = stream;
+}
 
-    hands.setOptions({
-        maxNumHands: 2,
-        minDetectionConfidence: 0.7,
-        minTrackingConfidence: 0.5
-    });
+// Iniciar la cámara y el modelo de MediaPipe Hands
+startCamera();
+const camera = new Camera(videoElement, {
+    onFrame: async () => {
+        await hands.send({image: videoElement});
+    },
+    width: 640,
+    height: 480
+});
+camera.start();
 
-    hands.onResults(onResults);
-
-    const camera = new Camera(videoElement, {
-        onFrame: async () => {
-            await hands.send({ image: videoElement });
-        },
-        width: 640,
-        height: 480
-    });
-
-    camera.start();
 </script>
+    
