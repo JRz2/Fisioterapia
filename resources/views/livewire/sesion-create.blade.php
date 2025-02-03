@@ -102,9 +102,8 @@
     </div>
 </div>
 
-
 <script>
-    const videoElement = document.getElementById('video'); // Tu elemento de video
+    const videoElement = document.getElementById('video'); // Elemento de video
     const canvasElement = document.getElementById('outputCanvas');
     const ctx = canvasElement.getContext('2d');
     
@@ -122,9 +121,7 @@
         minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
     });
     
-    // Llamar a la función para procesar los resultados
-    hands.onResults(onResults);
-    
+    // Función que maneja los resultados
     function onResults(results) {
         ctx.save();
         ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -142,28 +139,31 @@
     // Iniciar la cámara
     async function startCamera() {
         try {
-            // Obtener el stream de la cámara
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: true
-            });
-            videoElement.srcObject = stream; // Asignar el stream al elemento de video
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     
-            // Inicializar la cámara de MediaPipe
-            const camera = new Camera(videoElement, {
-                onFrame: async () => {
-                    await hands.send({image: videoElement}); // Enviar el frame a MediaPipe
-                },
-                width: 640,
-                height: 480
-            });
-            camera.start(); // Iniciar la cámara de MediaPipe
+            // Verifica si la cámara fue correctamente inicializada
+            if (stream) {
+                console.log("Cámara iniciada correctamente.");
+                videoElement.srcObject = stream; // Asigna el stream al video
+                const camera = new Camera(videoElement, {
+                    onFrame: async () => {
+                        await hands.send({image: videoElement}); // Enviar cada frame a MediaPipe
+                    },
+                    width: 640,
+                    height: 480
+                });
+                camera.start(); // Inicia la cámara de MediaPipe
+            } else {
+                throw new Error("No se pudo acceder a la cámara.");
+            }
         } catch (error) {
             console.error("Error al acceder a la cámara:", error);
             alert("No se pudo acceder a la cámara. Verifica los permisos.");
         }
     }
     
-    // Llamar a la función para iniciar la cámara
+    // Iniciar la cámara
     startCamera();
     </script>
+    
     
