@@ -102,6 +102,10 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/mediapipe/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.3.1646404666/mediapipe/pose.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/hands.js"></script>
+
 <script>
     const videoElement = document.getElementById('video'); // Elemento de video
     const canvasElement = document.getElementById('outputCanvas');
