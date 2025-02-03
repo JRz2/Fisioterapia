@@ -96,7 +96,7 @@
     </div>
 </div>
 
-
+<script src="/mediapipe/hands/hands.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
@@ -111,10 +111,9 @@
     const ctx = canvasElement.getContext('2d');
 
     const hands = new Hands({
-  locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands/${file}`;
-  }
+  locateFile: (file) => `/mediapipe/hands/${file}`
 });
+
 
 
     hands.setOptions({
