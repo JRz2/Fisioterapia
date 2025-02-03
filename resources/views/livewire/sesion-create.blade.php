@@ -103,60 +103,67 @@
 </div>
 
 
-
 <script>
-const videoElement = document.getElementById('video'); // Tu elemento de video
-const canvasElement = document.getElementById('outputCanvas');
-const ctx = canvasElement.getContext('2d');
-
-// Crear el modelo de MediaPipe Hands
-const hands = new Hands({
-    locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`;
+    const videoElement = document.getElementById('video'); // Tu elemento de video
+    const canvasElement = document.getElementById('outputCanvas');
+    const ctx = canvasElement.getContext('2d');
+    
+    // Crear el modelo de MediaPipe Hands
+    const hands = new Hands({
+        locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`;
+        }
+    });
+    
+    hands.setOptions({
+        selfieMode: true, // Usa la cámara frontal
+        maxNumHands: 2, // Número máximo de manos a detectar
+        minDetectionConfidence: 0.5, // Confianza mínima para detección
+        minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
+    });
+    
+    // Llamar a la función para procesar los resultados
+    hands.onResults(onResults);
+    
+    function onResults(results) {
+        ctx.save();
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+    
+        if (results.multiHandLandmarks) {
+            for (const landmarks of results.multiHandLandmarks) {
+                drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
+                drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+            }
+        }
+        ctx.restore();
     }
-});
-
-hands.setOptions({
-    selfieMode: true, // Usa la cámara frontal
-    maxNumHands: 2, // Número máximo de manos a detectar
-    minDetectionConfidence: 0.5, // Confianza mínima para detección
-    minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
-});
-
-// Llamar a la función para procesar los resultados
-hands.onResults(onResults);
-
-function onResults(results) {
-    ctx.save();
-    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-    if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
-            drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
-            drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+    
+    // Iniciar la cámara
+    async function startCamera() {
+        try {
+            // Obtener el stream de la cámara
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+            videoElement.srcObject = stream; // Asignar el stream al elemento de video
+    
+            // Inicializar la cámara de MediaPipe
+            const camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    await hands.send({image: videoElement}); // Enviar el frame a MediaPipe
+                },
+                width: 640,
+                height: 480
+            });
+            camera.start(); // Iniciar la cámara de MediaPipe
+        } catch (error) {
+            console.error("Error al acceder a la cámara:", error);
+            alert("No se pudo acceder a la cámara. Verifica los permisos.");
         }
     }
-    ctx.restore();
-}
-
-// Iniciar la cámara
-async function startCamera() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: true
-    });
-    videoElement.srcObject = stream;
-}
-
-// Iniciar la cámara y el modelo de MediaPipe Hands
-startCamera();
-const camera = new Camera(videoElement, {
-    onFrame: async () => {
-        await hands.send({image: videoElement});
-    },
-    width: 640,
-    height: 480
-});
-camera.start();
-
-</script>
+    
+    // Llamar a la función para iniciar la cámara
+    startCamera();
+    </script>
+    
