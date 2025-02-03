@@ -103,15 +103,17 @@
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
 
 
+
+
 <script>
     const videoElement = document.getElementById('video'); 
     const canvasElement = document.getElementById('outputCanvas');
     const ctx = canvasElement.getContext('2d');
 
     const hands = new Hands({
-    locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-    }
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+  }
 });
 
 
