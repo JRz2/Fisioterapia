@@ -69,16 +69,10 @@
                                 </div>
                                 
                                 <div>
-                                    <!-- Video de la cámara -->
-                                    <video id="video" width="640" height="480" autoplay></video>
-                                
-                                    <!-- Canvas para dibujar los resultados (puntos de referencia) -->
-                                    <canvas id="outputCanvas" width="640" height="480"></canvas>
-                                
-                                    <!-- Botón para guardar los datos -->
-                                    <button wire:click="saveMovimientoDataFromFrontend" id="saveBtn" class="btn btn-primary">
-                                        Guardar Postura
-                                    </button>
+                                    <div>
+                                        <video id="input_video" autoplay></video>
+                                        <canvas id="output_canvas" width="640" height="480"></canvas>
+                                    </div>
                                 </div>
                                 
                             </div>
@@ -102,70 +96,50 @@
     </div>
 </div>
 
-<script async src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.0/hands.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script>
-    const videoElement = document.getElementById('video'); // Elemento de video
-    const canvasElement = document.getElementById('outputCanvas');
-    const ctx = canvasElement.getContext('2d');
-    
-    // Crear el modelo de MediaPipe Hands
-    const hands = new Hands({
-        locateFile: (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`;
-        }
-    });
-    
-    hands.setOptions({
-        selfieMode: true, // Usa la cámara frontal
-        maxNumHands: 2, // Número máximo de manos a detectar
-        minDetectionConfidence: 0.5, // Confianza mínima para detección
-        minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
-    });
-    
-    // Función que maneja los resultados
+    const videoElement = document.getElementById('input_video');
+    const canvasElement = document.getElementById('output_canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+
     function onResults(results) {
-        ctx.save();
-        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-    
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
         if (results.multiHandLandmarks) {
             for (const landmarks of results.multiHandLandmarks) {
-                drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
-                drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
+                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1 });
             }
         }
-        ctx.restore();
+        canvasCtx.restore();
     }
-    
-    // Iniciar la cámara
-    async function startCamera() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    
-            // Verifica si la cámara fue correctamente inicializada
-            if (stream) {
-                console.log("Cámara iniciada correctamente.");
-                videoElement.srcObject = stream; // Asigna el stream al video
-                const camera = new Camera(videoElement, {
-                    onFrame: async () => {
-                        await hands.send({image: videoElement}); // Enviar cada frame a MediaPipe
-                    },
-                    width: 640,
-                    height: 480
-                });
-                camera.start(); // Inicia la cámara de MediaPipe
-            } else {
-                throw new Error("No se pudo acceder a la cámara.");
-            }
-        } catch (error) {
-            console.error("Error al acceder a la cámara:", error);
-            alert("No se pudo acceder a la cámara. Verifica los permisos.");
+
+    const hands = new Hands({
+        locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
         }
-    }
-    
-    // Iniciar la cámara
-    startCamera();
-    </script>
-    
-    
+    });
+
+    hands.setOptions({
+        maxNumHands: 2,
+        minDetectionConfidence: 0.7,
+        minTrackingConfidence: 0.5
+    });
+
+    hands.onResults(onResults);
+
+    const camera = new Camera(videoElement, {
+        onFrame: async () => {
+            await hands.send({ image: videoElement });
+        },
+        width: 640,
+        height: 480
+    });
+
+    camera.start();
+</script>
