@@ -238,11 +238,10 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+<!-- Cargar MediaPipe -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/mediapipe/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.3.1646404666/mediapipe/pose.js"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
