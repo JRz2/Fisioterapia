@@ -102,59 +102,62 @@
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script>
-    const videoElement = document.getElementById('video'); // Tu elemento de video
-const canvasElement = document.getElementById('outputCanvas');
-const ctx = canvasElement.getContext('2d');
+    const videoElement = document.getElementById('video'); 
+    const canvasElement = document.getElementById('outputCanvas');
+    const ctx = canvasElement.getContext('2d');
 
-// Crear el modelo de MediaPipe Hands
-const hands = new Hands({
-    locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`;
-    }
-});
+    // Configurar el modelo MediaPipe Hands
+    const hands = new Hands({
+        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3.1646404666/${file}`
+    });
 
-hands.setOptions({
-    selfieMode: true, // Usa la cámara frontal
-    maxNumHands: 2, // Número máximo de manos a detectar
-    minDetectionConfidence: 0.5, // Confianza mínima para detección
-    minTrackingConfidence: 0.5 // Confianza mínima para seguimiento
-});
+    hands.setOptions({
+        selfieMode: true,
+        maxNumHands: 2,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5
+    });
 
-// Llamar a la función para procesar los resultados
-hands.onResults(onResults);
+    hands.onResults(onResults);
 
-function onResults(results) {
-    ctx.save();
-    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+    function onResults(results) {
+        if (!results.image) return; // Verifica si hay una imagen de entrada
 
-    if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
-            drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
-            drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+        // Ajustar tamaño del canvas al del video
+        canvasElement.width = videoElement.videoWidth;
+        canvasElement.height = videoElement.videoHeight;
+
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+        if (results.multiHandLandmarks) {
+            for (const landmarks of results.multiHandLandmarks) {
+                drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
+                drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+            }
         }
     }
-    ctx.restore();
-}
 
-// Iniciar la cámara
-async function startCamera() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: true
-    });
-    videoElement.srcObject = stream;
-}
+    async function startCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElement.srcObject = stream;
 
-// Iniciar la cámara y el modelo de MediaPipe Hands
-startCamera();
-const camera = new Camera(videoElement, {
-    onFrame: async () => {
-        await hands.send({image: videoElement});
-    },
-    width: 640,
-    height: 480
-});
-camera.start();
+            // Esperar a que el video esté listo antes de inicializar la cámara
+            videoElement.onloadedmetadata = () => {
+                const camera = new Camera(videoElement, {
+                    onFrame: async () => {
+                        await hands.send({image: videoElement});
+                    },
+                    width: 640,
+                    height: 480
+                });
+                camera.start();
+            };
+        } catch (error) {
+            console.error("Error al acceder a la cámara:", error);
+        }
+    }
 
+    startCamera();
 </script>
-    
