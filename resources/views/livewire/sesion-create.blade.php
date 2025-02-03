@@ -62,17 +62,12 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                </div>
+                                </div>                              
 
-                                <div class="flex flex-col items-center mt-4">
-                                    <video id="video" class="border rounded-lg" width="640" height="480" autoplay playsinline></video>
-                                    <canvas id="output_canvas" class="absolute top-0 left-0"></canvas>
-                                </div>
-                                
-                                
                                 <div>
                                     <h1>Evaluacion del movimiento</h1>
                                 </div>
+                                <video id="video" autoplay playsinline width="640" height="480"></video>
                             </div>
                         </div>
                     </x-slot>
@@ -94,51 +89,18 @@
     </div>
 </div>
 
+
+
 <script>
-    document.addEventListener('livewire:load', function () {
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('output_canvas');
-        const ctx = canvas.getContext('2d');
-    
-        async function setupCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                video.play(); // Asegurar que el video se reproduzca
-            } catch (err) {
-                console.error("Error al acceder a la cámara: ", err);
-                alert("Por favor, permite el acceso a la cámara.");
-            }
+    async function startCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            document.getElementById('video').srcObject = stream;
+        } catch (error) {
+            console.error("Error al acceder a la cámara:", error);
+            alert("No se pudo acceder a la cámara. Verifica los permisos.");
         }
-    
-        async function detectPose() {
-            const detector = await poseDetection.createDetector(poseDetection.SupportedModels.MoveNet);
-            setInterval(async () => {
-                const poses = await detector.estimatePoses(video);
-                if (poses.length > 0) {
-                    const landmarks = poses[0].keypoints.map(p => ({ x: p.x, y: p.y, score: p.score }));
-                    
-                    Livewire.emit('postureDetected', landmarks);
-    
-                    // Ajustar tamaño del canvas al tamaño del video
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    landmarks.forEach(point => {
-                        ctx.beginPath();
-                        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
-                        ctx.fillStyle = 'red';
-                        ctx.fill();
-                    });
-                }
-            }, 1000);
-        }
-    
-        setupCamera().then(() => {
-            detectPose();
-        });
-    });
-    </script>
-    
-    
+    }
+
+    startCamera();
+</script>
