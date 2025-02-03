@@ -111,7 +111,7 @@
     const ctx = canvasElement.getContext('2d');
 
     const hands = new Hands({
-  locateFile: (file) => `/mediapipe/hands/${file}`
+  locateFile: (file) => `/mediapipe/hands/hand_landmark_full.tflite${file}`
 });
 
 
