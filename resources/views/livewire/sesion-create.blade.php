@@ -69,9 +69,10 @@
                                 </div>
                                 
                                 <div class="flex flex-col items-center mt-4">
-                                    <video id="video" autoplay playsinline></video>
-                                    <canvas id="outputCanvas"></canvas>
-                                    
+                                    <div>
+                                        <video id="webcam" autoplay style="display: none"></video>
+                                        <canvas id="output_canvas"></canvas>
+                                    </div>
                                 </div>
                                 
                                 
@@ -96,73 +97,3 @@
     </div>
 </div>
 
-<script src="/mediapipe/hands/hands.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
-
-
-
-
-<script>
-    const videoElement = document.getElementById('video'); 
-    const canvasElement = document.getElementById('outputCanvas');
-    const ctx = canvasElement.getContext('2d');
-
-    const hands = new Hands({
-  locateFile: (file) => `/mediapipe/hands/hand_landmark_full.tflite${file}`
-});
-
-
-
-    hands.setOptions({
-        selfieMode: true,
-        maxNumHands: 2,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5
-    });
-
-    hands.onResults(onResults);
-
-    function onResults(results) {
-        if (!results.image) return; // Verifica si hay una imagen de entrada
-
-        // Ajustar tamaño del canvas al del video
-        canvasElement.width = videoElement.videoWidth;
-        canvasElement.height = videoElement.videoHeight;
-
-        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-        if (results.multiHandLandmarks) {
-            for (const landmarks of results.multiHandLandmarks) {
-                drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
-                drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
-            }
-        }
-    }
-
-    async function startCamera() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            videoElement.srcObject = stream;
-
-            // Esperar a que el video esté listo antes de inicializar la cámara
-            videoElement.onloadedmetadata = () => {
-                const camera = new Camera(videoElement, {
-                    onFrame: async () => {
-                        await hands.send({image: videoElement});
-                    },
-                    width: 640,
-                    height: 480
-                });
-                camera.start();
-            };
-        } catch (error) {
-            console.error("Error al acceder a la cámara:", error);
-        }
-    }
-
-    startCamera();
-</script>
