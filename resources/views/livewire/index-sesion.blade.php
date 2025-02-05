@@ -25,18 +25,16 @@
                         <p><strong>Observación:</strong> {{ $sesion->observacion }}</p>
                         <p><strong>Recomendación:</strong> {{ $sesion->recomendacion }}</p>
                         <p><strong>Tratamiento:</strong> {{ $sesion->tratamiento }}</p>
-                        <p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
-                        <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>
+                        <!--<p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
+                        <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>-->
                         <button
                             onclick="visualizarPosturas({{ json_encode($sesion->postura_inicial) }}, {{ json_encode($sesion->postura_final) }})">
                             Visualizar Posturas
                         </button>
 
-                        <canvas id="output_canvas" width="1280" height="720"></canvas>
-                        <button onclick="captureCanvasImage()">Capturar Imagen</button>
 
-                        <div id="container"> IMAGEN</div>
-    <video id="video" style="display:none;" autoplay></video>
+
+                        
 
 
                         <!-- Mostrar imágenes -->
@@ -57,49 +55,27 @@
                     </div>
                 </div>
             @endforeach
+
+            <div>
+                
+                <div class="flex flex-col items-center mt-4">
+                    <div class="flex flex-col items-center mt-4">
+                        <div>
+                            <video id="webcam" autoplay style="display: none"></video>
+                            <canvas id="output_canvas" width="640" height="480"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <input type="hidden" id="initialPosition" wire:model="postura_inicial">
+                <input type="hidden" id="finalPosition" wire:model="postura_final">
+            </div>
         @else
             <p class="text-gray-500">No hay sesiones disponibles.</p>
         @endif
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 
-    <script src="app.js"></script>
-<script>
-    // Configurar la escena
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webglCanvas') });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
 
-    camera.position.z = 1.5;
-
-    // Coordenadas de MediaPipe Hands (Ejemplo)
-    const posturaInicial = @json($sesion->postura_inicial);
-    const posturaFinal = @json($sesion->postura_final);
-
-    console.log("Postura Inicial:", posturaInicial);
-    console.log("Postura Final:", posturaFinal);
-
-    function createHandMesh(landmarks, color) {
-        const points = landmarks.map(l => new THREE.Vector3(l.x - 0.5, -l.y + 0.5, l.z)); // Ajustar posición
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ color: color });
-        return new THREE.Line(geometry, material);
-    }
-
-    // Renderizar ambas posturas
-    if (posturaInicial) scene.add(createHandMesh(posturaInicial, 0x00ff00)); // Verde
-    if (posturaFinal) scene.add(createHandMesh(posturaFinal, 0xff0000)); // Rojo
-
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    animate();
-</script>

@@ -23,6 +23,8 @@
         "@mediapipe/hands": "^0.4.1675469240",
         "@mediapipe/holistic": "^0.5.1675471629",
         "@mediapipe/pose": "^0.5.1675469404",
+        "@tensorflow-models/handpose": "^0.1.0",
+        "@tensorflow/tfjs": "^4.22.0",
         "bootstrap": "^5.3.3",
         "sweetalert2": "^11.14.1",
         "three": "^0.173.0"
