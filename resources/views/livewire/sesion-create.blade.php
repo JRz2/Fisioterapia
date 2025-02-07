@@ -72,7 +72,6 @@
                                     <h1>Evaluacion del movimiento</h1>
                                 </div>
 
-<<<<<<< HEAD
                                 <div>
                                     <!-- Canvas para mostrar el resultado de MediaPipe -->
                                     <canvas id="output_canvas" width="640" height="480"></canvas>
@@ -110,37 +109,6 @@
 
                                     </div>
                                 </div>
-=======
-                                <!--<div>
-                                    <video id="hola" autoplay></video>
-                                    <div>
-                                        <video id="webcam" autoplay style="display: none"></video>
-                                        <canvas id="output_canvas" width="640" height="480"></canvas>
-                                    </div>
-
-                                    <input type="hidden" id="initialPosition" wire:model="postura_inicial">
-                                    <input type="hidden" id="finalPosition" wire:model="postura_final">
-
-
-                                    <div class="row pt-4">
-                                        <button type="button" id="captureInitialButton"
-                                            class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
-                                            Capturar Posición Inicial
-                                        </button>
-                                        <button type="button" id="captureFinalButton"
-                                            class="bg-green-500 text-white px-4 py-2 rounded-lg">
-                                            Capturar Posición Final
-                                        </button>
-                                    </div>
-
-                                </div>-->
-
-
-
-
-
-
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 
 
                             </div>
@@ -163,9 +131,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe

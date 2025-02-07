@@ -56,41 +56,16 @@ hands.onResults((results) => {
             // Captura la posición del landmark de la muñeca (landmark 0)
             const wrist = landmarks[0];
             //getWristPosition();
-<<<<<<< HEAD
             console.log( results.multiHandLandmarks);
-=======
-            console.log( wrist, landmarks);
-
-            compareMovements(landmarks,parametro);
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
             // Si se ha solicitado capturar la posición inicial
             if (captureInitial) {
                 initialPosition = { x: wrist.x, y: wrist.y, z: wrist.z };
                 initialPositionInput.value = JSON.stringify(initialPosition);
                 captureInitial = false;
-<<<<<<< HEAD
                 console.log(initialPositionInput.value , results.multiHandLandmarks); 
                 
                 //Livewire.dispatch('updatePosturaInicial', { postura: JSON.stringify(initialPosition) });
                 Livewire.dispatch('updatePosturaInicial', { postura: results.multiHandLandmarks });// Reiniciar la bandera
-=======
-                for (const landmarks of results.multiHandLandmarks) {
-                    for (let i = 0; i < landmarks.length; i++) {
-                        const landmark = landmarks[i];
-        
-                        // Convertir coordenadas de MediaPipe a Three.js
-                        points[i].position.set(
-                            (landmark.x - 0.5) * 2,  // Centrar en el eje X
-                            -(landmark.y - 0.5) * 2, // Invertir Y para que coincida con Three.js
-                            -landmark.z              // Invertir Z para profundidad correcta
-                        );
-                    }
-                }
-                console.log(initialPositionInput.value , results.multiHandLandmarks); 
-                
-                //Livewire.dispatch('updatePosturaInicial', { postura: JSON.stringify(initialPosition) });
-                Livewire.dispatch('updatePosturaInicial', { postura: landmarks });// Reiniciar la bandera
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
                 alert('Posición inicial capturada');
             }
 
@@ -99,39 +74,16 @@ hands.onResults((results) => {
                 finalPosition = { x: wrist.x, y: wrist.y, z: wrist.z };
                 finalPositionInput.value = JSON.stringify(finalPosition);
                 captureFinal = false;
-<<<<<<< HEAD
                 console.log(finalPositionInput.value);
                 Livewire.dispatch('updatePosturaFinal', { postura: results.multiHandLandmarks  }); // Reiniciar la bandera
                 alert('Posición final capturada');
             }
-=======
-                for (const landmarks of results.multiHandLandmarks) {
-                    for (let i = 0; i < landmarks.length; i++) {
-                        const landmark = landmarks[i];
-        
-                        // Convertir coordenadas de MediaPipe a Three.js
-                        points[i].position.set(
-                            (landmark.x - 0.5) * 2,  // Centrar en el eje X
-                            -(landmark.y - 0.5) * 2, // Invertir Y para que coincida con Three.js
-                            -landmark.z              // Invertir Z para profundidad correcta
-                        );
-                    }
-                }
-                console.log(finalPositionInput.value);
-                Livewire.dispatch('updatePosturaFinal', { postura: landmarks  }); // Reiniciar la bandera
-                alert('Posición final capturada');
-            }
-
-            
-
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
         }
     }
 
     canvasCtx.restore();
 });
 
-<<<<<<< HEAD
 /*hands.onResults((results) => {
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -151,48 +103,6 @@ hands.onResults((results) => {
 
     canvasCtx.restore();
 });*/
-=======
-hands1.onResults((results1) => {
-    console.log(results1);
-    if (results1.multiHandLandmarks) {
-        console.log(results1.multiHandLandmarks);
-      results1.multiHandLandmarks.forEach((landmarks) => {
-        // Dibuja los landmarks en Three.js
-        
-        landmarks.forEach((landmark) => {
-          const sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(0.1),
-            new THREE.MeshBasicMaterial({ color: 0xff0000 })
-          );
-          sphere.position.set(landmark.x * 10, landmark.y * 10, landmark.z * 10);
-          scene.add(sphere);
-        });
-      });
-    }
-  });
-
-
-  const cameraElement = new Camera(videoElement1, {
-    onFrame: async () => {
-      await hands1.send({ image: videoElement1});
-    },
-    width: 640,
-    height: 480,
-  });
-  cameraElement.start();
-
-  const camera = new Camera(videoElement, {
-    onFrame: async () => {
-        await hands.send({ image: videoElement });
-    },
-    width: 640,
-    height: 480
-});
-camera.start();
-
-
-
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 
 // Función para obtener la posición de la muñeca
 function getWristPosition() {
@@ -204,14 +114,10 @@ function getWristPosition() {
     console.log('No se detectaron landmarks'); // Log si no se detectan landmarks
     return null;
 }
-<<<<<<< HEAD
 // Función para dibujar los landmarks de las manos
 
 
 // Función para dibujar los landmarks de las manos
-=======
-
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 function drawLandmarks(ctx, landmarks) {
     ctx.fillStyle = '#FF0000'; // Color de los puntos
     ctx.strokeStyle = '#00BFFF'; // Color de las líneas
@@ -244,7 +150,6 @@ let captureFinal = false;
 document.getElementById('captureInitialButton').addEventListener('click', () => {
     captureInitial = true;
 });
-<<<<<<< HEAD
 camera.start();
 
 // Variables para controlar la captura de posiciones
@@ -255,14 +160,11 @@ let captureFinal = false;
 document.getElementById('captureInitialButton').addEventListener('click', () => {
     captureInitial = true;
 });
-=======
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 
 document.getElementById('captureFinalButton').addEventListener('click', () => {
     captureFinal = true;
 });
 
-<<<<<<< HEAD
 // Escuchar eventos de Livewire para capturar posiciones
 // Escuchar eventos de Livewire para capturar posiciones
 Livewire.on('captureInitialPosition', () => {
@@ -292,36 +194,3 @@ Livewire.on('captureFinalPosition', () => {
         console.log('No se pudo capturar la postura final'); // Log si no se captura la postura
     }
 });
-=======
-
-
-function compareMovements(detectedLandmarks, storedLandmarks) {
-    let totalDistance = 0;
-    console.log(detectedLandmarks,storedLandmarks);
-    for (let i = 0; i < detectedLandmarks.length; i++) {
-      const dx = detectedLandmarks[i][0] - storedLandmarks[i][0];
-      const dy = detectedLandmarks[i][1] - storedLandmarks[i][1];
-      const dz = detectedLandmarks[i][2] - storedLandmarks[i][2];
-      totalDistance += Math.sqrt(dx * dx + dy * dy + dz * dz);
-    }
-
-    console.log(totalDistance / detectedLandmarks.length);
-    return totalDistance / detectedLandmarks.length; // Promedio de distancia
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-// Enviar coordenadas a Livewire
-/*trackHand((landmarks) => {
-    Livewire.emit("updateHandPoints", landmarks);
-});*/
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe

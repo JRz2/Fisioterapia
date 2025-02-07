@@ -25,31 +25,18 @@
                         <p><strong>Observación:</strong> {{ $sesion->observacion }}</p>
                         <p><strong>Recomendación:</strong> {{ $sesion->recomendacion }}</p>
                         <p><strong>Tratamiento:</strong> {{ $sesion->tratamiento }}</p>
-<<<<<<< HEAD
                         <p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
                         <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>
-=======
-                        <!--<p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
-                        <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>-->
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
                         <button
                             onclick="visualizarPosturas({{ json_encode($sesion->postura_inicial) }}, {{ json_encode($sesion->postura_final) }})">
                             Visualizar Posturas
                         </button>
 
-<<<<<<< HEAD
                         <canvas id="output_canvas" width="1280" height="720"></canvas>
                         <button onclick="captureCanvasImage()">Capturar Imagen</button>
 
                         <div id="container"> IMAGEN</div>
     <video id="video" style="display:none;" autoplay></video>
-=======
-
-
-                        
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
-
-
                         <!-- Mostrar imágenes -->
                         @if ($sesion->imgsesion->isNotEmpty())
                             <div id="gallery-{{ $sesion->id }}"
@@ -90,7 +77,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
@@ -131,7 +117,3 @@
     }
     animate();
 </script>
-=======
-
-
->>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
