@@ -25,18 +25,29 @@
                         <p><strong>Observación:</strong> {{ $sesion->observacion }}</p>
                         <p><strong>Recomendación:</strong> {{ $sesion->recomendacion }}</p>
                         <p><strong>Tratamiento:</strong> {{ $sesion->tratamiento }}</p>
+<<<<<<< HEAD
                         <p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
                         <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>
+=======
+                        <!--<p>Postura Inicial: {{ json_encode($sesion->postura_inicial) }}</p>
+                        <p>Postura Final: {{ json_encode($sesion->postura_final) }}</p>-->
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
                         <button
                             onclick="visualizarPosturas({{ json_encode($sesion->postura_inicial) }}, {{ json_encode($sesion->postura_final) }})">
                             Visualizar Posturas
                         </button>
 
+<<<<<<< HEAD
                         <canvas id="output_canvas" width="1280" height="720"></canvas>
                         <button onclick="captureCanvasImage()">Capturar Imagen</button>
 
                         <div id="container"> IMAGEN</div>
     <video id="video" style="display:none;" autoplay></video>
+=======
+
+
+                        
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 
 
                         <!-- Mostrar imágenes -->
@@ -57,12 +68,29 @@
                     </div>
                 </div>
             @endforeach
+
+            <div>
+                
+                <div class="flex flex-col items-center mt-4">
+                    <div class="flex flex-col items-center mt-4">
+                        <div>
+                            <video id="webcam" autoplay style="display: none"></video>
+                            <canvas id="output_canvas" width="640" height="480"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <input type="hidden" id="initialPosition" wire:model="postura_inicial">
+                <input type="hidden" id="finalPosition" wire:model="postura_final">
+            </div>
         @else
             <p class="text-gray-500">No hay sesiones disponibles.</p>
         @endif
     </div>
 </div>
 
+<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
@@ -103,3 +131,7 @@
     }
     animate();
 </script>
+=======
+
+
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe

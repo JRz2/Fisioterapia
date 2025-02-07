@@ -1,12 +1,21 @@
 import './bootstrap';
+<<<<<<< HEAD
 import * as THREE from 'three';
+=======
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 
 import Swal from 'sweetalert2';
 import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
+<<<<<<< HEAD
 //import './mediapipe.js';
 import './hand-tracking.js';
+=======
+import './mediapipe.js';
+//import './hand-tracking.js';
+//import './three.js';
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
 //import './mediapipeholistic.js';
 //setupmediapipeholistic();
 //import './mediapipe_hands.js';
@@ -14,6 +23,7 @@ import './hand-tracking.js';
 
 
 
+<<<<<<< HEAD
 // 1️⃣ Crear escena, cámara y renderizador de Three.js
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -91,3 +101,6 @@ navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
     });
     camera.start();
 });
+=======
+
+>>>>>>> 5fc47f13c3b2882d42f29eebf28c7d8775153cbe
