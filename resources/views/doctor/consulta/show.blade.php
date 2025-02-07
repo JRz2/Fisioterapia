@@ -218,6 +218,7 @@
                     <div class="col-md-12">
                         <div>
                             @livewire('sesion-create', ['consultaId' => $consulta->id])
+                            <a class="btn btn-success" href="{{route('doctor.sesion.create')}}"> AGREGAR SESION</a>
                         </div>
 
                         <div style="width: 70%; margin-left: auto; margin-right:auto">

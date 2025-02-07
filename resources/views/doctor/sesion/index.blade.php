@@ -47,10 +47,7 @@
                     <td>{{ $sesion->consulta->codigo }}</td>
                     <td>{{ $sesion->created_at }}</td>
                     <td>
-                        <a class="btn btn-info btn-sm" 
-                        >
-                            <i class="fa fa-eye"></i> Ver
-                        </a>
+                        <a class="btn btn-outline-secondary" href="{{route('doctor.sesion.show', $sesion)}}"><i class="fa fa-eye"></i></a>  
                     </td>
                 </tr>
                 @endforeach
@@ -77,9 +74,8 @@
                 <td>{{ $sesion->consulta->codigo }}</td>
                 <td>{{ $sesion->created_at }}</td>
                 <td>
-                    <a class="btn btn-info btn-sm" 
-                    >
-                        <i class="fa fa-eye"></i> Ver
+                    <a class="btn btn-info btn-sm">
+                    <a class="btn btn-outline-secondary" href="{{route('doctor.sesion.show', $sesion->id)}}"><i class="fa fa-eye"></i></a>  
                     </a>
                 </td>
             </tr>

@@ -24,24 +24,51 @@ class SesionController extends Controller
      */
     public function create()
     {
-        //
+        return view('doctor.sesion.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $consulta_id = 1;
+        $codigo = "S002";
+        $fecha = "05/02/2025";
+        $fechaConvertida = Carbon::createFromFormat('d/m/Y', $fecha)->format('Y-m-d');
+        $data = $request->validate([
+            'postura_inicial' => 'required|string',
+            'postura_final' => 'required|string',
+        ]);
+    
+        // Si es necesario, decodifica el JSON
+        $data['postura_inicial'] = json_decode($data['postura_inicial'], true);
+        $data['postura_final'] = json_decode($data['postura_final'], true);
+    
+        // Guarda la sesión (suponiendo que tienes un modelo Sesion)
+        Sesion::create([
+            'consulta_id' => $consulta_id,
+            'codigo' => $codigo,
+            'fecha' => $fechaConvertida,
+            'postura_inicial' => json_encode($data['postura_inicial']),
+            'postura_final' => json_encode($data['postura_final']),
+        ]);
+    
+        return redirect()->route('doctor.sesion.create')->with('success', 'Sesión guardada exitosamente.');
     }
+    
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $session = Sesion::findOrFail($id);
+        //dd($id);
+        //dd($session);
+        return view('doctor.sesion.show', compact('session'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
