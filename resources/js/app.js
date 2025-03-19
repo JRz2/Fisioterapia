@@ -1,6 +1,5 @@
 import './bootstrap';
 //import * as THREE from 'three';
-
 //import Swal from 'sweetalert2';
 //import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
 //import { Camera } from '@mediapipe/camera_utils';

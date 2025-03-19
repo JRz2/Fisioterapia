@@ -33,8 +33,9 @@ class SesionController extends Controller
     public function store(Request $request)
     {   
         $consulta_id = 1;
-        $codigo = "S002";
+        $codigo = "S009";
         $fecha = "05/02/2025";
+        $recomendacion = "Seguir con el tratamiento";
         $fechaConvertida = Carbon::createFromFormat('d/m/Y', $fecha)->format('Y-m-d');
         $data = $request->validate([
             'postura_inicial' => 'required|string',
@@ -50,6 +51,7 @@ class SesionController extends Controller
             'consulta_id' => $consulta_id,
             'codigo' => $codigo,
             'fecha' => $fechaConvertida,
+            'recomendacion' => $recomendacion,
             'postura_inicial' => json_encode($data['postura_inicial']),
             'postura_final' => json_encode($data['postura_final']),
         ]);

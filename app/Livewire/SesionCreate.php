@@ -40,10 +40,6 @@ class SesionCreate extends Component
 
     public function save()
     {
-        Log::info('Datos a guardar:', [
-            'postura_inicial' => $this->postura_inicial,
-            'postura_final' => $this->postura_final,
-        ]);
         $this->validate([
             'fecha' => 'required',
         ]);
@@ -69,8 +65,6 @@ class SesionCreate extends Component
             'observacion' => $this->observacion,
             'recomendacion' => $this->recomendacion,
             'tratamiento' => $this->tratamiento,
-            'postura_inicial' => $this->postura_inicial,
-            'postura_final' => $this->postura_final,
         ]);
 
         if ($this->ruta) {

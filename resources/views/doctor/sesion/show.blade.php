@@ -7,272 +7,195 @@
 @stop
 
 @section('content')
-    <p>A continuación se muestran las posturas capturadas:</p>
-    <div id="threeContainer" style="width: 100%; height: 600px;"></div>
+    <p>Se muestran dos manos: una con la postura inicial y otra con la postura final.</p>
+    <div id="webgl-container"></div>
 @stop
 
 @section('css')
-    <style>
-        #threeContainer {
-            width: 100%;
-            height: 600px;
-            background-color: #f0f0f0;
-        }
-    </style>
+<style>
+    body { margin: 0; overflow: hidden; }
+    #webgl-container { width: 100vw; height: 100vh; }
+</style>
 @stop
 
 @section('js')
-    <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://unpkg.com/delaunator@5.0.0/delaunator.min.js"></script>
-    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/SVGLoader.js"></script>
-
+    <!-- Incluir Three.js, OrbitControls, GLTFLoader y SkeletonUtils para clonar modelos con esqueletos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/SkeletonUtils.js"></script>
     <script>
-        let handMotion = null;
+        console.log("Iniciando la escena de Three.js");
+
+        // Crear la escena, cámara y renderizador
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xeeeeee);
+        console.log("Escena creada");
+
+        const camera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.set(0, 1, 5);
+        console.log("Cámara creada y posicionada");
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+        console.log("Renderizador creado y añadido al contenedor");
+
+        // Añadir iluminación
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        console.log("Luz ambiental añadida");
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(0, 5, 5);
+        scene.add(directionalLight);
+        console.log("Luz direccional añadida");
+
+        // Controles de la cámara
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = true;
+        console.log("Controles de la cámara inicializados");
+
+        // Parsear datos de posturas recibidos desde el backend
         const initialPostureString = @json($session->postura_inicial);
         const finalPostureString = @json($session->postura_final);
+        console.log("Postura inicial (raw):", initialPostureString);
+        console.log("Postura final (raw):", finalPostureString);
         const initialPosture = JSON.parse(initialPostureString);
         const finalPosture = JSON.parse(finalPostureString);
-        const scaleFactor = 100;
-      
-        const HAND_CONNECTIONS = [
-            [0, 1],
-            [1, 2],
-            [2, 3],
-            [3, 4],
-            [0, 5],
-            [5, 6],
-            [6, 7],
-            [7, 8],
-            [5, 9],
-            [9, 10],
-            [10, 11],
-            [11, 12],
-            [9, 13],
-            [13, 14],
-            [14, 15],
-            [15, 16],
-            [13, 17],
-            [17, 18],
-            [18, 19],
-            [19, 20],
-            [0, 17]
-        ];
+        console.log("Posturas parseadas correctamente");
 
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf0f0f0);
-
-        
-        const gridHelper = new THREE.GridHelper(400, 20);
-        scene.add(gridHelper);
-        //const axesHelper = new THREE.AxesHelper(200);
-        //scene.add(axesHelper);
-
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 600, 0.1, 1000);
-        camera.position.set(0, 0, 300);
-
-        const renderer = new THREE.WebGLRenderer({
-            antialias: true
-        });
-        renderer.setSize(window.innerWidth, 600);
-        document.getElementById('threeContainer').appendChild(renderer.domElement);
-
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.25;
-        controls.enableZoom = true;
-
-       
-
-        console.log("Initial Posture:", initialPosture);
-        console.log("Final Posture:", finalPosture);
-
-        function createPoint(position, color = 0xff0000, radius = 3) {
-            const geometry = new THREE.SphereGeometry(radius, 16, 16);
-            const material = new THREE.MeshBasicMaterial({
-                color: color
-            });
-            const sphere = new THREE.Mesh(geometry, material);
-            sphere.position.copy(position);
-            return sphere;
-        }
-
-        function createLine(start, end, color = 0x000000) {
-            const material = new THREE.LineBasicMaterial({
-                color: color
-            });
-            const points = [];
-            points.push(start);
-            points.push(end);
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
-            const line = new THREE.Line(geometry, material);
-            return line;
-        }
-
-        function createHand(landmarks, colorPoints = 0xff0000, colorLines = 0x000000) {
-            const handGroup = new THREE.Group();
-            const points = [];
-
-            landmarks.forEach(function(landmark) {
-                let amplification = 2;
-                const point = new THREE.Vector3(
-                    (landmark.x - 0.5) * scaleFactor * amplification, 
-                    -(landmark.y - 0.5) * scaleFactor *
-                    amplification, 
-                    -landmark.z * scaleFactor * amplification 
-                );
-                points.push(point);
-                const sphere = createPoint(point, colorPoints);
-                handGroup.add(sphere);
-            });
-
-            HAND_CONNECTIONS.forEach(function(connection) {
-                const startIdx = connection[0];
-                const endIdx = connection[1];
-                if (points[startIdx] && points[endIdx]) {
-                    const line = createLine(points[startIdx], points[endIdx], colorLines);
-                    handGroup.add(line);
-                }
-            });
-
-            return handGroup;
-        }
-
-        function interpolateLandmarks(initial, final, t) {
-          let result = [];
-          for (let i = 0; i < initial.length; i++) {
-            result.push({
-              x: initial[i].x * (1 - t) + final[i].x * t,
-              y: initial[i].y * (1 - t) + final[i].y * t,
-              z: initial[i].z * (1 - t) + final[i].z * t
-            });
-          }
-          return result;
-        }
-
-
-        function disposeHierarchy(node) {
-  node.traverse((child) => {
-    if (child.geometry) {
-      child.geometry.dispose();
-    }
-    if (child.material) {
-      // Si el material es un array, liberamos cada uno
-      if (Array.isArray(child.material)) {
-        child.material.forEach(material => material.dispose());
-      } else {
-        child.material.dispose();
-      }
-    }
-  });
-}
-
-
-        function updateMotionHand() {
-        const t = (Math.sin(Date.now() * 0.001) + 1) / 2;
-        const intermediateLandmarks = interpolateLandmarks(initialPosture, finalPosture, t);
-        const newHandMotion = createHand(intermediateLandmarks, 0x0000ff, 0x000088);
-        newHandMotion.position.x = 0;
-        
-        if (handMotion) {
-            disposeHierarchy(handMotion);
-          scene.remove(handMotion);
-        }
-        handMotion = newHandMotion;
-        scene.add(handMotion);
-      }
-
-      function createGridTexture(width, height, divisions) {
-        // Crear un canvas para dibujar la cuadrícula
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-
-        // Fondo blanco (o del color que prefieras)
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.strokeStyle = '#cccccc';
-        ctx.lineWidth = 1;
-
-        // Calcular los pasos en X y Y
-        const stepX = width / divisions;
-        const stepY = height / divisions;
-
-        for (let i = 0; i <= divisions; i++) {
-            // Dibujar líneas verticales
-            ctx.beginPath();
-            ctx.moveTo(i * stepX, 0);
-            ctx.lineTo(i * stepX, height);
-            ctx.stroke();
-
-            // Dibujar líneas horizontales
-            ctx.beginPath();
-            ctx.moveTo(0, i * stepY);
-            ctx.lineTo(width, i * stepY);
-            ctx.stroke();
-
-            // Escribir números para indicar las divisiones
-            ctx.fillStyle = '#000000';
-            ctx.font = '12px Arial';
-            // Número en la parte superior (eje X)
-            ctx.fillText(i, i * stepX + 2, 12);
-            // Número en el lateral (eje Y)
-            ctx.fillText(i, 2, i * stepY + 12);
-        }
-
-        // Crear la textura a partir del canvas
-        const texture = new THREE.CanvasTexture(canvas);
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        return texture;
-    }
-
-    // Generar la textura de la cuadrícula
-    const gridTexture = createGridTexture(512, 512, 10);
-
-    // Crear un material usando esa textura
-    const gridMaterial = new THREE.MeshBasicMaterial({ map: gridTexture, side: THREE.DoubleSide });
-
-    // Crear un plano que servirá de fondo (ajusta el tamaño según tu escena)
-    const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), gridMaterial);
-    gridPlane.rotation.x = 0; // Alinear horizontalmente
-    gridPlane.position.set(0, 0, -150);
-    //gridPlane.position.y = -150; // Ubicarlo en un plano inferior o donde prefieras
-    scene.add(gridPlane);
-
-
-        const handInitial = createHand(initialPosture, 0xff0000, 0x880000);
-        const handFinal = createHand(finalPosture, 0x00ff00, 0x008800);
-        handInitial.position.x = -100;
-        handFinal.position.x = 100;
-       // scene.add(handInitial);
-        //scene.add(handFinal);
-
-        function onResults(results) {
-            if (!results.multiHandLandmarks || !window.handModel) return;
-            let landmarks = results.multiHandLandmarks[0]; 
-        }
-
+        // Bucle de renderizado
         function animate() {
             requestAnimationFrame(animate);
-            updateMotionHand();
-           // handInitial.rotation.y += 0.01;
-           //handFinal.rotation.y += 0.01;
             controls.update();
             renderer.render(scene, camera);
         }
-        animate();
 
-        window.addEventListener('resize', onWindowResize, false);
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / 600;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, 600);
+        // Función para crear el mapeo de huesos a landmarks usando los nombres del modelo
+        function createMapping(model) {
+            return {
+                0: model.getObjectByName('pulseR_01'),
+                1: model.getObjectByName('thumb_baseR_03'),
+                2: model.getObjectByName('thumb_CtrlR_04'),
+                3: model.getObjectByName('thumb_Ctrl_02R_06'),
+                4: model.getObjectByName('thumb_tipR_048'),
+                5: model.getObjectByName('index_baseR_012'),
+                6: model.getObjectByName('index_CtrlR_013'),
+                7: model.getObjectByName('index_Ctrl_02R_015'),
+                8: model.getObjectByName('index_tipR_044'),
+                9: model.getObjectByName('middle_baseR_020'),
+                10: model.getObjectByName('middle_CtrlR_021'),
+                11: model.getObjectByName('middle_Ctrl_02R_023'),
+                12: model.getObjectByName('middle_tipR_045'),
+                13: model.getObjectByName('ring_baseR_028'),
+                14: model.getObjectByName('ring_CtrlR_029'),
+                15: model.getObjectByName('ring_Ctrl_02R_031'),
+                16: model.getObjectByName('ring_tipR_046'),
+                17: model.getObjectByName('pinky_baseR_036'),
+                18: model.getObjectByName('pinky_CtrlR_037'),
+                19: model.getObjectByName('pinky_Ctrl_02R_039'),
+                20: model.getObjectByName('pinky_tipR_047'),
+            };
         }
+
+        // Función para aplicar una postura a un modelo usando su mapeo,
+        // con logs antes y después de aplicar los valores
+        function applyPostureToModel(mapping, posture) {
+            for (let i = 0; i < posture.length; i++) {
+                const bone = mapping[i];
+                if (bone && posture[i]) {
+                    console.log(`Antes - Hueso ${i} (${bone.name}) rotation:`, bone.rotation.toArray());
+                    bone.rotation.x = posture[i].x;
+                    bone.rotation.y = posture[i].y;
+                    bone.rotation.z = posture[i].z;
+                    console.log(`Después - Hueso ${i} (${bone.name}) rotation:`, bone.rotation.toArray());
+                    // Actualizar la matriz del hueso
+                    bone.updateMatrixWorld(true);
+                } else {
+                    console.warn(`No se encontró el hueso para el landmark ${i} o la rotación no está definida`);
+                }
+            }
+            // Actualizar la jerarquía completa (si se conoce un ancestro común)
+            if (mapping[0] && mapping[0].parent && mapping[0].parent.parent) {
+                mapping[0].parent.parent.updateMatrixWorld(true);
+            }
+        }
+
+        function updateSkinnedMeshes(model) {
+        model.traverse(child => {
+            if (child.isSkinnedMesh) {
+            // Rebind: actualiza la relación entre la malla y su esqueleto
+            child.bind(child.skeleton, child.matrixWorld);
+            child.skeleton.update();
+            console.log('Actualizado skinned mesh:', child.name);
+            }
+        });
+        }
+
+
+        // Cargar el modelo 3D de la mano
+        console.log("Iniciando carga del modelo 3D");
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            '/models/test/rigged_hand.glb', // Asegúrate de que esta ruta sea correcta
+            function (gltf) {
+                console.log("Modelo 3D cargado correctamente");
+
+                if (gltf.animations && gltf.animations.length > 0) {
+                console.warn("El modelo tiene animaciones; se detendrán para mostrar la pose estática.");
+                const mixer = new THREE.AnimationMixer(gltf.scene);
+                gltf.animations.forEach((clip) => {
+                const action = mixer.clipAction(clip);
+                action.stop(); // Esto detiene la reproducción de la animación
+                });
+                // No llamamos a mixer.update() en el loop de renderizado, para que las animaciones no se actualicen.
+                }
+                // Crear la mano para la postura inicial
+                const handModelInitial = gltf.scene;
+                handModelInitial.scale.set(1, 1, 1);
+                handModelInitial.position.x = -1.5; // Posición a la izquierda
+                scene.add(handModelInitial);
+                console.log("Mano con postura inicial añadida");
+
+                // Clonar la mano para la postura final (con SkeletonUtils para clonar correctamente el esqueleto)
+                const handModelFinal = THREE.SkeletonUtils.clone(handModelInitial);
+                handModelFinal.position.x = 1.5; // Posición a la derecha
+                scene.add(handModelFinal);
+                console.log("Mano con postura final añadida");
+
+                // Crear mapeo de huesos para cada modelo
+                const mappingInitial = createMapping(handModelInitial);
+                const mappingFinal = createMapping(handModelFinal);
+                console.log("Mapeos de huesos creados");
+                console.log("Mapping Inicial:", mappingInitial);
+                console.log("Mapping Final:", mappingFinal);
+
+                // Aplicar la postura inicial a la primera mano
+                console.log("Aplicando postura inicial a la primera mano");
+                applyPostureToModel(mappingInitial, initialPosture);
+                updateSkinnedMeshes(handModelInitial);
+
+                // Aplicar la postura final a la segunda mano
+                console.log("Aplicando postura final a la segunda mano");
+                applyPostureToModel(mappingFinal, finalPosture);
+                updateSkinnedMeshes(handModelFinal);
+
+                // Iniciar el bucle de renderizado
+                console.log("Iniciando bucle de animación");
+                animate();
+            },
+            undefined,
+            function (error) {
+                console.error("Error al cargar el modelo:", error);
+            }
+        );
     </script>
 @stop

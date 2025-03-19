@@ -67,50 +67,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div>
-                                    <h1>Evaluacion del movimiento</h1>
-                                </div>
-
-                                <div>
-                                    <!-- Canvas para mostrar el resultado de MediaPipe -->
-                                    <canvas id="output_canvas" width="640" height="480"></canvas>
-
-                                    <!-- Inputs ocultos para almacenar las posiciones -->
-                                    <input type="hidden" id="initialPosition" wire:model="postura_inicial">
-                                    <input type="hidden" id="finalPosition" wire:model="postura_final">
-
-                                    <!-- Botones para capturar posiciones -->
-                                    <button type="button" id="captureInitialButton"
-                                        class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
-                                        Capturar Posición Inicial
-                                    </button>
-                                    <button type="button" id="captureFinalButton"
-                                        class="bg-green-500 text-white px-4 py-2 rounded-lg">
-                                        Capturar Posición Final
-                                    </button>
-                                </div>
-
-                                <div class="flex flex-col items-center mt-4">
-                                    <div class="flex flex-col items-center mt-4">
-                                        <div>
-                                            <video id="webcam" autoplay style="display: none"></video>
-                                            <canvas id="output_canvas"></canvas>
-                                        </div>
-
-                                        <div>
-                                            <x-label class="text-sm font-semibold text-gray-700 mt-4">
-                                                Coordenadas Capturadas
-                                            </x-label>
-                                            <input type="text" wire:model="coordenadas" readonly
-                                                class="w-full p-2 border border-gray-300 rounded-lg shadow-sm">
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </x-slot>
