@@ -60,4 +60,16 @@ class Consulta extends Model
         return $this->hasOne(Reporte::class);
     }  
 
+    public function imgsesion()
+    {
+        return $this->hasManyThrough(
+            ImgSesion::class,  // Modelo destino
+            Sesion::class,     // Modelo intermedio
+            'consulta_id',     // Clave foránea en Sesion
+            'sesion_id',       // Clave foránea en ImgSesion
+            'id',              // Clave primaria local en Consulta
+            'id'               // Clave primaria local en Sesion
+        );
+    }
+
 }

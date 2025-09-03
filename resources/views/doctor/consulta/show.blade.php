@@ -93,10 +93,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <p>
-                                    Informes
-                                </p>
+                        </div>
+
+                        <div class="card card-outline card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Informes</h3>
+                            </div>
+                            <div class="card-body">
                                 @livewire('ReporteConsulta-datatable', ['consultaId' => $consulta->id])
                             </div>
                         </div>
@@ -120,7 +123,7 @@
                         @else
                             <div class="card card-outline card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Diagnostico</h3>
+                                    <h3 class="card-title">Diagnóstico</h3>
                                 </div>
                                 <div class="row card-body">
                                     <p>No hay diagnóstico disponible para esta consulta.</p>
@@ -154,13 +157,16 @@
                             </div>
                         @endif
 
+                    @if ($diagnostico && $diagnostico->img)
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card card-outline card-primary">
                                     <div class="card-header">
                                         <h3 class="card-title">IMAGEN DE APOYO</h3>
                                     </div>
-                                    {{$diagnostico->img}}
+                                    <label>
+                                        {{ strtoupper($diagnostico->img) }}
+                                    </label>
                                     <div class="card-body">
                                         <div class="sketchfab-embed-wrapper w-full"> 
                                             <iframe class="w-full" title="esqueleto" frameborder="0" allowfullscreen mozallowfullscreen="true" 
@@ -173,6 +179,7 @@
                                 </div>
                             </div>
                         </div>
+                    @endif                    
 
                     </div>
                 </div>
@@ -187,12 +194,15 @@
                                 <div id="gallery-{{ $examen->id }}" class="gallery flex flex-wrap justify-center gap-4 mt-4">
                                     @foreach ($imgexamen as $imgExamen)
                                         <div class="flex-shrink-0">
-                                            <img src="{{ asset('storage/app/public/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/app/public/' . $imgExamen->ruta) }}">
+                                            <!-- Imagenes para local -->
+                                            <img src="{{ asset('storage/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/' . $imgExamen->ruta) }}">
+                                            <!-- Imagenes para la web -->
+                                            <!-- <img src="{{ asset('storage/app/public/' . $imgExamen->ruta) }}" alt="Imagen de la sesión" class="w-32 h-32 rounded-lg shadow-sm" data-original="{{ asset('storage/app/public/' . $imgExamen->ruta) }}"> -->
                                         </div>
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-gray-500">No hay imágenes disponibles para esta sesión.</p>
+                                <p class="text-gray-500">No hay imágenes disponibles para esta consulta.</p>
                             @endif
 
                         </div>
@@ -218,7 +228,6 @@
                     <div class="col-md-12">
                         <div>
                             @livewire('sesion-create', ['consultaId' => $consulta->id])
-                            <a class="btn btn-success" href="{{route('doctor.sesion.create')}}"> AGREGAR SESION</a>
                         </div>
 
                         <div style="width: 70%; margin-left: auto; margin-right:auto">

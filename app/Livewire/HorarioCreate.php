@@ -23,6 +23,14 @@ class HorarioCreate extends Component
         'domingo' => ['hora_inicio' => null, 'hora_fin' => null],
     ];
 
+    public function mount($consultaId)
+    {
+        $this->consultaId = $consultaId;
+        $this->horario = Horario::where('consulta_id', $this->consultaId)->first();
+        $this->dispatch('horarioGuardado');
+
+    }
+
     public function save()
     {
         if (empty($this->sesiones) || $this->sesiones <= 0) {

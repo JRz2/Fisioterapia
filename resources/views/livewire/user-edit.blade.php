@@ -17,28 +17,32 @@
                         <div class="card-body my-0">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <x-label>Foto</x-label>
-                                    <div style="height: 170px">
+                                    <div>
                                         @if ($imagen)
                                                 @if (method_exists($imagen, 'temporaryUrl'))
-                                                    <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
+                                                    <img src="{{ $imagen->temporaryUrl() }}" class="w-20 h-20 object-cover rounded-full mb-2 mx-auto">
                                                 @else
                                                     @if (strpos($imagen, 'image/') !== false)
-                                                        <img src="{{ asset($imagen) }}" alt="Imagen del usuario" class="w-40 h-40 rounded-full">
+                                                        <img src="{{ asset($imagen) }}" alt="Imagen del usuario" class="w-20 h-20 object-cover rounded-full mb-2 mx-auto">
                                                     @else
+                                                    <!--Imagen para local -->
+                                                        <img src="{{ asset('storage/' . $imagen) }}" class="w-20 h-20 object-cover rounded-full mb-2 mx-auto">
+                                                    <!--Imagen para la web    
                                                         <img src="{{ asset('storage/app/public/' . $imagen) }}" class="w-40 h-40 rounded-full">
+                                                    --> 
                                                     @endif
                                                 @endif
                                         @else
                                             <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
                                         @endif       
-
                                     </div>
-                                    <input class="form-control" wire:model="imagen" wire:key="{{ $imagenkey }}" type="file" id="file" style="display: none;">
-                                    <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">
-                                        <span wire:loading wire:target="imagen" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                        Seleccionar archivo
-                                    </label>
+                                    <div class="flex flex-col items-center">
+                                        <input class="form-control" wire:model="imagen" wire:key="{{ $imagenkey }}" type="file" id="file" style="display: none;">
+                                        <label for="file" style="display: inline-block; padding: 8px 12px; cursor: pointer; background-color: #7a8da1; color: white; border-radius: 4px;">
+                                            <span wire:loading wire:target="imagen" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            Seleccionar archivo
+                                        </label>
+                                    </div>
                                 </div>
     
                                 <div class="col-md-4 mb-4">

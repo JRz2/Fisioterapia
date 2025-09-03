@@ -28,12 +28,15 @@
                     </div>
                    
                     <div >
-                    <div class="col-md-2">
-                        @livewire('imgexamen-add', ['examenId' => $examenId])
-                    </div>
-                    <div class=" col-md-6">
-                        @livewire('imgexamen-datatable', ['consultaId' => $consultaId])
-                    </div>
+                        <div class="col-md-2">
+                            @if ($examenId)
+                                @livewire('imgexamen-add', ['examenId' => $examenId], key('add-'.$examenId))
+                            @endif
+                        </div>
+
+                        <div class=" col-md-6">
+                            @livewire('imgexamen-datatable', ['consultaId' => $consultaId])
+                        </div>
                     </div>
                     
                 </div>

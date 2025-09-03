@@ -1,11 +1,9 @@
 <div>
-
     <x-button class="form-control mx-2" wire:click="create">
         <span wire:loading wire:target="create" class="spinner-border spinner-border-sm" role="status"
             aria-hidden="true"></span>
         <span class="ml-2">Nuevo Paciente</span>
     </x-button>
-
     <div>
         <form wire:submit="save">
             <x-dialog-modal wire:model="opencreate">
@@ -51,20 +49,24 @@
                                     <x-label for="validationCustom01">
                                         Nombre
                                     </x-label>
-                                    <x-input class="form-control" type="text" id="validationCustom01" wire:model="nombre" required> </x-imput>
+                                    <x-input class="form-control" type="text" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" wire:model="nombre" 
+                                        oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')" required> 
+                                    </x-imput>
                                         <x-input-error for="nombre"></x-input-error>
-                                        <x-label class="mt-2">
-                                            Apellido Paterno
-                                        </x-label>
-                                        <x-input class="form-control" wire:model="paterno" required> </x-imput>
-                                            <x-input-error for="paterno"></x-input-error>
-
-                                            <x-label class="mt-2">
-                                                Apellido Materno
-                                            </x-label>
-                                            <x-input class="form-control" wire:model="materno" required> </x-imput>
-                                                <x-input-error for="materno"></x-input-error>
-
+                                    <x-label class="mt-2">
+                                        Apellido Paterno
+                                    </x-label>
+                                    <x-input class="form-control" wire:model="paterno" 
+                                        oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')" required> 
+                                    </x-imput>
+                                    <x-input-error for="paterno"></x-input-error>
+                                    <x-label class="mt-2">
+                                        Apellido Materno
+                                    </x-label>
+                                    <x-input class="form-control" wire:model="materno" 
+                                        oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')" required> 
+                                    </x-imput>
+                                    <x-input-error for="materno"></x-input-error>
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <x-label>
@@ -81,13 +83,16 @@
                                     <x-label class="mt-2">
                                         Deporte
                                     </x-label>
-                                    <x-input class="form-control" wire:model="deporte"></x-input>
+                                    <x-input class="form-control" wire:model="deporte" 
+                                        oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                                    </x-input>
 
                                     <x-label class="mt-2">
                                         Ocupacion
                                     </x-label>
-                                    <x-input class="form-control" wire:model="ocupacion"></x-input>
-
+                                    <x-input class="form-control" wire:model="ocupacion" 
+                                        oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                                    </x-input>
                                 </div>
                             </div>
 
@@ -131,7 +136,6 @@
                             </div>
                         </div>
                     </div>
-
                 </x-slot>
 
                 <x-slot name="footer">
@@ -147,7 +151,6 @@
                         </x-button>
                     </div>
                 </x-slot>
-
             </x-dialog-modal>
         </form>
     </div>

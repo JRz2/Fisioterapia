@@ -1,4 +1,4 @@
-<div x-data="{ diasSeleccionados: @entangle('dias') }" class="p-4 border rounded shadow-lg bg-light">
+<div x-data="{ diasSeleccionados: @entangle('dias') }">
     <form wire:submit.prevent="save">
         @csrf
 

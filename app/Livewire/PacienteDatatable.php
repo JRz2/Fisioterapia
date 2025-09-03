@@ -47,7 +47,10 @@ class PacienteDatatable extends DataTableComponent
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 
                     ? asset($row->imagen) 
-                    : asset('storage/app/public/'. $row->imagen),  
+                    //imagen para local
+                    : asset('storage/' . $row->imagen), 
+                    //iamgen para la web
+                    //: asset('storage/app/public/'. $row->imagen),  
             ])),                       
             Column::make("Nombre", "nombre")->sortable()->searchable(),
             Column::make("Paterno", "paterno")->sortable()->searchable(),
@@ -117,19 +120,6 @@ class PacienteDatatable extends DataTableComponent
 
     public function update()
     {
-        /* $this->validate([
-            'pacienteEdit.nombre' => 'required',
-            'pacienteEdit.paterno' => 'required',
-            'pacienteEdit.materno' => 'required',
-            'pacienteEdit.edad' => 'required',
-            'pacienteEdit.genero' => 'required',
-        ],[
-            'pacienteEdit.nombre' => 'Nombre requerido',
-            'pacienteEdit.paterno' => 'Apellido Paterno requerido',
-            'pacienteEdit.materno' => 'Apellido Materno requerido',
-            'pacienteEdit.edad' => 'Edad requerido',
-            'pacienteEdit.genero' => 'Genero requerido',
-        ]);*/
 
         $paciente = Paciente::find($this->paciente_edit_id);
         $paciente->update([

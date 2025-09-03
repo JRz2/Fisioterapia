@@ -32,7 +32,7 @@ class ReporteConsultaDatatable extends DataTableComponent
             ->sortable(),
         Column::make("Diagnostico", "diagnostico")
             ->sortable(),
-        Column::make("Acciones")->collapseOnTablet()
+        Column::make("PDF")->collapseOnTablet()
             ->label(fn($row) => view('livewire.reporte-actions', compact('row')))
         ];
     }

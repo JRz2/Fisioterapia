@@ -34,7 +34,7 @@ class CreatePaciente extends Component
     public $editMode = false;
         
     public function confirmUpdate($data)
-    {
+    {   
 
         $dataRes = json_decode(json_encode($data));
 

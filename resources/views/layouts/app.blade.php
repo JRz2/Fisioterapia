@@ -117,6 +117,16 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
         });
     </script>
 
+    <script>
+        Livewire.on('swal:error', param => {
+            Swal.fire({
+            title: param[0].title,
+            text: param[0].text,
+            icon: "question"
+            });
+        });
+    </script>
+
 </body>
 
 </html>

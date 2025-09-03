@@ -9,7 +9,7 @@ class Sesion extends Model
 {
     use HasFactory;
 
-    protected $fillable =['fecha','codigo','sintoma', 'observacion', 'recomendacion', 'tratamiento','postura_inicial','postura_final','rango','consulta_id'];
+    protected $fillable =['fecha','codigo','sintoma', 'observacion', 'recomendacion', 'tratamiento','postura_inicial','postura_final','rango','consulta_id', 'ruta'];
 
     protected $casts = [
         'posture_initial' => 'array',

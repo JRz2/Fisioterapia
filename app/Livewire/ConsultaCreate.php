@@ -13,7 +13,7 @@ class ConsultaCreate extends Component
     
     public $activeSection = 'anamnesis';
 
-    protected $listeners = ['confirmValidate'];
+    protected $listeners = ['confirmValidate', 'horarioGuardado' => 'marcarGuardado'];
 
     public $paciente;
     public $pacientelive;
@@ -36,6 +36,12 @@ class ConsultaCreate extends Component
     public $btnterminar = true;
     public $panel = true;
 
+    public $guardado = false;
+
+    public function marcarGuardado()
+    {
+        $this->guardado = true;
+    }
 
     public function confirmValidate($data)
     {

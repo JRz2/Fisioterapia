@@ -41,6 +41,7 @@ Route::view('/minferior', 'doctor.model.minferior');
 Route::view('/msuperior', 'doctor.model.msuperior');
 Route::view('/mcara', 'doctor.model.mcara');
 Route::view('/pruebas', 'doctor.model.pruebas');
-
+Route::view('/hand', 'doctor.model.hand');
+Route::view('/body', 'doctor.model.body');
 
 

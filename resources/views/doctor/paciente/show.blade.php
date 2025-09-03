@@ -35,9 +35,6 @@
                             </div>
                             <div class="row card-body">
                                 <div class="w-2/4 flex flex-col items-center">
-                                    <x-label class="text-lg">
-                                        Foto
-                                    </x-label>
                                     <div>
                                         @if (strpos($paciente->imagen, 'image/') !== false)
                                             <img src="{{ asset($paciente->imagen) }}" class="rounded-full"
@@ -85,32 +82,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
+                        </div>
+                        <div class="card card-outline card-primary">
+                            <div class="card-header">
                                 <x-label class="text-lg">
                                     Informes
                                 </x-label>
+                            </div>
+                            <div class="card-body">
                                 @livewire('reporte-datatable', ['pacienteId' => $paciente->id])
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-7">
-                        <div class="row">
-                            <div>
+                        <div class="card card-outline card-primary">
+                            <div class="card-header">
                                 <x-label class="text-lg">
-                                    Consultas del paciente
+                                    Consultas del Paciente
                                 </x-label>
                             </div>
-                            <div class="ml-auto">
+                            <div class="row card-body">
                                 @livewire('new-consulta', ['pacienteId' => $paciente->id])
+                                <div class="w-100">
+                                    @livewire('consulta-datatable', ['pacienteId' => $paciente->id])
+                                </div>
                             </div>
                         </div>
-
-                        <div class="mt-4">
-                            @livewire('consulta-datatable', ['pacienteId' => $paciente->id])
-                        </div>
-
-
                     </div>
                 </div>
 
@@ -182,7 +180,6 @@
                                                         <x-label>
                                                             IMC 
                                                         </x-label>
-                                                        "Indice de Masa COrporal"
                                                     </div>
                                                     <div class="col-md-3">
                                                         @php
@@ -274,7 +271,6 @@
                                                         <x-label>
                                                             IMC 
                                                         </x-label>
-                                                        "Indice de Masa Corporal"
                                                     </div>
                                                     <div class="col-md-3">
                                                         <x-input class="form-control" disabled>

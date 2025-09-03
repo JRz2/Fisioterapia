@@ -18,7 +18,7 @@ class ImgexamenAdd extends Component
     public function saveadd(){  
         if ($this->imagen) {
             foreach ($this->imagen as $img) {
-                $path = $img->store('examens', 'public'); 
+                $path = $img->store('examens'); 
                 Imgexamen::create([
                     'examen_id' => $this->examenId, 
                     'ruta' => $path,
@@ -35,6 +35,13 @@ class ImgexamenAdd extends Component
     }
 
     public function add(){
+        if (!$this->examenId) {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'No se ha creado un examen aún. Guarde primero el examen antes de subir imágenes.',
+            ]);
+            return;
+        }
         $this->openadd = true;
     }
 

@@ -16,11 +16,11 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <x-label>Foto</x-label>
-                                    <div style="height: 170px">
+                                    <div>
                                         @if($imagen)
-                                            <img src="{{ $imagen->temporaryUrl() }}" class="w-40 h-40 rounded-full">
+                                            <img src="{{ $imagen->temporaryUrl() }}" class="w-20 h-20 object-cover rounded-full mb-2 mx-auto">
                                         @else
-                                            <img src="{{ asset('image/user.png') }}" class="w-40 h-40 rounded-full">
+                                            <img src="{{ asset('image/user.png') }}" class="w-20 h-20 object-cover rounded-full mb-2 mx-auto">
                                         @endif
                                     </div>
                                     <input class="form-control" wire:model="imagen" wire:key="{{ $imagenkey }}" wire:click="clickImage" type="file" id="file" style="display: none;">
@@ -31,8 +31,8 @@
                                 </div>
     
                                 <div class="col-md-4 mb-4">
-                                    <x-label for="validationCustom01">Nombre Completo</x-label>
-                                    <x-input class="form-control" type="text" id="validationCustom01" wire:model="name" required />
+                                    <x-label>Nombre Completo</x-label>
+                                    <x-input class="form-control" type="text"  wire:model="name" required />
                                     <x-input-error for="name"></x-input-error>
                                 </div>
     

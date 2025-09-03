@@ -6,7 +6,6 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\User;
 use Livewire\Attributes\On;
-use PhpParser\Node\Expr\FuncCall;
 
 class UserDatatable extends DataTableComponent
 {
@@ -18,7 +17,6 @@ class UserDatatable extends DataTableComponent
     public $password;
     public $password_confirmation;
     protected $listeners = ['destroy'];
-    public $openedit;
 
     public function configure(): void
     {
@@ -34,7 +32,10 @@ class UserDatatable extends DataTableComponent
             Column::make("Imagen")->label(fn($row) => view('livewire.paciente-datatable', [
                 'imagen' => strpos($row->imagen, 'image/') !== false 
                     ? asset($row->imagen) 
-                    : asset('storage/app/public/' . $row->imagen),  
+                    //Imagen para local
+                    : asset('storage/' . $row->imagen), 
+                    //Imagen para la web   
+                    //: asset('storage/app/public/' . $row->imagen),  
             ])),  
             Column::make("Nombre", "name")->sortable(),
             Column::make("Email", "email")->collapseOnTablet()->sortable()->searchable(),
@@ -70,9 +71,11 @@ class UserDatatable extends DataTableComponent
     {
     }
 
-    public function createUpdate($data){
-        $this->dispatch('confirmUpdate', [$data]); 
+    public function userRol($data){
+        $this->dispatch('confirmRol', [$data]); 
     }
+
+   
 
     public function UserEdit($user){
         $userId = $user['id'];

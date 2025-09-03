@@ -36,7 +36,7 @@ class ExamenCreate extends Component
                 'examen' => $this->examen,
                 'prueba' => $this->prueba,
             ]);
-            //$this->examenId = $examen->id;
+
             $this->dispatch('swal:success', [
                 'title' => 'Pruebas',
                 'text' => 'Actualizado Correctamente',
@@ -47,16 +47,9 @@ class ExamenCreate extends Component
                 'examen' => $this->examen,
                 'prueba' => $this->prueba,
             ]);
-            //$this->examenId = $examen->id;
-            /*if ($this->ruta) {
-                foreach ($this->ruta as $img) {
-                    $path = $img->store('examens', 'public'); 
-                    Imgexamen::create([
-                        'examen_id' => $examen->id, 
-                        'ruta' => $path,
-                    ]);
-                }
-            }*/
+
+            $this->examenId = $examen->id; 
+
             $this->dispatch('swal:success', [
                 'title' => 'Pruebas',
                 'text' => 'Creado Correctamente',

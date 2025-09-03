@@ -31,7 +31,7 @@ class ReporteDatatable extends DataTableComponent
             //Column::make("Paciente", "consulta.paciente.nombre")->sortable()->searchable(),  
             //Column::make("Apellido", "consulta.paciente.paterno")->sortable()->collapseOnTablet()->searchable(),
             Column::make("Fecha", "fecha")->sortable(),
-            Column::make("Imprimir PDF")->collapseOnTablet()
+            Column::make("PDF")->collapseOnTablet()
                 ->label(fn($row) => view('livewire.reporte-actions', compact('row')))
         ];
     }

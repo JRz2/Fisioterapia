@@ -136,7 +136,12 @@
                         @livewire('diagnostico-create', ['consultaId' => $id])
                     </div>
                     <div x-show="activeTab === 'horario'" class="tab-content">
-                        @livewire('horario-create', ['consultaId' => $id])
+                         @if (!$guardado)
+                            @livewire('horario-create', ['consultaId' => $id])
+                        @else
+                            @livewire('horario-show')
+                            @livewire('horarioconsulta-datatable', ['consultaId' => $id])
+                        @endif
                     </div>
                 </div>
             </div>
