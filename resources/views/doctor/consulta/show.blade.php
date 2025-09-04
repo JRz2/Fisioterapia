@@ -34,6 +34,10 @@
                         </x-button>
                     </a>
 
+                    <div>
+                        @livewire('consulta-img')
+                    </div>
+
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-6">
