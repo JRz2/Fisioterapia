@@ -9,7 +9,18 @@ class Imgconsulta extends Model
 {
     use HasFactory;
 
-    protected $fillable =['ruta', 'consulta_id'];
+    protected $fillable = [
+        'ruta',
+        'consulta_id',
+        'meshy_task_id',
+        'meshy_status',
+        'meshy_progress',
+        'meshy_result',
+    ];
+
+    protected $casts = [
+        'meshy_result' => 'array',
+    ];
 
     public function consulta()
     {

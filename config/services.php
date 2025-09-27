@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'meshy' => [
+        'key' => env('MESHY_API_KEY'),
+    ],
+
+
 ];

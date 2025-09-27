@@ -35,7 +35,7 @@
                     </a>
 
                     <div>
-                        @livewire('consulta-img')
+                        @livewire('consulta-img', ['consultaId' => $consulta->id])
                     </div>
 
                 </div>

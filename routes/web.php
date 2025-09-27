@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Doctor\ReporteController;
 use App\Http\Controllers\Doctor\HorarioController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MeshyProxyController;
+use App\Http\Middleware\Authenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +46,6 @@ Route::view('/pruebas', 'doctor.model.pruebas');
 Route::view('/hand', 'doctor.model.hand');
 Route::view('/body', 'doctor.model.body');
 
-
+Route::get('/meshy/model/{imgconsulta}/{format?}', [MeshyProxyController::class, 'model'])
+    ->name('meshy.model')
+    ->withoutMiddleware(\App\Http\Middleware\Authenticate::class); 

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('consulta_id');
             $table->string('ruta')->nullable();
+            $table->string('meshy_task_id')->nullable()->index();
+            $table->string('meshy_status')->nullable();
+            $table->integer('meshy_progress')->nullable();
+            $table->json('meshy_result')->nullable();
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });
