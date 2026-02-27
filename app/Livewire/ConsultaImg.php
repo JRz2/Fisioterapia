@@ -17,7 +17,7 @@ class ConsultaImg extends Component
     public $consultaId;
 
     protected $rules = [
-        'imagen.*' => 'image|max:10240', // 10MB por imagen (ajusta si quieres)
+        'imagen.*' => 'image|max:10240', 
     ];
 
     public function mount($consultaId){
@@ -49,21 +49,18 @@ class ConsultaImg extends Component
 
         if ($this->imagen && count($this->imagen) > 0) {
             foreach ($this->imagen as $uploaded) {
-                // Guardar el archivo localmente en storage (opcional, útil para referencia)
-                $path = $uploaded->store('consultas', 'public'); // storage/app/public/consultas/...
-                
-                // Preparamos Data URI (base64). Intentamos redimensionar/comprimir si Intervention está disponible.
+
+                $path = $uploaded->store('consultas', 'public'); 
+
                 $useIntervention = class_exists(\Intervention\Image\ImageManagerStatic::class);
-                $maxDimension = 1024; // px máximo ancho/alto al redimensionar
-                $quality = 80; // calidad JPEG 0-100 si se reencodea
+                $maxDimension = 1024; 
+                $quality = 80; 
 
                 try {
                     if ($useIntervention) {
-                        // Si tienes intervention/image instalado
-                        // composer require intervention/image
+
                         $img = \Intervention\Image\ImageManagerStatic::make($uploaded->getRealPath());
 
-                        // Redimensionar manteniendo aspect ratio si es demasiado grande
                         if ($img->width() > $maxDimension || $img->height() > $maxDimension) {
                             $img->resize($maxDimension, $maxDimension, function ($constraint) {
                                 $constraint->aspectRatio();
@@ -71,13 +68,11 @@ class ConsultaImg extends Component
                             });
                         }
 
-                        // Re-encode según mime para controlar tamaño
                         $mime = $uploaded->getClientMimeType() ?? 'image/jpeg';
                         if (Str::contains($mime, ['png'])) {
                             $encoded = (string) $img->encode('png');
                             $prefix = 'data:image/png;base64,';
                         } else {
-                            // jpeg por defecto
                             $encoded = (string) $img->encode('jpg', $quality);
                             $prefix = 'data:image/jpeg;base64,';
                         }
@@ -85,7 +80,6 @@ class ConsultaImg extends Component
                         $base64 = base64_encode($encoded);
                         $dataUri = $prefix . $base64;
                     } else {
-                        // Si no está Intervention, usamos el fichero original (puede ser grande)
                         $realPath = $uploaded->getRealPath();
                         $mime = $uploaded->getClientMimeType() ?: mime_content_type($realPath);
                         $base64 = base64_encode(file_get_contents($realPath));
@@ -93,18 +87,16 @@ class ConsultaImg extends Component
                     }
                 } catch (\Exception $e) {
                     Log::error('Error creando Data URI: '.$e->getMessage(), ['file' => $uploaded->getClientOriginalName()]);
-                    // fallback: intentar con el archivo crudo
                     $realPath = $uploaded->getRealPath();
                     $mime = $uploaded->getClientMimeType() ?: mime_content_type($realPath);
                     $base64 = base64_encode(@file_get_contents($realPath));
                     $dataUri = "data:{$mime};base64,{$base64}";
                 }
 
-                // Llamada a Meshy con Data URI
                 $taskId = null;
                 try {
                     $response = Http::withToken(config('services.meshy.key'))
-                        ->timeout(30) // ajusta timeout si tus imágenes son grandes
+                        ->timeout(30) 
                         ->post('https://api.meshy.ai/openapi/v1/image-to-3d', [
                             'image_url' => $dataUri,
                             'enable_pbr' => true,
@@ -125,7 +117,6 @@ class ConsultaImg extends Component
                     Log::error('Exception calling Meshy: '.$e->getMessage(), ['file' => $path]);
                 }
 
-                // Guardar registro en BD (campos meshy_* asumidos en tu migracion)
                 Imgconsulta::create([
                     'consulta_id'   => $this->consultaId,
                     'ruta'          => $path,
@@ -166,6 +157,10 @@ class ConsultaImg extends Component
                     $img->meshy_progress = $data['progress'] ?? $img->meshy_progress;
                     $img->meshy_result = $data;
                     $img->save();
+                    if (($previousStatus !== 'SUCCEEDED') && ($data['status'] ?? '') === 'SUCCEEDED') {
+                        $this->dispatchBrowserEvent('meshyModelReady', $img->id);
+                        //$this->emit('meshyModelReady', $img->id);
+                    }
                 } else {
                     Log::warning('Meshy check failed', [
                         'id' => $img->meshy_task_id,

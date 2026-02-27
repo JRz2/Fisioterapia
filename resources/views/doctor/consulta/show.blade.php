@@ -55,8 +55,12 @@
                                             <img src="{{ asset($paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
                                         @else
-                                            <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="rounded-full"
+                                        <!-- IMG PARA LOCAL -->
+                                        <img src="{{ asset('storage/' . $paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
+                                        <!-- IMG PARA WEB -->
+                                           <!-- <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="rounded-full"
+                                                style="width: 200px; height: 200px; object-fit: cover;"> -->
                                         @endif
                                     </div>
                                 </div>
@@ -212,6 +216,10 @@
                         </div>
                     </div>
                 </div>
+         <div class="col-md-8">
+        {{-- Nuevo componente que contiene la lista y el viewer --}}
+        @livewire('model-viewer', ['consultaId' => $consulta->id])
+    </div>
                 <div class="row mt-6">
                     <div class="col-md-12">
                         <div class="card card-outline card-secondary">

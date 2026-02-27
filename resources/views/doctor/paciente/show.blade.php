@@ -40,8 +40,12 @@
                                             <img src="{{ asset($paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
                                         @else
-                                            <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="rounded-full"
+                                        <!-- IMG PARA LOCAL -->
+                                        <img src="{{ asset('storage/' . $paciente->imagen) }}" class="rounded-full"
                                                 style="width: 200px; height: 200px; object-fit: cover;">
+                                        <!-- IMG PARA WEB -->
+                                           <!-- <img src="{{ asset('storage/app/public/' . $paciente->imagen) }}" class="rounded-full"
+                                                style="width: 200px; height: 200px; object-fit: cover;"> -->
                                         @endif
                                     </div>
                                 </div>

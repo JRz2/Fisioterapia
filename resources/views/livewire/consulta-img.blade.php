@@ -1,14 +1,13 @@
 
 <div>
-    {{-- Botón / modal (tu código, adaptado) --}}
     <x-button class="form-control mx-2" wire:click="create">
         <span wire:loading wire:target="create" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span class="ml-2">Radiografia</span>
+        <span class="ml-2">Imagen 3D</span>
     </x-button>
 
     <x-dialog-modal wire:model="openadd">
         <x-slot name="title">
-            <label style="margin-top: 15px"> {{ 'RADIOGRAFIA A 3D' }} </label>
+            <label style="margin-top: 15px"> {{ 'Imagenes A 3D' }} </label>
         </x-slot>
 
         <x-slot name="content">
@@ -26,7 +25,6 @@
                                 </label>
                             </div>
 
-                            {{-- Previews --}}
                             <div class="mt-3">
                                 @if ($imagen && is_array($imagen))
                                     <div class="d-flex flex-wrap" style="gap: 10px;">
@@ -60,15 +58,12 @@
         </x-slot>
     </x-dialog-modal>
 
-    {{-- --------------------------------------------- --}}
-    {{-- Sección que lista las imágenes y estado de Meshy --}}
-    {{-- Polling cada 10s para actualizar estado --}}
     <div wire:poll.10s="checkMeshyTasks" class="mt-4">
         @forelse($imagenes as $img)
             <div class="card mb-3 p-2">
                 <div class="d-flex gap-3 align-items-start">
                     <div>
-                        <img src="{{ Storage::url($img->ruta) }}" alt="original" style="max-width:120px; border:1px solid #ddd; padding:2px;">
+                        <img src="{{ asset('storage/' . $img->ruta) }}" alt="original" style="max-width:120px; border:1px solid #ddd; padding:2px;">
                     </div>
 
                     <div style="flex:1;">
@@ -87,7 +82,6 @@
                             {{-- Thumbnail --}}
                             @if(!empty($res['thumbnail_url']))
                                 <div style="margin-bottom:8px;">
-                                    <img src="{{ $res['thumbnail_url'] }}" alt="thumb" style="max-width:200px; display:block;">
                                 </div>
                             @endif
 
@@ -166,7 +160,5 @@ window.addEventListener('load', () => {
   });
 });
 </script>
-
-    {{-- model-viewer script (añádelo solo una vez en la página, aquí está por conveniencia) --}}
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </div>

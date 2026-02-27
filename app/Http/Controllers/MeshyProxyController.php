@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class MeshyProxyController extends Controller
 {
-    /**
-     * Proxy para servir el modelo (glb/fbx/obj) devolviendo CORS header.
-     * URL ejemplo: /meshy/model/1/glb
-     */
+
     public function model(Imgconsulta $imgconsulta, $format = 'glb')
     {
         $res = $imgconsulta->meshy_result ?? null;
@@ -51,14 +48,11 @@ class MeshyProxyController extends Controller
             return response("Remote status {$g->getStatusCode()}", 502);
         }
 
-        // --- Aquí se determina el Content-Type y se fuerza model/gltf-binary para .glb ---
         $contentType = $g->getHeaderLine('Content-Type') ?: 'application/octet-stream';
 
-        // Fuerza un Content-Type explícito para .glb (evita problemas con algunos viewers)
         if ($format === 'glb') {
             $contentType = 'model/gltf-binary';
         }
-        // ------------------------------------------------------------------------------
 
         $contentLength = $g->getHeaderLine('Content-Length') ?: null;
 
