@@ -401,13 +401,18 @@ return [
                 ],
                 [
                     'text'    => 'Inferior',
-                    'icon'    => 'fas fa-socks',
+                    'icon'    => 'fas fa-person-walking',
                     'url'     => '/minferior',
                 ],
                 [
-                    'text'    => 'Superior',
+                    'text'    => 'Espalda',
                     'icon'    => 'fas fa-lungs',
-                    'url'     => '/msuperior',
+                    'url'     => '/mespalda',
+                ],
+                                [
+                    'text'    => 'Antebrazo',
+                    'icon'    => 'fas fa-hand-paper',
+                    'url'     => '/mantebrazo',
                 ],
             ],
         ],
