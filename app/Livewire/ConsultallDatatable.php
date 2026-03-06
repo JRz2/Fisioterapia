@@ -18,18 +18,12 @@ class ConsultallDatatable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
-                ->sortable(),
-            Column::make("Codigo", "codigo")
-                ->sortable(),
-            Column::make("Fecha", "fecha")
-                ->sortable(),
-            Column::make("Paciente id", "paciente_id")
-                ->sortable(),
-            Column::make("Created at", "created_at")
-                ->sortable(),
-            Column::make("Updated at", "updated_at")
-                ->sortable(),
+            Column::make("Id", "id")->sortable()->collapseOnTablet()->searchable(),
+            Column::make("Codigo", "codigo")->sortable()->searchable(),
+            Column::make("Nombre", "paciente.nombre")->sortable()->collapseOnTablet()->searchable(),
+            Column::make("Paterno", "paciente.paterno")->sortable()->collapseOnTablet()->searchable(),
+            Column::make("Materno", "paciente.materno")->sortable()->collapseOnTablet()->searchable(),
+            Column::make("Fecha", "fecha")->sortable()->collapseOnTablet()->searchable(),
         ];
     }
 }
