@@ -34,10 +34,6 @@
                         </x-button>
                     </a>
 
-                    <div>
-                        @livewire('consulta-img', ['consultaId' => $consulta->id])
-                    </div>
-
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-6">
@@ -217,8 +213,6 @@
                     </div>
                 </div>
          <div class="col-md-8">
-        {{-- Nuevo componente que contiene la lista y el viewer --}}
-        @livewire('model-viewer', ['consultaId' => $consulta->id])
     </div>
                 <div class="row mt-6">
                     <div class="col-md-12">
@@ -260,73 +254,5 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.5/viewer.min.js"></script>
-
-    <script>
-        // Función para inicializar Viewer.js
-        function initializeViewer() {
-            console.log("Inicializando Viewer.js...");
-            const galleries = document.querySelectorAll('.gallery');
-
-            galleries.forEach(gallery => {
-                // Destruir cualquier instancia previa de Viewer.js
-                if (gallery.viewerInstance) {
-                    gallery.viewerInstance.destroy();
-                    console.log("Instancia de Viewer.js destruida");
-                }
-
-                // Crear una nueva instancia de Viewer.js
-                gallery.viewerInstance = new Viewer(gallery, {
-                    url: 'data-original',
-                    toolbar: {
-                        zoomIn: true,
-                        zoomOut: true,
-                        oneToOne: true,
-                        reset: true,
-                        prev: true,
-                        next: true,
-                    },
-                });
-                console.log("Nueva instancia de Viewer.js creada");
-            });
-        }
-
-        // Configurar MutationObserver para detectar cambios en el DOM
-        function setupMutationObserver() {
-            console.log("Configurando MutationObserver...");
-            const container = document.querySelector('.max-w-4xl');
-
-            if (!container) return;
-
-            const observer = new MutationObserver((mutations) => {
-                console.log("MutationObserver detectó cambios...");
-                setTimeout(() => {
-                    initializeViewer();
-                    console.log("Viewer.js inicializado después de cambios en el DOM");
-                }, 500); // Ajusta el tiempo según sea necesario
-            });
-
-            observer.observe(container, {
-                childList: true,
-                subtree: true
-            });
-        }
-
-        // Usa Livewire.on para manejar el evento personalizado
-        Livewire.on('sesion-created', () => {
-            console.log("Evento 'sesion-created' disparado");
-            setupMutationObserver();
-        });
-
-        // Escuchar cuando la página se carga inicialmente
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Página cargada - inicializando Viewer.js");
-            initializeViewer();
-            setupMutationObserver();
-        });
-    </script>
-
 
 @endsection

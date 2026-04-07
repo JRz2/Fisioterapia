@@ -23,6 +23,7 @@ return new class extends Migration
             $table->json('postura_inicial')->nullable();
             $table->json('postura_final')->nullable();
             $table->json('rango')->nullable();
+            $table->json('datos_biomecanicos')->nullable();
             $table->foreign('consulta_id')->references('id')->on('consultas');
             $table->timestamps();
         });

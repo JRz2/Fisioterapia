@@ -27,11 +27,9 @@
                             <img src="{{ asset('storage/' . $img->ruta) }}" class="w-20 h-20 object-cover rounded">
                         @endforeach
 
-                        <p> <strong>AGREGAR MODELOS 3D</strong></p>
-                        <a class="btn btn-success" href="{{ route('doctor.hand.create', $sesion->id) }}">MODELO
-                            MANO</a>
-                        <a class="btn btn-success" href="{{ route('doctor.body.create', $sesion->id) }}">MODELO
-                            CUERPO</a>
+                        <a class="btn btn-success" href="{{ route('doctor.modelo.show', $sesion->id) }}">
+                            Ver modelo 3d
+                        </a>
                     </div>
                 </div>
             @endforeach

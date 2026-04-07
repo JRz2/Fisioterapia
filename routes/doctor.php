@@ -9,6 +9,7 @@ use App\Http\Controllers\Doctor\PruebaController;
 use App\Http\Controllers\Doctor\SesionController;
 use App\Http\Controllers\Doctor\BodyController;
 use App\Http\Controllers\Doctor\HandController;
+use App\Http\Controllers\KinematicsController;
 
 Route::resource('pacientes', PacienteController::class)->names('doctor.paciente'); 
 Route::resource('consultas', ConsultaController::class)->names('doctor.consulta'); 
@@ -32,3 +33,9 @@ Route::resource('reportes', ReporteController::class)
     ->names('doctor.reporte');
 Route::get('reportes/create/{consulta}', [ReporteController::class, 'create'])->name('doctor.reporte.create');
 Route::get('/reporte/pdf/{id}', [ReporteController::class, 'pdf']);
+
+Route::resource('modelos', KinematicsController::class)
+    ->except(['create'])
+    ->names('doctor.modelo');
+Route::get('modelos/create/{sesion}', [KinematicsController::class, 'create'])->name('doctor.modelo.create');
+Route::post('/doctor/modelo/update', [KinematicsController::class, 'update'])->name('doctor.modelo.update');
