@@ -51,3 +51,8 @@ Route::view('/body', 'doctor.model.body');
 Route::get('/meshy/model/{imgconsulta}/{format?}', [MeshyProxyController::class, 'model'])
     ->name('meshy.model')
     ->withoutMiddleware(\App\Http\Middleware\Authenticate::class); 
+
+Route::get('fisio/recomendaciones/{pacienteId}', [RecomendacionController::class, 'index'])
+    ->name('fisio.recomendaciones.index');
+Route::post('fisio/recomendaciones/asignar', [RecomendacionController::class, 'asignarEjercicios'])
+    ->name('fisio.recomendaciones.asignar');
